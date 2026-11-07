@@ -6,7 +6,7 @@ permalink: /features/
 series: 기능
 seriesNumber: "개요"
 statusLabel: 초안 · 앰버서더 검토 대기
-verifiedAt: 2026-11-08T00:54:00+09:00
+verifiedAt: 2026-11-08T02:02:00+09:00
 sources:
   - title: Introducing Devin
     url: https://docs.devin.ai/get-started/devin-intro
@@ -36,6 +36,40 @@ sources:
     url: https://docs.devin.ai/admin/billing/self-serve
   - title: Devin Mobile (waitlist page)
     url: https://devin.ai/mobile
+  - title: Local Hands for Devin Cloud Sessions
+    url: https://docs.devin.ai/work-with-devin/local-hands
+  - title: Devin CLI handoff
+    url: https://docs.devin.ai/cli/handoff
+  - title: Hand off to Devin Cloud from Any Agent
+    url: https://docs.devin.ai/work-with-devin/devin-handoff
+  - title: Agent Client Protocol (Devin Desktop)
+    url: https://docs.devin.ai/desktop/acp
+  - title: Devin macOS support
+    url: https://docs.devin.ai/onboard-devin/environment/macos-support
+  - title: Android emulator support
+    url: https://docs.devin.ai/onboard-devin/environment/android-emulation
+  - title: Devin CLI sandbox
+    url: https://docs.devin.ai/cli/sandbox
+  - title: Testing & Video Recordings
+    url: https://docs.devin.ai/work-with-devin/testing-and-recordings
+  - title: Quick Review
+    url: https://docs.devin.ai/desktop/quick-review
+  - title: Devin Desktop changelog
+    url: https://docs.devin.ai/desktop/changelog
+  - title: Devin Memory and Dreaming
+    url: https://docs.devin.ai/product-guides/memory
+  - title: Devin Skills
+    url: https://docs.devin.ai/product-guides/skills
+  - title: Devin environment setup
+    url: https://docs.devin.ai/onboard-devin/environment
+  - title: Devin environment blueprints
+    url: https://docs.devin.ai/onboard-devin/environment/blueprints
+  - title: Devin Code Scans
+    url: https://docs.devin.ai/work-with-devin/code-scans
+  - title: Devin Dynamic Workflows
+    url: https://docs.devin.ai/work-with-devin/dynamic-workflows
+  - title: "@devindevelopers: 20 things you might not know Devin can do (X thread, first post)"
+    url: https://x.com/devindevelopers/status/2118851585707053162
 ---
 
 Devin은 하나의 앱이 아니라 여러 곳에서 쓰는 제품군입니다. 공식 Desktop FAQ는 제품을 **Devin Cloud, Devin Desktop, Devin CLI, Devin Review** 네 가지로 묶어 설명합니다. 이 페이지는 먼저 이 네 가지 ‘쓰는 곳’을 정리하고, 그 위에서 동작하는 업무 기능(보안, 장애 대응, 자동화 등)을 이어서 소개합니다.
@@ -120,6 +154,74 @@ Ask Devin은 코드베이스에 질문하고 작업을 계획하는 기능이고
 
 ::: tip 기능은 하나씩 늘리기
 처음부터 자동화와 보안 스캔을 모두 켜기보다, Cloud 세션 몇 번으로 지시문 쓰는 감을 익힌 뒤 Review나 Automations를 더하는 편이 결과를 판단하기 쉽습니다.
+:::
+
+## 공식 계정이 소개한 기능, 문서로 다시 보기
+
+Devin 공식 개발자 계정(@devindevelopers)은 X 스레드에서 “20 things you might not know Devin can do”라는 제목으로 기능 20가지를 소개했습니다. 이 절은 그중 관련 있는 기능을 다섯 묶음으로 나누고, **스레드 문장은 짧게 인용만 하고 기능 설명과 제약은 현재 공식 문서로 다시 확인한 내용**으로 적었습니다. 스레드는 홍보 성격의 소개이므로, 문서에서 확인되지 않은 표현은 옮기지 않았습니다.
+
+### 로컬과 클라우드를 잇기
+
+- **Local Hands**: 클라우드 세션이 내 컴퓨터에서 셸 명령을 실행하고 파일을 읽고 고칠 수 있게 합니다. 다만 무제한 접근이 아닙니다. 세션 소유자 본인이어야 하고, 같은 계정으로 로그인한 Devin Desktop이나 CLI가 필요하며, 조직의 Local Hands 설정이 켜져 있어야 하고, 도구 호출마다 승인을 받습니다. 화면·키보드·마우스는 제어하지 않습니다. 사용자 승인이 없는 세션(일정 실행, 자동화, API 세션 등), 보안 프로필을 쓰는 세션, 네이티브 배포가 꺼진 조직에서는 쓸 수 없고, 아직 점진 배포 중입니다.
+- **Handoff**: CLI에서 `/handoff`를 실행하면 대화 맥락과 현재 git 브랜치를 묶어 클라우드 세션으로 넘깁니다. 로컬에서 계획하고 오래 걸리는 구현은 클라우드에 맡기는 식으로 쓸 수 있습니다. Claude Code, Codex 같은 다른 에이전트에서는 오픈소스 Devin Handoff 플러그인으로 넘깁니다.
+- **Agent Command Center**: Devin Desktop 안에서 로컬 에이전트와 클라우드 Devin 세션을 한 화면에서 관리합니다. ACP(Agent Client Protocol)를 지원하는 서드파티 에이전트도 여기서 실행할 수 있습니다. 문서 기준 Free, Pro, Max, Teams에서 쓸 수 있고 Enterprise는 기본적으로 꺼져 있습니다. 외부 ACP 에이전트를 쓰면 과금과 약관은 해당 제공사와의 관계로 넘어갑니다.
+
+스레드 원문: <span lang="en">“Devin Cloud can run commands on your machine.”</span> ([@devindevelopers 게시물: Local Hands](https://x.com/devindevelopers/status/2118851585707053162)), <span lang="en">“Plan locally, then hand the build to a cloud session.”</span> ([@devindevelopers 게시물: Handoff](https://x.com/devindevelopers/status/2118851596750635513)), <span lang="en">“Start and manage local and cloud agents from one screen.”</span> ([@devindevelopers 게시물: Agent Command Center](https://x.com/devindevelopers/status/2118851618456174879)). 스레드의 ‘ACP 에이전트 40개 이상’은 게시 시점의 숫자라 옮기지 않았습니다.
+
+::: src
+[Local Hands for Devin Cloud Sessions](https://docs.devin.ai/work-with-devin/local-hands), [Devin CLI handoff](https://docs.devin.ai/cli/handoff), [Hand off to Devin Cloud from Any Agent](https://docs.devin.ai/work-with-devin/devin-handoff), [Agent Command Center](https://docs.devin.ai/desktop/agent-command-center), [Agent Client Protocol](https://docs.devin.ai/desktop/acp)
+:::
+
+### 실행 환경과 플랫폼
+
+- **macOS VM과 iOS Simulator**: 블루프린트에 `runs-on: macos`를 지정하면 Devin이 Xcode와 iOS Simulator로 iOS·macOS 앱을 빌드하고 테스트하며, TestFlight 업로드도 안내되어 있습니다. Dedicated SaaS 배포는 계정 팀을 통해 켜야 합니다.
+- **Android 에뮬레이터**: 세션 안의 에뮬레이터에서 Android 앱을 빌드·실행하고, 주요 흐름을 눌러 보며 녹화로 결과를 남길 수 있습니다.
+- **CLI 샌드박스**: `--sandbox`로 실행하면 운영체제 수준에서 쓸 수 있는 경로와 네트워크를 제한합니다. 샌드박스를 만들 수 없는 환경에서는 CLI가 샌드박스 없이 실행하지 않고 시작을 거부합니다.
+
+스레드는 특정 기기의 접힌·펼친 화면 테스트까지 언급하지만([@devindevelopers 게시물: macOS and iOS VMs](https://x.com/devindevelopers/status/2118851587611201626)), 현재 공식 문서에서는 그 내용을 확인하지 못해 일반적인 iOS Simulator 지원으로만 적었습니다. Android는 [@devindevelopers 게시물: Android Testing](https://x.com/devindevelopers/status/2118851594821189705), 샌드박스는 [@devindevelopers 게시물: Sandboxing](https://x.com/devindevelopers/status/2118851598659022976)에서 소개되었습니다.
+
+::: src
+[Devin macOS support](https://docs.devin.ai/onboard-devin/environment/macos-support), [Android emulator support](https://docs.devin.ai/onboard-devin/environment/android-emulation), [Devin CLI sandbox](https://docs.devin.ai/cli/sandbox)
+:::
+
+### 검증 근거 남기기
+
+- **테스트 녹화**: PR을 만든 뒤 Devin이 앱을 실행하고 브라우저로 직접 조작하며 화면을 녹화하고, 중요한 순간에 텍스트 주석을 달아 영상으로 보냅니다. 리뷰어가 동작을 빠르게 확인하도록 돕는 근거이며, CI의 자동 테스트를 대신하지는 않습니다.
+- **Quick Review**: Devin Desktop에서 Devin Local 에이전트가 만든 로컬 변경을 별도 에이전트가 다시 검토해, 커밋하기 전에 편집기 안에 의견을 보여 줍니다. 가격은 요금제에 따라 다릅니다.
+- **Since last seen 보기**: Desktop 변경 기록(changelog)에 따르면 로컬 세션의 Changes 탭에 파일별 diff와 “Since last seen” 범위가 추가되어, 마지막으로 본 뒤 바뀐 부분만 볼 수 있습니다.
+
+스레드 원문: <span lang="en">“Devin records and annotates its own UI tests.”</span> ([@devindevelopers 게시물: Test Recordings](https://x.com/devindevelopers/status/2118851622264869316)), <span lang="en">“A second agent reviews your uncommitted diff before you commit.”</span> ([@devindevelopers 게시물: Quick Review](https://x.com/devindevelopers/status/2118851611535577192)), <span lang="en">“Review only what changed since you last looked.”</span> ([@devindevelopers 게시물: Since Last Seen Diffs](https://x.com/devindevelopers/status/2118851620301685217))
+
+::: src
+[Testing & Video Recordings](https://docs.devin.ai/work-with-devin/testing-and-recordings), [Quick Review](https://docs.devin.ai/desktop/quick-review), [Devin Desktop changelog](https://docs.devin.ai/desktop/changelog)
+:::
+
+### 반복할수록 팀에 맞춰지기
+
+- **Memory**: 선호, 교정, 프로젝트에서 배운 점을 노트로 저장해 다음 세션에 이어 씁니다. 메모리는 조직 안에서도 **개인 단위**라 팀원과 공유되지 않습니다.
+- **Skills**: 저장소의 `.agents/skills/<이름>/SKILL.md` 파일이나 Customize 페이지로 테스트, 배포, 리뷰 같은 반복 절차를 가르칩니다. 팀이 함께 쓰는 절차는 메모리가 아니라 스킬로 남기는 편이 맞습니다.
+- **환경 스냅샷**: Devin이 저장소를 보고 블루프린트를 제안하면, 사람이 검토·승인한 뒤 빌드가 스냅샷을 만듭니다. 이후 세션은 저장소, 도구, 의존성, 환경 변수가 준비된 그 스냅샷에서 시작합니다. 비밀값은 Secrets에 저장합니다.
+
+스레드 원문: <span lang="en">“Guide or correct Devin once, and future sessions apply it without being asked.”</span> ([@devindevelopers 게시물: Memory](https://x.com/devindevelopers/status/2118851600802525473)), <span lang="en">“Teach Devin your team's workflow once, then reuse it anywhere.”</span> ([@devindevelopers 게시물: Skills](https://x.com/devindevelopers/status/2118851614140403905)), 환경 설정은 [@devindevelopers 게시물: Environment Setup](https://x.com/devindevelopers/status/2118851627742552409)
+
+::: src
+[Devin Memory and Dreaming](https://docs.devin.ai/product-guides/memory), [Devin Skills](https://docs.devin.ai/product-guides/skills), [Devin environment setup](https://docs.devin.ai/onboard-devin/environment), [Devin environment blueprints](https://docs.devin.ai/onboard-devin/environment/blueprints)
+:::
+
+### 개발 수명주기 전반으로 넓히기
+
+- **Code Scans**: 작성창에 `/scan`과 찾고 싶은 내용을 적고 저장소를 지정하면, 성능, 테스트 커버리지, 죽은 코드, 접근성 같은 문제를 찾아 결과(findings)를 내고 PR로 고칠 수 있습니다. 완료된 스캔은 새 커밋만 다시 스캔할 수 있고, Automations로 일정 실행도 됩니다. ‘Use code scans’ 권한이 필요합니다.
+- **보안 수정**: Security 2.0에서 찾은 취약점을 Devin에게 배정해 수정을 맡깁니다. 조직의 보안 스캔 접근 권한과 역할 권한이 필요합니다.
+- **Dynamic Workflows**: Devin이 결정적인 Python 스크립트를 작성해 여러 Devin 세션에 일을 나누고 결과를 합칩니다. 문서는 판단이 필요한 독립 단위가 대략 다섯 개 이상일 때 적합하고, 그보다 작으면 일반 세션을 권합니다.
+
+스레드 원문: <span lang="en">“Scans can cover multiple repos, re-run on new commits, and turn findings into PRs.”</span> ([@devindevelopers 게시물: Code Scans](https://x.com/devindevelopers/status/2118851605185618134)), <span lang="en">“Turn a security finding into a tested fix PR.”</span> ([@devindevelopers 게시물: Native Security Fixes](https://x.com/devindevelopers/status/2118851607735513526)), <span lang="en">“One prompt fans out to many agents, then combines the results.”</span> ([@devindevelopers 게시물: Dynamic Workflows](https://x.com/devindevelopers/status/2118851609606148103))
+
+::: src
+[Devin Code Scans](https://docs.devin.ai/work-with-devin/code-scans), [Devin Security 2.0](https://docs.devin.ai/work-with-devin/security-2-0), [Devin Dynamic Workflows](https://docs.devin.ai/work-with-devin/dynamic-workflows)
+:::
+
+::: tip 홍보 문장과 문서 확인을 구분하기
+스레드의 한 줄 소개는 기능의 존재를 알리는 데 쓰고, 실제 도입 판단은 권한·플랜·배포 상태가 적힌 공식 문서로 하는 편이 안전합니다. 스레드 마지막 게시물의 할인 코드처럼 기간이 정해진 혜택은 이 가이드에 싣지 않습니다.
 :::
 
 ## 요금제와 접근

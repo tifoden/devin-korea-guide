@@ -6,7 +6,7 @@ permalink: /use-cases/
 series: 활용사례
 seriesNumber: "개요"
 statusLabel: 초안 · 앰버서더 검토 대기
-verifiedAt: 2026-11-08T00:54:00+09:00
+verifiedAt: 2026-11-08T02:02:00+09:00
 sources:
   - title: Customers
     url: https://devin.ai/customers
@@ -28,6 +28,20 @@ sources:
     url: https://devin.ai/customers/itau
   - title: Devin documentation index (use cases)
     url: https://docs.devin.ai/llms.txt
+  - title: Android emulator support
+    url: https://docs.devin.ai/onboard-devin/environment/android-emulation
+  - title: Devin macOS support
+    url: https://docs.devin.ai/onboard-devin/environment/macos-support
+  - title: Testing & Video Recordings
+    url: https://docs.devin.ai/work-with-devin/testing-and-recordings
+  - title: Devin CLI handoff
+    url: https://docs.devin.ai/cli/handoff
+  - title: Devin Skills
+    url: https://docs.devin.ai/product-guides/skills
+  - title: Devin Code Scans
+    url: https://docs.devin.ai/work-with-devin/code-scans
+  - title: Devin Dynamic Workflows
+    url: https://docs.devin.ai/work-with-devin/dynamic-workflows
 ---
 
 이 페이지의 사례는 모두 Cognition이 [공식 고객 사례 페이지](https://devin.ai/customers)에 공개한 것입니다. 이 가이드가 따로 취재하거나 검증한 결과가 아니고, 수치는 각 회사의 환경에서 나온 값이라 다른 팀에서도 똑같이 나온다는 뜻이 아닙니다.
@@ -82,6 +96,22 @@ sources:
 
 ::: src
 [Devin documentation index](https://docs.devin.ai/llms.txt)
+:::
+
+## 기능을 조합해 쓰는 장면
+
+위 고객 사례와 별개로, 공식 문서가 직접 설명하는 사용 흐름을 기능 조합별로 정리했습니다. 특정 고객의 결과가 아니며 수치도 없습니다. 기능별 조건과 제약은 [기능 페이지](/features/#공식-계정이-소개한-기능-문서로-다시-보기)에 있습니다.
+
+| 장면 | 함께 쓰는 기능 | 공식 문서가 설명하는 흐름 |
+|---|---|---|
+| 모바일 앱 변경 확인 | Android 에뮬레이터, macOS VM의 iOS Simulator, 테스트 녹화 | Android는 PR마다 앱을 에뮬레이터에서 실행해 주요 흐름을 눌러 보고 녹화를 남기는 흐름을 소개합니다(<span lang="en">“You get a video recording that proves the feature works”</span>). iOS·macOS 앱은 블루프린트에 `runs-on: macos`를 지정해 빌드·테스트합니다. |
+| 로컬에서 계획, 클라우드에서 구현 | Devin CLI `/handoff`, Agent Command Center | CLI가 대화 맥락과 현재 git 브랜치를 묶어 클라우드 세션을 만들고, 그 세션의 PR을 다시 로컬로 가져올 수 있습니다. |
+| 커밋 전 이중 확인 | Quick Review, Since last seen 보기 | 로컬 변경을 별도 에이전트가 검토하고, 다시 볼 때는 마지막으로 본 뒤 바뀐 부분만 확인합니다. |
+| 팀 절차를 매번 같게 | Skills, 환경 스냅샷 | 테스트·배포 절차를 `SKILL.md`로 남기고, 승인한 블루프린트로 만든 스냅샷에서 세션을 시작합니다. 개인 Memory는 팀과 공유되지 않으니 팀 규칙은 스킬로 둡니다. |
+| 여러 저장소 점검 | Code Scans, Automations, Dynamic Workflows | `/scan`으로 문제 유형을 찾고, 새 커밋만 다시 스캔하거나 일정으로 돌립니다. 독립된 작업이 많으면 워크플로로 나눠 처리한 뒤 결과를 합칩니다. |
+
+::: src
+[Android emulator support](https://docs.devin.ai/onboard-devin/environment/android-emulation), [Devin macOS support](https://docs.devin.ai/onboard-devin/environment/macos-support), [Testing & Video Recordings](https://docs.devin.ai/work-with-devin/testing-and-recordings), [Devin CLI handoff](https://docs.devin.ai/cli/handoff), [Quick Review](https://docs.devin.ai/desktop/quick-review), [Devin Desktop changelog](https://docs.devin.ai/desktop/changelog), [Devin Skills](https://docs.devin.ai/product-guides/skills), [Devin Memory and Dreaming](https://docs.devin.ai/product-guides/memory), [Devin Code Scans](https://docs.devin.ai/work-with-devin/code-scans), [Devin Dynamic Workflows](https://docs.devin.ai/work-with-devin/dynamic-workflows)
 :::
 
 ## 가상 실습: 우리 팀에 맞는 첫 사례 찾기
