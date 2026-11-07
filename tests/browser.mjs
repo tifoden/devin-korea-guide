@@ -13,7 +13,14 @@ const server = await serve(ROOT);
 const base = `http://127.0.0.1:${server.address().port}`;
 const browser = await chromium.connectOverCDP(process.env.CDP_URL || "http://localhost:29229");
 
-const PAGES = [{ name: "home", path: "/" }, { name: "article", path: "/guides/first-task/" }];
+const PAGES = [
+  { name: "home", path: "/", nav: "개요" },
+  { name: "article", path: "/guides/first-task/", nav: "시작하기" },
+  { name: "features", path: "/features/", nav: "기능" },
+  { name: "models", path: "/models/", nav: "모델" },
+  { name: "use-cases", path: "/use-cases/", nav: "활용사례" },
+  { name: "startups", path: "/startups/", nav: "스타트업 프로그램" },
+];
 const VIEWPORTS = [{ name: "desktop", width: 1440, height: 900, dpr: 1 }, { name: "mobile", width: 390, height: 844, dpr: 2 }];
 const results = [];
 let failed = 0;
@@ -49,7 +56,7 @@ for (const vp of VIEWPORTS) {
     check(`${tag} no horizontal overflow`, info.overflow <= 0, `overflow=${info.overflow}px`);
     check(`${tag} fonts: Pretendard + Geist Mono loaded, no NB International`, !info.nb && info.pretendard && info.mono, JSON.stringify({ nb: info.nb, pretendard: info.pretendard, mono: info.mono }));
     check(`${tag} Korean UI text uses Pretendard (h1/h2/nav/buttons/callouts/prose)`, info.uiFonts.length === 0, info.uiFonts.join(", "));
-    check(`${tag} nav current = ${p.name === "home" ? "개요" : "가이드"}`, info.currentNav.join() === (p.name === "home" ? "개요" : "가이드"), info.currentNav.join());
+    check(`${tag} nav current = ${p.nav}`, info.currentNav.join() === p.nav, info.currentNav.join());
     check(`${tag} block-level targets ≥ 24px`, info.smallTargets.length === 0, info.smallTargets.join(", "));
     if (p.name === "article") check(`${tag} prose font-size 17px`, info.proseSize === "17px", info.proseSize);
 
@@ -115,20 +122,28 @@ for (const vp of VIEWPORTS) {
     const closed = await page.evaluate(() => ({ exp: document.querySelector(".menu-toggle").getAttribute("aria-expanded"), focus: document.activeElement.className }));
     check(`menu/mobile Escape closes and returns focus`, closed.exp === "false" && closed.focus === "menu-toggle", JSON.stringify(closed));
     await page.locator(".menu-toggle").click();
-    await page.locator("#site-menu a", { hasText: "편집 기준" }).click();
-    await page.waitForTimeout(600);
-    const mr = await below();
-    check(`menu/mobile link closes menu and lands below header`, mr.id === "editorial" && mr.top >= mr.bar && mr.top < mr.bar + 60 && (await page.getAttribute(".menu-toggle", "aria-expanded")) === "false", JSON.stringify(mr));
-    check(`menu/mobile section link marked current`, await page.evaluate(() => document.querySelector('.site-nav a[aria-current="location"]')?.textContent.trim() === "편집 기준"));
+    await page.locator("#site-menu a", { hasText: "기능" }).click();
+    await page.waitForURL("**/features/");
+    await page.waitForLoadState("networkidle");
+    const mr = await page.evaluate(() => ({ path: location.pathname, cur: document.querySelector('.site-nav a[aria-current="page"]')?.textContent.trim(), exp: document.querySelector(".menu-toggle").getAttribute("aria-expanded") }));
+    check(`menu/mobile link navigates to /features/ and closes menu`, mr.path === "/features/" && mr.exp === "false", JSON.stringify(mr));
+    check(`menu/mobile page link marked current`, mr.cur === "기능", JSON.stringify(mr));
+    await page.locator(".subnav__list a", { hasText: "요금제와 접근" }).click();
+    await page.waitForTimeout(700);
+    const fr = await page.evaluate(() => { const t = document.getElementById("요금제와-접근").getBoundingClientRect().top; const bar = document.querySelector(".subnav").getBoundingClientRect().bottom; return { t, bar }; });
+    check(`menu/mobile features tab lands below header+tabs`, fr.t >= fr.bar && fr.t < fr.bar + 60, JSON.stringify(fr));
   } else {
     check(`article/desktop section tabs hidden (sidebar TOC instead)`, !(await page.locator(".subnav").isVisible()));
     await page.goto(base + "/", { waitUntil: "networkidle" });
-    await page.locator(".site-nav a", { hasText: "다룰 내용" }).click();
-    await page.waitForTimeout(600);
-    const dr = await below();
-    check(`nav/desktop 다룰 내용 lands below header`, dr.id === "roadmap" && dr.top >= dr.bar && dr.top < dr.bar + 60, JSON.stringify(dr));
-    check(`nav/desktop section link marked current`, await page.evaluate(() => document.querySelector('.site-nav a[aria-current="location"]')?.textContent.trim() === "다룰 내용"));
-    await page.screenshot({ path: `${OUT}home-desktop-nav-roadmap.png` });
+    await page.locator(".site-nav a", { hasText: "활용사례" }).click();
+    await page.waitForURL("**/use-cases/");
+    await page.waitForLoadState("networkidle");
+    check(`nav/desktop 활용사례 navigates and is current`, await page.evaluate(() => location.pathname === "/use-cases/" && document.querySelector('.site-nav a[aria-current="page"]')?.textContent.trim() === "활용사례"));
+    await page.locator(".toc__list a", { hasText: "대규모 마이그레이션" }).click();
+    await page.waitForTimeout(700);
+    const dr = await page.evaluate(() => { const t = document.getElementById("대규모-마이그레이션").getBoundingClientRect().top; const bar = document.querySelector("[data-header]").getBoundingClientRect().bottom; return { t, bar }; });
+    check(`nav/desktop TOC link lands below header`, dr.t >= dr.bar && dr.t < dr.bar + 60, JSON.stringify(dr));
+    await page.screenshot({ path: `${OUT}use-cases-desktop-toc.png` });
   }
   await context.close();
 }

@@ -2,7 +2,9 @@
 // `match` marks a whole URL prefix as current; `section` is an in-page id used for scroll-spy on that page.
 export default [
   { label: "개요", url: "/", section: "overview" },
-  { label: "가이드", url: "/guides/first-task/", match: "/guides/" },
-  { label: "다룰 내용", url: "/#roadmap", section: "roadmap" },
-  { label: "편집 기준", url: "/#editorial", section: "editorial" },
+  { label: "시작하기", url: "/guides/first-task/", match: "/guides/" },
+  { label: "기능", url: "/features/" },
+  { label: "모델", url: "/models/" },
+  { label: "활용사례", url: "/use-cases/" },
+  { label: "스타트업 프로그램", url: "/startups/" },
 ];
