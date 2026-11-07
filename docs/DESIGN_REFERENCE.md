@@ -14,8 +14,8 @@ Labels used below:
 
 | Role | Observed declaration | Used here |
 | --- | --- | --- |
-| Heading and body | `--font-heading` / `--font-body`: `var(--font-nb-international-pro), system-ui, sans-serif` → computed `nbInternationalPro, "nbInternationalPro Fallback", system-ui, sans-serif` | Same order, plus Pretendard for Hangul (adapted, see below) |
-| Mono labels | `--font-mono`: `var(--font-geist-mono), ui-monospace, monospace` | `geistMono` (self-hosted from the `geist` npm package, OFL 1.1) |
+| Heading and body | `--font-heading` / `--font-body`: `var(--font-nb-international-pro), system-ui, sans-serif` → computed `nbInternationalPro, "nbInternationalPro Fallback", system-ui, sans-serif` | **Adapted (owner decision, 2026-11-07):** `"Pretendard Variable", Pretendard, …system Korean fonts` for all headings, body, nav, buttons, callouts and labels. NB International Pro is not loaded. |
+| Mono labels | `--font-mono`: `var(--font-geist-mono), ui-monospace, monospace` | `geistMono` (self-hosted from the `geist` npm package, OFL 1.1), **only** for code, URLs and numerals (TOC/tab numbers). Labels that contain Korean (`.mono-label`, badges, breadcrumb, note labels, table headers) use `--font-label: var(--font-body)` at the observed 12px / .03em. |
 | Product UI (inside screenshots) | `--font-product-sans`: `inter`, `interLatinExt`; `--font-product-mono`: `ibmPlexMono` | Not used. Our pages show no product UI. |
 | Serif | `stkBureauSerif` is declared but no visible text used it on this page | Not used |
 
@@ -37,9 +37,10 @@ Font file metadata (read with fontTools):
 
 ### How the fonts are handled
 
-- **NB International Pro:** `npm run fonts:official` downloads the two public woff2 files to `src/assets/fonts/official/`. That folder is in `.gitignore`. The files are commercially licensed, and owner permission alone doesn't confirm the right to redistribute them in a repository. If they're missing, the observed metric-matched fallback (`local(Arial)` with the same overrides) renders Latin text.
-- **Korean fallback (adapted):** `"Pretendard Variable", Pretendard` (SIL OFL 1.1, self-hosted dynamic subset) is placed directly after the two NB families. Because NB has no Hangul, the browser renders each Latin glyph in NB International Pro and each Hangul glyph in Pretendard. NB has no Hangul, so Cognition has no official Korean face. This choice is ours.
-- Headings stay at the observed weight 400. Inline `strong` and note titles use Pretendard 600 so Korean emphasis is visible. This is adapted, because NB is only served at 300 and 400–500.
+- **Pretendard everywhere (adapted, owner decision):** the owner asked for one consistent face for all Korean typography. Mixing NB International Pro (Latin) with Pretendard (Hangul) inside one line gave two different x-heights and stroke weights in mixed text such as "Devin으로". All text roles now use `"Pretendard Variable"` (SIL OFL 1.1, self-hosted dynamic subset). The NB files, `npm run fonts:official` and the `@font-face` rules were removed, which also removes the commercial-redistribution question.
+- **Geist Mono (observed, kept intentionally):** code, URLs and numerals only. It has no Hangul; any Hangul inside a code block falls through to Pretendard (`--font-mono: geistMono, "Pretendard Variable", …`).
+- **Weights:** headings use 500 (observed NB headings are 400; Pretendard 400 at 32–40px reads lighter than NB 400, so 500 is adapted). Body 400, `strong` and note titles 600.
+- `tests/browser.mjs` asserts that no NB face is loaded and that h1/h2/nav/buttons/callouts/labels/prose compute to Pretendard.
 
 ## 2. Color (observed light theme, `html.light.theme-light`)
 
@@ -84,7 +85,7 @@ Font file metadata (read with fontTools):
 | `.page-container` | max-width 1400px · padding-inline 20px, then 40px, then 60px | same. The breakpoints are 48rem and 64rem (inferred from Tailwind `md`/`lg` class names). |
 | Page frame | `lg:border-x` 1px `border-secondary`, padding 60px 16px (`py-12` on mobile) | `.frame` |
 | Section rules | full-width `border-top`/`border-y` 1px `rgba(0,0,0,.06)` | `.band` |
-| Hero | `pt-[100px] lg:pt-[140px]`; intro `max-w-[568px] gap-[27px]`; title and lead `space-y-4` | pt 64px, then 120px (inferred, shorter page); same intro widths and gaps |
+| Hero | `pt-[100px] lg:pt-[140px]` measured from the viewport top (nav is `position: fixed`, 52px) | Our header is sticky (in flow), so hero padding is 40px / 64px / 88px after a 60px / 52px header. Measured H1 top: **140px desktop, 100px mobile — identical to official.** |
 | Two-tone heading + content split | heading left, content right | `.split` 5fr / 7fr (inferred ratio) |
 | Feature pair grid | `gap-x-2 gap-y-[60px] grid-cols-2`; h3 `text-h4 mb-2` | `.columns` (3 columns, gap 24px) |
 | FAQ rows | `border-t pt-10 pb-10`, `text-h4` | `.row` (32px on desktop, 24px on mobile) |
@@ -113,6 +114,18 @@ Font file metadata (read with fontTools):
 | Focus | `focus-visible:outline-2 outline-solid outline-offset-4 outline-text-accent-primary` | `:focus-visible { outline: 2px solid accent; outline-offset: 4px }` |
 | Icons | SVG icons (`/assets/images/desktop/hero/icons/*.svg`) inside product UI | Not used. Arrows are text glyphs (→ ↗). |
 | Background image | `/assets/images/new-home/graphic-backgrounds/bg-1.jpg` behind product windows | Reused behind the home preview window (`src/assets/img/devin-bg-1.jpg`) |
+
+## 6a. Navigation (observed + adapted)
+
+| Item | Observed (devin.ai/desktop) | Implementation |
+| --- | --- | --- |
+| Bar | `nav.fixed … bg-dt-bg`, h 52px desktop, 60px mobile, `rgb(248,248,248)` | `.site-header` sticky, h 52 / 60 (`--header-h`), same colour |
+| Items | buttons 14px / 19.6px, h 28, pad `1px 8px 0 12px`, radius 200px | `.nav-link` 14px / 19.6px, h 28, pad `1px 12px 0`, radius 200px. Current page: `aria-current="page"` + `rgba(0,0,0,.06)` pill. |
+| Item source | Product / Solutions / Resources / … dropdowns | `src/_data/nav.js`. **Rule: add an entry only when its page or section exists.** Today: 개요(/), 가이드(/guides/first-task/), 다룰 내용(/#roadmap), 편집 기준(/#editorial). No dropdowns until there are ≥2 pages per group. |
+| Mobile | 36px menu button, full-height panel, stacked rows with 1px separators, CTAs at bottom | `.menu-toggle` 36px disclosure (`aria-expanded`, `aria-controls`), full-height panel, 1px row rules, docs button last. Escape closes and returns focus; Tab loops inside; link click closes; resets at ≥64rem. Without JS the links stay as a horizontally scrollable row. |
+| Section state | – | `assets/js/nav.js` scroll-spy sets `aria-current="location"` on in-page links (home sections, article TOC, article tabs). |
+| Article section tabs (adapted) | segmented control: white active chip + 1px border, 4px radius | `.subnav` under the header on < 64rem only, generated from the article's own headings + 출처. Horizontally scrollable; the active tab scrolls into view. Desktop keeps the sticky sidebar TOC. |
+| Anchor offset | – | `scroll-padding-top: header + 16px`; on mobile article pages header + tabs (45px) + 16px. Tested. |
 
 ## 7. Motion
 

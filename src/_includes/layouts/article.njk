@@ -22,6 +22,19 @@ bodyClass: page-article
     </div>
   </header>
 
+  {%- if headings.length %}
+  <nav class="subnav" aria-label="이 글의 섹션 바로가기">
+    <div class="page-container">
+      <ol class="subnav__list">
+        {%- for h in headings %}
+        <li><a class="subnav__link" href="#{{ h.id }}"><span class="subnav__num" aria-hidden="true">{{ "0" if loop.index < 10 else "" }}{{ loop.index }}</span>{{ h.text }}</a></li>
+        {%- endfor %}
+        <li><a class="subnav__link" href="#sources">출처</a></li>
+      </ol>
+    </div>
+  </nav>
+  {%- endif %}
+
   <div class="band">
     <div class="page-container">
       <div class="frame article__layout">

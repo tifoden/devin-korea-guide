@@ -32,7 +32,9 @@ for (const vp of VIEWPORTS) {
       lang: document.documentElement.lang,
       h1: document.querySelectorAll("h1").length,
       overflow: document.documentElement.scrollWidth - window.innerWidth,
-      nb: document.fonts.check('16px nbInternationalPro', "Devin"),
+      nb: [...document.fonts].some((f) => /nbInternational/i.test(f.family)),
+      uiFonts: [...document.querySelectorAll("h1, h2, .nav-link, .btn, .callout, .prose p, .note__label, .reading-guide__title, .breadcrumb ol, .meta-list dt, .src__label, .mono-label, .prose th")].map((el) => getComputedStyle(el).fontFamily.split(",")[0]).filter((f) => !/Pretendard/.test(f)),
+      currentNav: [...document.querySelectorAll('.site-nav a[aria-current="page"]')].map((a) => a.textContent.trim()),
       pretendard: [...document.fonts].some((f) => /Pretendard/.test(f.family) && f.status === "loaded"),
       mono: [...document.fonts].some((f) => f.family.replace(/"/g, "") === "geistMono" && f.status === "loaded"),
       bodyFont: getComputedStyle(document.body).fontFamily,
@@ -45,7 +47,9 @@ for (const vp of VIEWPORTS) {
     check(`${tag} lang=ko`, info.lang === "ko");
     check(`${tag} single h1`, info.h1 === 1, `h1=${info.h1}`);
     check(`${tag} no horizontal overflow`, info.overflow <= 0, `overflow=${info.overflow}px`);
-    check(`${tag} fonts loaded (NB International Pro, Pretendard, Geist Mono)`, info.nb && info.pretendard && info.mono, JSON.stringify({ nb: info.nb, pretendard: info.pretendard, mono: info.mono }));
+    check(`${tag} fonts: Pretendard + Geist Mono loaded, no NB International`, !info.nb && info.pretendard && info.mono, JSON.stringify({ nb: info.nb, pretendard: info.pretendard, mono: info.mono }));
+    check(`${tag} Korean UI text uses Pretendard (h1/h2/nav/buttons/callouts/prose)`, info.uiFonts.length === 0, info.uiFonts.join(", "));
+    check(`${tag} nav current = ${p.name === "home" ? "개요" : "가이드"}`, info.currentNav.join() === (p.name === "home" ? "개요" : "가이드"), info.currentNav.join());
     check(`${tag} block-level targets ≥ 24px`, info.smallTargets.length === 0, info.smallTargets.join(", "));
     if (p.name === "article") check(`${tag} prose font-size 17px`, info.proseSize === "17px", info.proseSize);
 
@@ -77,10 +81,55 @@ for (const vp of VIEWPORTS) {
   const tocLink = page.locator(".toc__list a").nth(3);
   await tocLink.click();
   await page.waitForTimeout(300);
-  const tocResult = await page.evaluate(() => { const id = decodeURIComponent(location.hash.slice(1)); const el = document.getElementById(id); const header = document.querySelector(".site-header").getBoundingClientRect().bottom; const top = el.getBoundingClientRect().top; return { id, top: Math.round(top), header: Math.round(header) }; });
+  const tocResult = await page.evaluate(() => { const id = decodeURIComponent(location.hash.slice(1)); const el = document.getElementById(id); const sub = document.querySelector(".subnav"); const header = Math.max(document.querySelector(".site-header").getBoundingClientRect().bottom, sub && sub.offsetParent ? sub.getBoundingClientRect().bottom : 0); const top = el.getBoundingClientRect().top; return { id, top: Math.round(top), header: Math.round(header) }; });
+  await page.waitForTimeout(300);
+  check(`article/${vp.name} TOC active state follows scroll`, await page.evaluate(() => document.querySelector(".toc__list a[aria-current]")?.hash === location.hash));
   check(`article/${vp.name} TOC link lands below sticky header`, tocResult.top >= tocResult.header && tocResult.top < 400, JSON.stringify(tocResult));
   const table = await page.evaluate(() => { const w = document.querySelector(".table-wrap"); return w ? { tabindex: w.getAttribute("tabindex"), scrollable: w.scrollWidth > w.clientWidth } : null; });
   check(`article/${vp.name} table wrapper focusable`, table && table.tabindex === "0", JSON.stringify(table));
+
+  const below = () => page.evaluate(() => { const el = document.getElementById(decodeURIComponent(location.hash.slice(1))); const sub = document.querySelector(".subnav"); const bar = Math.max(document.querySelector(".site-header").getBoundingClientRect().bottom, sub && sub.offsetParent ? sub.getBoundingClientRect().bottom : 0); return { id: el.id, top: Math.round(el.getBoundingClientRect().top), bar: Math.round(bar) }; });
+  if (vp.name === "mobile") {
+    // Article section tabs
+    const subVisible = await page.locator(".subnav").isVisible();
+    check(`article/mobile section tabs visible`, subVisible);
+    await page.goto(base + "/guides/first-task/", { waitUntil: "networkidle" });
+    await page.locator(".subnav__link").nth(4).click();
+    await page.waitForTimeout(600);
+    const sr = await below();
+    check(`article/mobile section tab lands below header + tabs`, sr.top >= sr.bar && sr.top < sr.bar + 120, JSON.stringify(sr));
+    check(`article/mobile active section tab marked`, await page.evaluate(() => document.querySelector(".subnav__link[aria-current]")?.hash === location.hash));
+    await page.screenshot({ path: `${OUT}article-mobile-tabs.png` });
+    // Mobile menu: keyboard open, focus loop, Escape
+    await page.goto(base + "/", { waitUntil: "networkidle" });
+    await page.focus(".menu-toggle");
+    await page.keyboard.press("Enter");
+    const opened = await page.evaluate(() => ({ exp: document.querySelector(".menu-toggle").getAttribute("aria-expanded"), focus: document.activeElement.textContent.trim(), panel: getComputedStyle(document.getElementById("site-menu")).display }));
+    check(`menu/mobile Enter opens menu and focuses first link`, opened.exp === "true" && opened.focus === "개요" && opened.panel === "flex", JSON.stringify(opened));
+    await page.waitForTimeout(400);
+    await page.screenshot({ path: `${OUT}home-mobile-menu.png` });
+    const n = await page.locator("#site-menu a").count();
+    for (let i = 0; i < n; i++) await page.keyboard.press("Tab");
+    check(`menu/mobile Tab loops back to toggle`, await page.evaluate(() => document.activeElement.classList.contains("menu-toggle")));
+    await page.keyboard.press("Escape");
+    const closed = await page.evaluate(() => ({ exp: document.querySelector(".menu-toggle").getAttribute("aria-expanded"), focus: document.activeElement.className }));
+    check(`menu/mobile Escape closes and returns focus`, closed.exp === "false" && closed.focus === "menu-toggle", JSON.stringify(closed));
+    await page.locator(".menu-toggle").click();
+    await page.locator("#site-menu a", { hasText: "편집 기준" }).click();
+    await page.waitForTimeout(600);
+    const mr = await below();
+    check(`menu/mobile link closes menu and lands below header`, mr.id === "editorial" && mr.top >= mr.bar && mr.top < mr.bar + 60 && (await page.getAttribute(".menu-toggle", "aria-expanded")) === "false", JSON.stringify(mr));
+    check(`menu/mobile section link marked current`, await page.evaluate(() => document.querySelector('.site-nav a[aria-current="location"]')?.textContent.trim() === "편집 기준"));
+  } else {
+    check(`article/desktop section tabs hidden (sidebar TOC instead)`, !(await page.locator(".subnav").isVisible()));
+    await page.goto(base + "/", { waitUntil: "networkidle" });
+    await page.locator(".site-nav a", { hasText: "다룰 내용" }).click();
+    await page.waitForTimeout(600);
+    const dr = await below();
+    check(`nav/desktop 다룰 내용 lands below header`, dr.id === "roadmap" && dr.top >= dr.bar && dr.top < dr.bar + 60, JSON.stringify(dr));
+    check(`nav/desktop section link marked current`, await page.evaluate(() => document.querySelector('.site-nav a[aria-current="location"]')?.textContent.trim() === "다룰 내용"));
+    await page.screenshot({ path: `${OUT}home-desktop-nav-roadmap.png` });
+  }
   await context.close();
 }
 

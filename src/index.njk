@@ -4,7 +4,7 @@ title: Devin 한국어 가이드
 bodyClass: page-home
 ---
 {%- set firstGuide = collections.guides[0] -%}
-<section class="hero" aria-labelledby="home-title">
+<section class="hero" id="overview" aria-labelledby="home-title">
   <div class="page-container">
     <div class="hero__top">
       <div class="hero__intro">
@@ -16,7 +16,7 @@ bodyClass: page-home
           {%- if firstGuide %}
           <a class="btn btn--primary" href="{{ firstGuide.url }}">첫 가이드 읽기</a>
           {%- endif %}
-          <a class="btn btn--secondary" href="#roadmap-title">전체 목차 보기</a>
+          <a class="btn btn--secondary" href="#roadmap">전체 목차 보기</a>
         </div>
       </div>
       <a class="callout callout--link hero__notice" href="#editorial">
@@ -76,7 +76,7 @@ bodyClass: page-home
   </div>
 </section>
 
-<section class="band" aria-labelledby="roadmap-title">
+<section class="band" id="roadmap" aria-labelledby="roadmap-title">
   <div class="page-container">
     <div class="frame split">
       <div class="split__head">

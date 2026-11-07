@@ -61,6 +61,7 @@ export default function (eleventyConfig) {
     api.getFilteredByGlob("src/guides/*.md").filter((p) => p.data.status !== "draft-hidden")
   );
 
+  eleventyConfig.addFilter("startsWith", (str, prefix) => String(str).startsWith(prefix));
   eleventyConfig.addFilter("koDate", (value) => {
     const d = value instanceof Date ? value : new Date(value);
     return new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", year: "numeric", month: "long", day: "numeric" }).format(d);

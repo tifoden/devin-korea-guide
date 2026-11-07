@@ -7,8 +7,7 @@
     "dev": "eleventy --serve --port 8080",
     "check:links": "node scripts/check-links.mjs",
     "test:browser": "node tests/browser.mjs",
-    "test": "npm run build && npm run check:links && npm run test:browser",
-    "fonts:official": "node scripts/fetch-official-fonts.mjs"
+    "test": "npm run build && npm run check:links && npm run test:browser"
   },
   "license": "UNLICENSED",
   "type": "module",
