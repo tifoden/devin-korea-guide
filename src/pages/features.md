@@ -6,7 +6,7 @@ permalink: /features/
 series: 기능
 seriesNumber: "개요"
 statusLabel: 초안 · 앰버서더 검토 대기
-verifiedAt: 2026-11-08T02:14:00+09:00
+verifiedAt: 2026-11-08T02:30:00+09:00
 sources:
   - title: Introducing Devin
     url: https://docs.devin.ai/get-started/devin-intro
@@ -70,6 +70,20 @@ sources:
     url: https://docs.devin.ai/work-with-devin/dynamic-workflows
   - title: "@devindevelopers: 20 things you might not know Devin can do (X thread, first post)"
     url: https://x.com/devindevelopers/status/2118851585707053162
+  - title: Enterprise security
+    url: https://docs.devin.ai/enterprise/security-access/security/enterprise-security
+  - title: Enterprise Deployment
+    url: https://docs.devin.ai/enterprise/deployment/overview
+  - title: Custom Roles & RBAC
+    url: https://docs.devin.ai/enterprise/security-access/custom-roles
+  - title: IP Access Lists
+    url: https://docs.devin.ai/enterprise/security-access/ip-access-lists
+  - title: "Usage policies: budgets and user limits"
+    url: https://docs.devin.ai/enterprise/features/usage-policies
+  - title: Devin MCP servers and marketplace
+    url: https://docs.devin.ai/work-with-devin/mcp
+  - title: Devin Enterprise
+    url: https://devin.ai/enterprise
 ---
 
 Devin은 하나의 앱이 아니라 여러 곳에서 쓰는 제품군입니다. 공식 Desktop FAQ는 제품을 **Devin Cloud, Devin Desktop, Devin CLI, Devin Review** 네 가지로 묶어 설명합니다. 공식 사이트 메뉴는 여기에 Mobile을 더해 사용 환경으로 묶고, Review·Security·Oncall을 기능으로 둡니다. 이 페이지는 그 묶음대로 각 제품 페이지를 안내하고, 여러 제품에 걸친 기능과 공식 개발자 계정이 소개한 보조 기능을 이어서 정리합니다.
@@ -206,6 +220,63 @@ Devin 공식 개발자 계정(@devindevelopers)은 X 스레드에서 “20 thing
 
 ::: tip 홍보 문장과 문서 확인을 구분하기
 스레드의 한 줄 소개는 기능의 존재를 알리는 데 쓰고, 실제 도입 판단은 권한·플랜·배포 상태가 적힌 공식 문서로 하는 편이 안전합니다. 스레드 마지막 게시물의 할인 코드처럼 기간이 정해진 혜택은 이 가이드에 싣지 않습니다.
+:::
+
+## 팀·조직으로 도입할 때 확인할 것
+
+개인이 써 보는 단계를 넘어 회사 코드에 연결하려면 기능보다 먼저 데이터 처리, 배포 방식, 접근 관리를 확인해야 합니다. 아래는 공식 문서와 공식 사이트에 적힌 내용만 옮긴 것입니다. 실제 적용 범위는 계약과 플랜에 따라 다르므로 도입 전에 계약서와 [Trust Center](https://trust.cognition.ai)를 함께 확인하세요.
+
+### 데이터와 지적재산
+
+- **암호화:** 데이터는 전송 중과 저장 시 모두 암호화한다고 적혀 있습니다(<span lang="en">“encrypted in transit and at rest”</span>).
+- **학습 사용:** 기본적으로 고객 데이터와 코드로 모델을 학습하지 않는다고 밝힙니다(<span lang="en">“By default, Cognition does not train its models on customer data or code.”</span>). ‘기본적으로’라는 조건이 붙어 있다는 점을 같이 읽어야 합니다.
+- **보존 기간:** Devin이 처리한 데이터는 별도 합의가 없으면 고객 관계가 유지되는 동안만 보존합니다. 다만 피드백과 사용자 상호작용 데이터는 Cognition이 필요하다고 판단하는 만큼 보존할 수 있다고 적혀 있습니다.
+- **결과물의 권리:** Devin이 만든 코드와 작업물은 고객의 지적재산이고 상업적으로 쓸 수 있습니다. 단, 그 결과물로 경쟁 제품을 만들거나 역설계하려는 모델을 학습시키는 것은 금지됩니다.
+- **인증:** Cognition은 2024년 9월부터 SOC 2 Type II 인증을 유지하고 있다고 밝힙니다.
+
+공식 홈페이지에는 <span lang="en">“Zero data retention enforced with model providers”</span>, <span lang="en">“Every session runs in its own VM”</span>이라는 문구도 있습니다. 홈페이지 소개 문구라 세부 조건은 공개 문서에서 확인하지 못했습니다. 도입 검토에서는 계약서 조항으로 확인하세요.
+
+::: src
+[Enterprise security](https://docs.devin.ai/enterprise/security-access/security/enterprise-security), [Devin 공식 홈페이지](https://devin.ai) · 확인 2026-11-08 02:30 KST
+:::
+
+### 배포 방식
+
+Devin은 두 부분으로 나뉩니다. 판단을 맡는 **Brain**은 항상 Cognition 클라우드에 있고, 코드를 실행하는 작업 환경인 **Devbox**의 위치는 배포 방식에 따라 달라집니다.
+
+| 배포 방식 | Devbox 위치 | 내부망 연결 | 맞는 조직 |
+|---|---|---|---|
+| Enterprise Cloud | Cognition의 멀티테넌트 클라우드. 세션마다 격리된 머신 | 공개망 또는 IP 허용 목록 | 저장소와 도구가 공개망이나 IP 허용 목록으로 열려 있는 조직 |
+| Customer Dedicated Deployment | 고객 전용 단일 테넌트 VPC | AWS PrivateLink 또는 IPSec 터널 | IP 허용 목록을 쓸 수 없는 사설망 자원이 있는 조직 |
+
+어느 방식이든 Brain은 Cognition 클라우드에 남습니다. 코드 실행 위치만 바뀐다는 점을 보안 검토 자료에 정확히 적어야 합니다.
+
+::: src
+[Enterprise Deployment](https://docs.devin.ai/enterprise/deployment/overview), [Devin Connect](https://docs.devin.ai/enterprise/deployment/devin-connect) · 확인 2026-11-08 02:30 KST
+:::
+
+### 접근과 사용량 관리 (Enterprise)
+
+- **로그인과 계정 관리:** SAML·OIDC SSO, SCIM 프로비저닝, IdP 그룹 연동을 지원합니다.
+- **역할:** 조직 수준과 계정 수준의 두 단계 역할 체계가 있고, 권한을 골라 만든 커스텀 역할을 사용자나 IdP 그룹에 배정할 수 있습니다.
+- **접속 위치 제한:** IP 접근 목록을 설정하면 허용한 IP 대역에서만 웹 앱과 API에 접근할 수 있고, 그 밖의 API 요청은 `401`로 거부됩니다.
+- **사용량 한도:** 여러 조직이 함께 쓰는 풀에는 Budget을, 구성원 한 명에게는 User limit을 걸 수 있습니다. Desktop·CLI의 로컬 사용량과 클라우드 세션 사용량이 같은 한도에 합산되고, 한도에 닿으면 모든 사용 환경에서 새 작업이 막힙니다.
+- **로컬 도구 정책:** Enterprise 소개 페이지는 Desktop과 CLI에서 모델, MCP 서버, 명령의 허용 목록을 전사 기준으로 정하고 조직별로 덮어쓸 수 있다고 설명합니다. 세션, 설정, 작업 기록은 감사 로그로 남고 내보내기와 API를 지원한다고 적혀 있습니다.
+
+::: src
+[SSO Onboarding Guide](https://docs.devin.ai/enterprise/security-access/sso/guide), [Custom Roles & RBAC](https://docs.devin.ai/enterprise/security-access/custom-roles), [IP Access Lists](https://docs.devin.ai/enterprise/security-access/ip-access-lists), [Usage policies](https://docs.devin.ai/enterprise/features/usage-policies), [Devin Enterprise](https://devin.ai/enterprise) · 확인 2026-11-08 02:30 KST
+:::
+
+### 작업 맥락 연결
+
+Devin은 MCP로 외부 도구와 데이터에 연결합니다. 공식 문서는 Sentry·Datadog 로그 조사, 데이터베이스 조회, Linear 티켓이나 Notion 문서 작성 같은 쓰임을 예로 들고, stdio·SSE·HTTP 세 가지 전송 방식을 지원한다고 적습니다. Slack이나 Teams에서 @Devin을 태그하면 그 대화에서 바로 세션을 시작하고, 진행 상황도 같은 스레드에 답합니다.
+
+::: src
+[Devin MCP servers and marketplace](https://docs.devin.ai/work-with-devin/mcp), [When to Use Devin](https://docs.devin.ai/essential-guidelines/when-to-use-devin) · 확인 2026-11-08 02:30 KST
+:::
+
+::: tip 도입 검토 체크리스트
+보안 검토를 요청하기 전에 이 다섯 가지 답을 준비하면 논의가 빨라집니다. ① Devin이 접근할 저장소와 도구 목록, ② 그 자원이 공개망·IP 허용 목록·사설망 중 어디에 있는지(배포 방식 결정), ③ SSO와 역할을 누구에게 어떻게 줄지, ④ 팀별 사용량 한도, ⑤ 데이터 보존과 학습 사용에 대해 계약서에서 확인할 조항.
 :::
 
 ## 요금제와 접근

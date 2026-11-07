@@ -6,7 +6,7 @@ permalink: /use-cases/
 series: 활용사례
 seriesNumber: "개요"
 statusLabel: 초안 · 앰버서더 검토 대기
-verifiedAt: 2026-11-08T02:02:00+09:00
+verifiedAt: 2026-11-08T02:30:00+09:00
 sources:
   - title: Customers
     url: https://devin.ai/customers
@@ -42,6 +42,10 @@ sources:
     url: https://docs.devin.ai/work-with-devin/code-scans
   - title: Devin Dynamic Workflows
     url: https://docs.devin.ai/work-with-devin/dynamic-workflows
+  - title: Use Cases — Best Practices
+    url: https://docs.devin.ai/use-cases/best-practices
+  - title: When to Use Devin
+    url: https://docs.devin.ai/essential-guidelines/when-to-use-devin
 ---
 
 이 페이지의 사례는 모두 Cognition이 [공식 고객 사례 페이지](https://devin.ai/customers)에 공개한 것입니다. 이 가이드가 따로 취재하거나 검증한 결과가 아니고, 수치는 각 회사의 환경에서 나온 값이라 다른 팀에서도 똑같이 나온다는 뜻이 아닙니다.
@@ -112,6 +116,28 @@ sources:
 
 ::: src
 [Android emulator support](https://docs.devin.ai/onboard-devin/environment/android-emulation), [Devin macOS support](https://docs.devin.ai/onboard-devin/environment/macos-support), [Testing & Video Recordings](https://docs.devin.ai/work-with-devin/testing-and-recordings), [Devin CLI handoff](https://docs.devin.ai/cli/handoff), [Quick Review](https://docs.devin.ai/desktop/quick-review), [Devin Desktop changelog](https://docs.devin.ai/desktop/changelog), [Devin Skills](https://docs.devin.ai/product-guides/skills), [Devin Memory and Dreaming](https://docs.devin.ai/product-guides/memory), [Devin Code Scans](https://docs.devin.ai/work-with-devin/code-scans), [Devin Dynamic Workflows](https://docs.devin.ai/work-with-devin/dynamic-workflows)
+:::
+
+## 큰 작업을 조각으로 나눠 맡기기
+
+위 마이그레이션 사례처럼 큰 일을 Devin에게 맡길 때 공식 문서가 강조하는 건 ‘한 번에 크게’가 아니라 ‘작게 나눠 여러 번’입니다. 복잡한 새 기능을 깊게 파고드는 일(<span lang="en">Tall & Deep</span>)은 규모가 커질수록 신뢰도가 떨어지고, 단순하고 정의가 분명한 작업을 넓게 반복하는 일(<span lang="en">Wide & Shallow</span>)이 안정적이라고 설명합니다.
+
+| 기준 | 공식 문서의 설명 |
+|---|---|
+| 조각 크기 | 파일, 노트북, 모듈처럼 가장 작은 단위로 나눕니다. 각 조각은 사람이 직접 하면 90분 미만인 일이어야 합니다(<span lang="en">“under 90 minutes of manual engineering work”</span>). |
+| 검증 수단 | 테스트, 빌드, CI, 직접 만든 검증 스크립트처럼 성공과 실패를 분명히 가르는 수단이 있어야 합니다. |
+| 독립성 | 조각끼리 서로 기다리지 않고, 하나만 병합해도 기존 동작이 깨지지 않아야(하위 호환) 동시에 돌릴 수 있습니다. |
+| 사람 검토 | 조각이 끝날 때마다 사람이 검토한 뒤 `main`에 병합합니다. |
+| 오류 누적 | 수천 개 조각으로 늘리면 작은 오류율도 쌓인다고 경고합니다. |
+
+맞는 일로는 마이그레이션, 리팩터링, 현대화, 기술 부채 백로그를 꼽습니다. 반대로 외부 시스템이나 의존성이 많이 얽힌 일은 피하라고 권합니다. 첫 세션용 작업 고르는 법은 [첫 작업 시작하기](/guides/first-task/#첫-작업-고르기)에, 여러 세션을 동시에 돌리는 기능은 [Devin Cloud](/features/cloud/) 페이지에 정리했습니다.
+
+::: src
+[Use Cases — Best Practices](https://docs.devin.ai/use-cases/best-practices), [When to Use Devin](https://docs.devin.ai/essential-guidelines/when-to-use-devin) · 확인 2026-11-08 02:30 KST
+:::
+
+::: tip 조각 목록부터 만들기
+큰 작업을 시작하기 전에 조각 목록과 조각마다의 검증 명령을 표로 먼저 만들어 보세요. 목록이 잘 나오지 않는다면 아직 Devin에게 나눠 맡기기엔 범위가 덜 정리된 상태라는 신호입니다. 처음 몇 조각은 하나씩 돌려 결과를 확인하고, 그다음에 병렬로 늘리는 편이 안전합니다.
 :::
 
 ## 가상 실습: 우리 팀에 맞는 첫 사례 찾기

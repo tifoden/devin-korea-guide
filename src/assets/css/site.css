@@ -317,7 +317,7 @@ main:focus { outline: none; }
 /* ---------- Article ---------- */
 .article__header { padding: 48px 0 40px; }
 @media (min-width: 64rem) { .article__header { padding: 96px 0 48px; } .article__header > .page-container { padding-inline: calc(var(--gutter) + 16px); } }
-.breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; font-family: var(--font-label); font-size: 12px; letter-spacing: .03em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 24px; }
+.breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; font-family: var(--font-label); font-size: 12px; letter-spacing: .03em; color: var(--text-secondary); margin-bottom: 24px; }
 .breadcrumb li + li::before { content: "/"; margin-right: 8px; color: var(--text-tone); }
 .breadcrumb a { text-decoration: none; display: inline-block; padding: 4px 0; }
 .breadcrumb a:hover { color: var(--accent-text); }
