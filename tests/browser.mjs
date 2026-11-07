@@ -16,7 +16,8 @@ const browser = await chromium.connectOverCDP(process.env.CDP_URL || "http://loc
 const PAGES = [
   { name: "home", path: "/", nav: "개요" },
   { name: "article", path: "/guides/first-task/", nav: "시작하기" },
-  { name: "features", path: "/features/", nav: "기능" },
+  { name: "features", path: "/features/", nav: "제품" },
+  ...["cloud", "desktop", "cli", "mobile", "review", "security", "oncall"].map((n) => ({ name: `features-${n}`, path: `/features/${n}/`, nav: "제품" })),
   { name: "models", path: "/models/", nav: "모델" },
   { name: "use-cases", path: "/use-cases/", nav: "활용사례" },
   { name: "startups", path: "/startups/", nav: "스타트업 프로그램" },
@@ -41,7 +42,8 @@ for (const vp of VIEWPORTS) {
       overflow: document.documentElement.scrollWidth - window.innerWidth,
       nb: [...document.fonts].some((f) => /nbInternational/i.test(f.family)),
       uiFonts: [...document.querySelectorAll("h1, h2, .nav-link, .btn, .callout, .prose p, .note__label, .reading-guide__title, .breadcrumb ol, .meta-list dt, .src__label, .mono-label, .prose th")].map((el) => getComputedStyle(el).fontFamily.split(",")[0]).filter((f) => !/Pretendard/.test(f)),
-      currentNav: [...document.querySelectorAll('.site-nav a[aria-current="page"]')].map((a) => a.textContent.trim()),
+      currentNav: [...document.querySelectorAll('.site-nav > ul > li > a[aria-current="page"], .site-nav .nav-trigger.is-current')].filter((el) => !el.classList.contains("nav-fallback")).map((el) => el.firstChild.textContent.trim()),
+      panelCurrent: [...document.querySelectorAll('.nav-panel a[aria-current="page"]')].map((a) => a.getAttribute("href")),
       pretendard: [...document.fonts].some((f) => /Pretendard/.test(f.family) && f.status === "loaded"),
       mono: [...document.fonts].some((f) => f.family.replace(/"/g, "") === "geistMono" && f.status === "loaded"),
       bodyFont: getComputedStyle(document.body).fontFamily,
@@ -57,6 +59,7 @@ for (const vp of VIEWPORTS) {
     check(`${tag} fonts: Pretendard + Geist Mono loaded, no NB International`, !info.nb && info.pretendard && info.mono, JSON.stringify({ nb: info.nb, pretendard: info.pretendard, mono: info.mono }));
     check(`${tag} Korean UI text uses Pretendard (h1/h2/nav/buttons/callouts/prose)`, info.uiFonts.length === 0, info.uiFonts.join(", "));
     check(`${tag} nav current = ${p.nav}`, info.currentNav.join() === p.nav, info.currentNav.join());
+    if (p.path.startsWith("/features/")) check(`${tag} product panel marks ${p.path} current`, info.panelCurrent.join() === p.path, info.panelCurrent.join());
     check(`${tag} block-level targets ≥ 24px`, info.smallTargets.length === 0, info.smallTargets.join(", "));
     if (p.name === "article") check(`${tag} prose font-size 17px`, info.proseSize === "17px", info.proseSize);
 
@@ -115,19 +118,32 @@ for (const vp of VIEWPORTS) {
     check(`menu/mobile Enter opens menu and focuses first link`, opened.exp === "true" && opened.focus === "개요" && opened.panel === "flex", JSON.stringify(opened));
     await page.waitForTimeout(400);
     await page.screenshot({ path: `${OUT}home-mobile-menu.png` });
-    const n = await page.locator("#site-menu a").count();
+    const n = await page.evaluate(() => [...document.querySelectorAll("#site-menu a, #site-menu button")].filter((el) => el.getClientRects().length).length);
     for (let i = 0; i < n; i++) await page.keyboard.press("Tab");
     check(`menu/mobile Tab loops back to toggle`, await page.evaluate(() => document.activeElement.classList.contains("menu-toggle")));
     await page.keyboard.press("Escape");
     const closed = await page.evaluate(() => ({ exp: document.querySelector(".menu-toggle").getAttribute("aria-expanded"), focus: document.activeElement.className }));
     check(`menu/mobile Escape closes and returns focus`, closed.exp === "false" && closed.focus === "menu-toggle", JSON.stringify(closed));
     await page.locator(".menu-toggle").click();
-    await page.locator("#site-menu a", { hasText: "기능" }).click();
+    const trig = page.locator("#site-menu .nav-trigger");
+    check(`menu/mobile product group collapsed on non-product page`, (await trig.getAttribute("aria-expanded")) === "false");
+    await trig.click();
+    const grp = await page.evaluate(() => ({ exp: document.querySelector(".nav-trigger").getAttribute("aria-expanded"), heads: [...document.querySelectorAll(".nav-panel__heading")].filter((h) => h.getClientRects().length).map((h) => h.textContent), links: [...document.querySelectorAll(".nav-panel__link")].filter((a) => a.getClientRects().length).length, overflow: document.getElementById("site-menu").scrollWidth - document.getElementById("site-menu").clientWidth }));
+    check(`menu/mobile tap expands grouped product list`, grp.exp === "true" && grp.heads.join() === "사용 환경,업무 기능" && grp.links === 7 && grp.overflow <= 0, JSON.stringify(grp));
+    await page.screenshot({ path: `${OUT}nav-mobile-product.png` });
+    await page.locator("#site-menu .nav-panel__link", { hasText: "Devin Review" }).click();
+    await page.waitForURL("**/features/review/");
+    await page.waitForLoadState("networkidle");
+    const rv = await page.evaluate(() => ({ exp: document.querySelector(".menu-toggle").getAttribute("aria-expanded"), cur: document.querySelector(".nav-trigger.is-current")?.firstChild.textContent }));
+    check(`menu/mobile product link navigates and closes menu`, rv.exp === "false" && rv.cur === "제품", JSON.stringify(rv));
+    await page.locator(".menu-toggle").click();
+    check(`menu/mobile product group auto-expanded on product page`, (await trig.getAttribute("aria-expanded")) === "true");
+    await page.locator("#site-menu .nav-panel__overview").click();
     await page.waitForURL("**/features/");
     await page.waitForLoadState("networkidle");
-    const mr = await page.evaluate(() => ({ path: location.pathname, cur: document.querySelector('.site-nav a[aria-current="page"]')?.textContent.trim(), exp: document.querySelector(".menu-toggle").getAttribute("aria-expanded") }));
-    check(`menu/mobile link navigates to /features/ and closes menu`, mr.path === "/features/" && mr.exp === "false", JSON.stringify(mr));
-    check(`menu/mobile page link marked current`, mr.cur === "기능", JSON.stringify(mr));
+    const mr = await page.evaluate(() => ({ path: location.pathname, cur: document.querySelector(".nav-trigger.is-current")?.firstChild.textContent, exp: document.querySelector(".menu-toggle").getAttribute("aria-expanded") }));
+    check(`menu/mobile overview link navigates to /features/ and closes menu`, mr.path === "/features/" && mr.exp === "false", JSON.stringify(mr));
+    check(`menu/mobile product section marked current`, mr.cur === "제품", JSON.stringify(mr));
     await page.locator(".subnav__list a", { hasText: "요금제와 접근" }).click();
     await page.waitForTimeout(700);
     const fr = await page.evaluate(() => { const t = document.getElementById("요금제와-접근").getBoundingClientRect().top; const bar = document.querySelector(".subnav").getBoundingClientRect().bottom; return { t, bar }; });
@@ -144,6 +160,54 @@ for (const vp of VIEWPORTS) {
     const dr = await page.evaluate(() => { const t = document.getElementById("대규모-마이그레이션").getBoundingClientRect().top; const bar = document.querySelector("[data-header]").getBoundingClientRect().bottom; return { t, bar }; });
     check(`nav/desktop TOC link lands below header`, dr.t >= dr.bar && dr.t < dr.bar + 60, JSON.stringify(dr));
     await page.screenshot({ path: `${OUT}use-cases-desktop-toc.png` });
+    // Product dropdown: click, keyboard, Escape, focus return, outside click, Tab out, navigation.
+    await page.goto(base + "/", { waitUntil: "networkidle" });
+    const trig = page.locator(".nav-trigger");
+    const state = () => page.evaluate(() => { const t = document.querySelector(".nav-trigger"); const p = document.getElementById(t.getAttribute("aria-controls")); const r = p.getBoundingClientRect(); return { exp: t.getAttribute("aria-expanded"), shown: getComputedStyle(p).display !== "none", focus: document.activeElement.textContent.trim().slice(0, 16), cls: document.activeElement.className, right: r.right, vw: innerWidth, bg: getComputedStyle(p).backgroundColor }; });
+    check(`dropdown/desktop closed by default`, (await state()).exp === "false" && !(await state()).shown);
+    await trig.hover();
+    check(`dropdown/desktop hover alone does not open`, !(await state()).shown);
+    await trig.click();
+    const o1 = await state();
+    check(`dropdown/desktop click opens white panel inside viewport`, o1.exp === "true" && o1.shown && o1.right <= o1.vw && o1.bg === "rgb(255, 255, 255)", JSON.stringify(o1));
+    await page.screenshot({ path: `${OUT}nav-desktop-product.png` });
+    await page.mouse.click(1200, 600);
+    check(`dropdown/desktop outside click closes`, (await state()).exp === "false");
+    await trig.focus();
+    await page.keyboard.press("Enter");
+    const k1 = await state();
+    check(`dropdown/desktop Enter opens and focuses first link`, k1.exp === "true" && k1.focus.startsWith("Devin Cloud"), JSON.stringify(k1));
+    await page.keyboard.press("ArrowDown");
+    check(`dropdown/desktop ArrowDown moves to next link`, (await state()).focus.startsWith("Devin Desktop"));
+    await page.keyboard.press("Escape");
+    const e1 = await state();
+    check(`dropdown/desktop Escape closes and returns focus to trigger`, e1.exp === "false" && e1.cls.includes("nav-trigger"), JSON.stringify(e1));
+    await page.keyboard.press("Space");
+    check(`dropdown/desktop Space toggles open`, (await state()).exp === "true");
+    await page.keyboard.press("Escape");
+    await page.keyboard.press("ArrowDown");
+    check(`dropdown/desktop ArrowDown on trigger opens`, (await state()).exp === "true");
+    const nTab = await page.locator(".nav-panel a").count();
+    for (let i = 0; i < nTab; i++) await page.keyboard.press("Tab");
+    const t1 = await state();
+    check(`dropdown/desktop Tab past last link closes panel`, t1.exp === "false" && t1.focus === "모델", JSON.stringify(t1));
+    await trig.click();
+    await page.locator(".nav-panel__link", { hasText: "Devin CLI" }).click();
+    await page.waitForURL("**/features/cli/");
+    await page.waitForLoadState("networkidle");
+    const n1 = await page.evaluate(() => ({ cur: document.querySelector(".nav-trigger.is-current")?.firstChild.textContent, exp: document.querySelector(".nav-trigger").getAttribute("aria-expanded"), crumb: [...document.querySelectorAll(".breadcrumb li")].map((l) => l.textContent.trim()).join(">") }));
+    check(`dropdown/desktop link navigates; trigger current, panel closed, breadcrumb`, n1.cur === "제품" && n1.exp === "false" && n1.crumb === "홈>제품>Devin CLI", JSON.stringify(n1));
+    await trig.click();
+    await page.screenshot({ path: `${OUT}nav-desktop-product-current.png` });
+    await page.keyboard.press("Escape");
+    for (const w of [1024, 1280]) {
+      await page.setViewportSize({ width: w, height: 800 });
+      await trig.click();
+      const wv = await page.evaluate(() => { const docs = document.querySelector(".site-header__docs").getBoundingClientRect(); const last = [...document.querySelectorAll(".site-nav > ul > li")].pop().getBoundingClientRect(); const p = document.querySelector(".nav-panel").getBoundingClientRect(); return { overlap: last.right > docs.left, panelRight: p.right, vw: innerWidth, overflow: document.documentElement.scrollWidth - innerWidth }; });
+      check(`dropdown/desktop ${w}px: nav fits, panel in viewport, no overflow`, !wv.overlap && wv.panelRight <= wv.vw && wv.overflow <= 0, JSON.stringify(wv));
+      await page.keyboard.press("Escape");
+    }
+    await page.setViewportSize({ width: 1440, height: 900 });
   }
   await context.close();
 }

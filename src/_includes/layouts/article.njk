@@ -9,7 +9,10 @@ bodyClass: page-article
       <nav class="breadcrumb" aria-label="현재 위치">
         <ol>
           <li><a href="/">홈</a></li>
-          <li><span aria-current="page">{{ series }} {{ seriesNumber }}</span></li>
+          {%- if parentUrl %}
+          <li><a href="{{ parentUrl }}">{{ parentLabel }}</a></li>
+          {%- endif %}
+          <li><span aria-current="page">{{ crumb or (series + " " + seriesNumber) }}</span></li>
         </ol>
       </nav>
       <h1 id="article-title" class="t-h2 article__title">{{ title }}</h1>

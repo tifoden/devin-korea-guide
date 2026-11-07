@@ -1,12 +1,12 @@
 ---
 title: Devin 기능 한눈에 보기
-navTitle: 기능
-description: Devin Cloud, Desktop, CLI, Review부터 Security, Oncall, Automations까지. 공식 문서로 확인한 기능을 쓰는 곳과 쓸 때로 나눠 정리했습니다.
+navTitle: 제품
+description: Devin의 제품과 기능을 공식 메뉴의 묶음대로 정리한 개요입니다. 제품마다 별도 페이지로 이어집니다.
 permalink: /features/
 series: 기능
 seriesNumber: "개요"
 statusLabel: 초안 · 앰버서더 검토 대기
-verifiedAt: 2026-11-08T02:05:00+09:00
+verifiedAt: 2026-11-08T02:14:00+09:00
 sources:
   - title: Introducing Devin
     url: https://docs.devin.ai/get-started/devin-intro
@@ -72,7 +72,7 @@ sources:
     url: https://x.com/devindevelopers/status/2118851585707053162
 ---
 
-Devin은 하나의 앱이 아니라 여러 곳에서 쓰는 제품군입니다. 공식 Desktop FAQ는 제품을 **Devin Cloud, Devin Desktop, Devin CLI, Devin Review** 네 가지로 묶어 설명합니다. 이 페이지는 먼저 이 네 가지 ‘쓰는 곳’을 정리하고, 그 위에서 동작하는 업무 기능(보안, 장애 대응, 자동화 등)을 이어서 소개합니다.
+Devin은 하나의 앱이 아니라 여러 곳에서 쓰는 제품군입니다. 공식 Desktop FAQ는 제품을 **Devin Cloud, Devin Desktop, Devin CLI, Devin Review** 네 가지로 묶어 설명합니다. 공식 사이트 메뉴는 여기에 Mobile을 더해 사용 환경으로 묶고, Review·Security·Oncall을 기능으로 둡니다. 이 페이지는 그 묶음대로 각 제품 페이지를 안내하고, 여러 제품에 걸친 기능과 공식 개발자 계정이 소개한 보조 기능을 이어서 정리합니다.
 
 <div class="reading-guide" role="note" aria-label="이 페이지를 읽는 법">
 <p class="reading-guide__title">이 페이지를 읽는 법</p>
@@ -83,32 +83,32 @@ Devin은 하나의 앱이 아니라 여러 곳에서 쓰는 제품군입니다. 
 </ul>
 </div>
 
-## 쓰는 곳: 네 가지 제품
+## 제품별 페이지
 
-| 제품 | 하는 일 | 쓰기 좋은 때 | 접근 조건 |
+공식 사이트의 Product 메뉴는 사용 환경(Surfaces)으로 Devin Cloud, Devin Desktop, Devin CLI, Mobile을 묶고, Review·Security·Oncall은 기능(Features)으로 따로 둡니다. 이 가이드도 같은 묶음을 따릅니다. 제품마다 하는 일, 고르는 때, 시작 순서, 접근 조건을 별도 페이지에 정리했습니다.
+
+### 사용 환경
+
+| 제품 | 한 줄 요약 | 이럴 때 | 접근 조건 요약 |
 | --- | --- | --- | --- |
-| Devin Cloud | 클라우드 VM에서 Devin 세션을 실행합니다. Ask 모드로 계획하고 Agent 모드로 실행합니다. | 노트북을 닫아도 계속 진행돼야 하는 작업, PR까지 맡길 작업 | app.devin.ai 계정, 저장소 연결 |
-| Devin Desktop | Windsurf의 새 이름입니다(2026년 6월 2일 전환). Agent Command Center에서 로컬·클라우드 에이전트를 한곳에서 관리합니다. | 편집기 안에서 직접 코드를 보며 에이전트와 일할 때 | Devin Desktop 앱 설치 |
-| Devin CLI | 터미널에서 도는 로컬 코딩 에이전트입니다. 필요하면 작업을 클라우드 세션으로 넘길(handoff) 수 있습니다. | 터미널 중심으로 일하거나 로컬 환경이 꼭 필요할 때 | macOS, Linux, WSL, Windows |
-| Devin Review | PR의 변경을 묶어 설명하고 잠재적 버그를 표시합니다. PR에 `/devin review`라고 댓글을 달면 한 건만 리뷰할 수도 있습니다. | 사람 리뷰 전에 변경을 이해하고 위험한 부분을 먼저 찾을 때 | GitHub(Enterprise Server·Cloud 포함), GitLab(Self-Managed 포함). 원문: <span lang="en">“available for PRs on GitHub repositories … and merge requests on GitLab repositories”</span> |
+| [Devin Cloud](/features/cloud/) | 클라우드 VM에서 혼자 작업하고 PR로 돌려줍니다. Ask로 계획, Agent로 실행 | 몇 시간짜리 작업, 병렬 작업, 이벤트 자동화 | app.devin.ai 계정, 저장소 연결 |
+| [Devin Desktop](/features/desktop/) | Windsurf의 새 이름(2026년 6월 2일 전환). 로컬·클라우드 에이전트를 한 화면에서 관리 | 편집기에서 직접 보며 에이전트와 일할 때 | full seat 사용자. 앱 설치 |
+| [Devin CLI](/features/cli/) | 터미널의 로컬 코딩 에이전트. `/handoff`로 클라우드에 넘김 | 터미널 중심 작업, 로컬 환경이 꼭 필요할 때 | macOS, Linux, WSL, Windows |
+| [Mobile](/features/mobile/) | 휴대폰에서 세션을 시작하고 알림을 받는 앱 | 출시 전. 대기자 명단 단계 | 공식 페이지 원문: <span lang="en">“Join the waitlist for early access”</span> |
+
+### 업무 기능
+
+| 기능 | 한 줄 요약 | 이럴 때 | 접근 조건 요약 |
+| --- | --- | --- | --- |
+| [Devin Review](/features/review/) | PR 변경을 묶어 설명하고 잠재적 버그를 표시 | 사람 리뷰 전에 변경을 이해하고 위험한 곳을 찾을 때 | GitHub(Enterprise Server·Cloud 포함), GitLab(Self-Managed 포함). 공개 PR은 계정 불필요 |
+| [Devin Security](/features/security/) | Security 2.0. 취약점 스캔, Findings 관리, Fix with Devin | 조직 저장소의 취약점을 모아 보고 고칠 때 | 조직의 보안 스캔 접근과 역할 권한 |
+| [Devin Oncall](/features/oncall/) | 알림·버그·인시던트를 먼저 조사하고 고치거나 넘김 | 반복 알림 조사, 야간 1차 대응 | 조직별 1회 설정, Oncall 관리 권한 |
 
 ::: src
-[Devin Desktop FAQ](https://docs.devin.ai/desktop/devin-desktop-faq), [Your First Session](https://docs.devin.ai/get-started/first-run), [Agent Command Center](https://docs.devin.ai/desktop/agent-command-center), [Devin CLI Quickstart](https://docs.devin.ai/cli/index), [Devin Review](https://docs.devin.ai/work-with-devin/devin-review)
+[Devin Desktop FAQ](https://docs.devin.ai/desktop/devin-desktop-faq), [Devin CLI Quickstart](https://docs.devin.ai/cli/index), [Devin Review](https://docs.devin.ai/work-with-devin/devin-review), [Devin Security 2.0](https://docs.devin.ai/work-with-devin/security-2-0), [Devin Oncall](https://docs.devin.ai/product-guides/devin-oncall), [Devin Mobile](https://devin.ai/mobile)
 :::
 
-Desktop 안에서 클라우드 Devin에게 일을 넘기는 기능은 self-serve Desktop 플랜(Pro, Max, Teams)에 포함되어 있고, 접근 권한은 점진적으로 배포되고 있습니다(원문: <span lang="en">“Devin is included with every self-serve Devin Desktop plan (Pro, Max, Teams)”</span>, <span lang="en">“Access to Devin Cloud is rolling out gradually.”</span>). Enterprise 사용자는 관리자에게 확인하라고 안내합니다.
-
-::: src
-[Devin in Devin Desktop](https://docs.devin.ai/desktop/devin)
-:::
-
-### 모바일은 아직 대기자 명단 단계
-
-공식 사이트의 Devin Mobile 페이지는 2026년 11월 8일 확인 기준 **대기자 명단(waitlist) 신청** 페이지입니다. 휴대폰에서 세션을 시작하고 알림을 받아 PR을 리뷰·병합하는 화면을 소개하지만, 일반 출시된 앱으로 안내하지는 않습니다(원문: <span lang="en">“Join the waitlist for Devin Mobile … Join the waitlist for early access”</span>). 이 가이드도 모바일을 별도 출시 제품으로 표기하지 않습니다.
-
-::: src
-[Devin Mobile](https://devin.ai/mobile)
-:::
+공식 메뉴의 DeepWiki, Automations, Cost Controls, Analytics, Plugins, Outposts, Windows·macOS VM은 별도 페이지로 나누지 않았습니다. 이 가이드에서는 관련 제품 페이지나 아래 절에서 다룹니다. Fusion과 SWE 같은 모델은 [모델](/models/) 페이지에 있습니다.
 
 ## 일하는 방식: Ask와 Agent
 
@@ -118,27 +118,11 @@ Desktop 안에서 클라우드 Devin에게 일을 넘기는 기능은 self-serve
 [Your First Session](https://docs.devin.ai/get-started/first-run), [Ask Devin](https://docs.devin.ai/work-with-devin/ask-devin)
 :::
 
-## 업무 기능
-
-### Devin Security 2.0
-
-저장소를 스캔해 취약점을 찾고, 조직 전체의 Findings 페이지에서 결과를 검토하며, 취약점 수정을 Devin에게 맡길 수 있습니다. 앱의 `/security`에서 시작합니다. 조직에 보안 스캔 접근 권한이 있어야 하고, 역할에 따라 스캔 시작·관리 권한이 다릅니다.
-
-::: src
-[Devin Security 2.0](https://docs.devin.ai/work-with-devin/security-2-0)
-:::
-
-### Devin Oncall
-
-알림, 버그 리포트, 장애가 발생하면 바로 조사·수정·완화를 시작합니다. 공식 문서는 Oncall을 들어오는 문제를 조사하고 고치는 **Responders**와, 알림·버그·장애의 원인 경향을 보여 주는 **Reports**로 나눠 설명합니다.
-
-::: src
-[Devin Oncall](https://docs.devin.ai/product-guides/devin-oncall)
-:::
+## 여러 제품에 걸친 기능
 
 ### Automations
 
-Slack 메시지, GitHub 웹훅, Linear 티켓 변경, 일정, 사용자 정의 웹훅 같은 외부 이벤트에 Devin 세션을 연결합니다. 자동화는 트리거와 액션으로 이뤄지고, 조건과 사전 점검(Preflight)을 덧붙일 수 있습니다. 예를 들어 `#bugs` 채널 메시지나 CI 실패를 트리거로 쓸 수 있습니다.
+Slack 메시지, GitHub·GitLab 이벤트, Linear, PagerDuty, 일정, 사용자 정의 웹훅 같은 외부 이벤트에 Devin 세션을 연결합니다. 자동화는 트리거와 액션으로 이뤄지고, 조건과 사전 점검(Preflight)을 덧붙일 수 있습니다. 보안 스캔을 정기적으로 돌릴 때도 씁니다. 자세한 쓰임은 [Devin Cloud](/features/cloud/)와 [Devin Security](/features/security/)에 있습니다.
 
 ::: src
 [Automations](https://docs.devin.ai/product-guides/automations)

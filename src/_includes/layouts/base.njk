@@ -28,7 +28,27 @@
           <ul>
             {%- for item in nav %}
             {%- set current = (page.url == item.url) or (item.match and (page.url | startsWith(item.match))) %}
-            <li><a class="nav-link" href="{{ item.url }}"{% if item.section %} data-section="{{ item.section }}"{% endif %}{% if current %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+            {%- if item.menu %}
+          <li class="nav-item">
+            <a class="nav-link nav-fallback" href="{{ item.url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.label }}</a>
+            <button class="nav-link nav-trigger{% if current %} is-current{% endif %}" type="button" aria-expanded="false" aria-controls="{{ item.id }}">{{ item.label }}{% if current %}<span class="visually-hidden"> (현재 섹션)</span>{% endif %}<span class="nav-trigger__chevron" aria-hidden="true"></span></button>
+            <div class="nav-panel" id="{{ item.id }}">
+              {%- for group in item.menu %}
+              <div class="nav-panel__group">
+                <p class="nav-panel__heading" id="{{ item.id }}-g{{ loop.index }}">{{ group.heading }}</p>
+                <ul aria-labelledby="{{ item.id }}-g{{ loop.index }}">
+                  {%- for link in group.items %}
+                  <li><a class="nav-panel__link" href="{{ link.url }}"{% if page.url == link.url %} aria-current="page"{% endif %}><span class="nav-panel__label" lang="en">{{ link.label }}</span>{% if link.tag %} <span class="badge badge--neutral">{{ link.tag }}</span>{% endif %}<span class="nav-panel__desc">{{ link.desc }}</span></a></li>
+                  {%- endfor %}
+                </ul>
+              </div>
+              {%- endfor %}
+              <a class="nav-panel__overview" href="{{ item.overview.url }}"{% if page.url == item.overview.url %} aria-current="page"{% endif %}>{{ item.overview.label }} <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          {%- else %}
+          <li><a class="nav-link" href="{{ item.url }}"{% if item.section %} data-section="{{ item.section }}"{% endif %}{% if current %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+          {%- endif %}
             {%- endfor %}
           </ul>
         </nav>

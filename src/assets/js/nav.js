@@ -1,31 +1,77 @@
-// Mobile menu (disclosure with focus loop + Escape) and scroll-spy for in-page section links.
+// Mobile menu (disclosure with focus loop + Escape), grouped product panels (click/keyboard, never hover) and scroll-spy.
 (() => {
   const root = document.documentElement;
   const header = document.querySelector("[data-header]");
   const toggle = header && header.querySelector(".menu-toggle");
   const menu = document.getElementById("site-menu");
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  const desktop = matchMedia("(min-width: 64rem)");
+  const visible = (el) => el.getClientRects().length > 0;
+
+  const triggers = header ? [...header.querySelectorAll(".nav-trigger")] : [];
+  const panelOf = (t) => document.getElementById(t.getAttribute("aria-controls"));
+  const panelLinks = (t) => [...panelOf(t).querySelectorAll("a")];
+  const setPanel = (t, open, focusFirst) => {
+    if (open) triggers.forEach((o) => o !== t && setPanel(o, false));
+    t.setAttribute("aria-expanded", String(open));
+    if (open && focusFirst) panelLinks(t)[0].focus();
+  };
+  const openTrigger = () => triggers.find((t) => t.getAttribute("aria-expanded") === "true");
+  for (const t of triggers) {
+    t.addEventListener("click", (e) => setPanel(t, t.getAttribute("aria-expanded") !== "true", e.detail === 0 && desktop.matches));
+    t.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") { e.preventDefault(); setPanel(t, true, true); }
+    });
+    const panel = panelOf(t);
+    panel.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+      const links = panelLinks(t);
+      const i = links.indexOf(document.activeElement);
+      if (i < 0) return;
+      e.preventDefault();
+      links[(i + (e.key === "ArrowDown" ? 1 : -1) + links.length) % links.length].focus();
+    });
+    t.parentElement.addEventListener("focusout", (e) => {
+      if (desktop.matches && e.relatedTarget && !t.parentElement.contains(e.relatedTarget)) setPanel(t, false);
+    });
+  }
+  document.addEventListener("click", (e) => {
+    const t = openTrigger();
+    if (t && desktop.matches && !t.parentElement.contains(e.target)) setPanel(t, false);
+  });
+  document.addEventListener("keydown", (e) => {
+    const t = openTrigger();
+    if (e.key === "Escape" && t && desktop.matches) { setPanel(t, false); t.focus(); }
+  });
 
   if (toggle && menu) {
+    const focusables = () => [toggle, ...[...menu.querySelectorAll("a, button")].filter(visible)];
     const setOpen = (open, focusFirst) => {
       header.classList.toggle("is-open", open);
       root.classList.toggle("menu-open", open);
       toggle.setAttribute("aria-expanded", String(open));
-      if (open && focusFirst) menu.querySelector("a").focus();
+      if (open) triggers.forEach((t) => setPanel(t, t.classList.contains("is-current")));
+      if (open && focusFirst) focusables()[1].focus();
     };
     toggle.addEventListener("click", (e) => setOpen(toggle.getAttribute("aria-expanded") !== "true", e.detail === 0));
     header.addEventListener("keydown", (e) => {
       if (!header.classList.contains("is-open")) return;
       if (e.key === "Escape") { setOpen(false); toggle.focus(); return; }
       if (e.key !== "Tab") return;
-      const items = [toggle, ...menu.querySelectorAll("a")];
+      const items = focusables();
       const i = items.indexOf(document.activeElement);
       if (e.shiftKey && i <= 0) { e.preventDefault(); items[items.length - 1].focus(); }
       else if (!e.shiftKey && i === items.length - 1) { e.preventDefault(); items[0].focus(); }
     });
     menu.addEventListener("click", (e) => { if (e.target.closest("a")) setOpen(false); });
-    matchMedia("(min-width: 64rem)").addEventListener("change", () => setOpen(false));
+    desktop.addEventListener("change", () => { setOpen(false); triggers.forEach((t) => setPanel(t, false)); });
+  } else {
+    desktop.addEventListener("change", () => triggers.forEach((t) => setPanel(t, false)));
   }
+  header && header.addEventListener("click", (e) => {
+    const a = e.target.closest(".nav-panel a");
+    if (a && desktop.matches) setPanel(openTrigger() || triggers[0], false);
+  });
 
   const byHash = (a) => document.getElementById(decodeURIComponent(a.hash.slice(1)));
   const groups = [];

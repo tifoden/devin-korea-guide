@@ -127,6 +127,19 @@ Font file metadata (read with fontTools):
 | Article section tabs (adapted) | segmented control: white active chip + 1px border, 4px radius | `.subnav` under the header on < 64rem only, generated from the article's own headings + 출처. Horizontally scrollable; the active tab scrolls into view. Desktop keeps the sticky sidebar TOC. |
 | Anchor offset | – | `scroll-padding-top: header + 16px`; on mobile article pages header + tabs (45px) + 16px. Tested. |
 
+### 6b. Product dropdown (observed 2026-11-08 KST on devin.ai, 1425px viewport; adapted)
+
+| Aspect | Official (observed) | This guide (adapted) |
+| --- | --- | --- |
+| Trigger | `Product` button, `aria-expanded` toggles on click, Escape resets to `false` | `제품` button, same; also ArrowDown opens, Escape returns focus to trigger, outside click / Tab-out close. Never opens on hover |
+| Groups | Surfaces (Cloud, Desktop, CLI, Mobile) · Features (DeepWiki, Review, Security, Oncall, …) · Platform · Models | 사용 환경 (Cloud, Desktop, CLI, Mobile) · 업무 기능 (Review, Security, Oncall) · 전체 보기 → `/features/`. Only routes that exist here; models stay a top-level item |
+| Group heading | 14px / 400, black at .56 | 14px / 400 Pretendard, `--text-secondary` (.68, raised for 4.5:1) |
+| Link | 16px / 22.4px, black, radius 4px | 16px/1.4 Pretendard 500, black, radius `--radius-sm`, plus one-line Korean description (13px) and min-height 44px touch target |
+| Panel | full-width white panel under 52px header, soft shadow | anchored white card 560px, 1px `--border`, `--radius-window`, shadow `0 10px 15px -3px rgb(0 0 0/.06)` — narrower because there are 7 links, not 20 |
+| Latin font | NB International Pro | Pretendard (NB International Pro not used: no Hangul, licensing) |
+| Mobile | — | inside the existing disclosure menu as an accordion; auto-expanded on `/features/*` pages |
+| No JS | — | `제품` renders as a plain link to `/features/` |
+
 ## 7. Motion
 
 - `--default-transition-duration: .15s`, `--default-transition-timing-function: cubic-bezier(.4,0,.2,1)`.
