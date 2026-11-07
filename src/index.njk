@@ -1,0 +1,132 @@
+---
+layout: layouts/base.njk
+title: Devin 한국어 가이드
+bodyClass: page-home
+---
+{%- set firstGuide = collections.guides[0] -%}
+<section class="hero" aria-labelledby="home-title">
+  <div class="page-container">
+    <div class="hero__top">
+      <div class="hero__intro">
+        <div class="hero__text">
+          <h1 id="home-title" class="t-h2"><span lang="en">Devin</span> 한국어 가이드</h1>
+          <p class="hero__lead">AI 소프트웨어 엔지니어 Devin을 한국어로 차근차근 익히는 안내서입니다. 공식 문서에서 확인한 사실과 필자의 제안, 연습용 예제를 나눠 적습니다.</p>
+        </div>
+        <div class="btn-row">
+          {%- if firstGuide %}
+          <a class="btn btn--primary" href="{{ firstGuide.url }}">첫 가이드 읽기</a>
+          {%- endif %}
+          <a class="btn btn--secondary" href="#roadmap-title">전체 목차 보기</a>
+        </div>
+      </div>
+      <a class="callout callout--link hero__notice" href="#editorial">
+        <span class="mono-label callout__label">앰버서더 주도 초안</span>
+        <span class="callout__text">Cognition이 발행하거나 검수·보증한 문서가 아닙니다. 제품 정보는 언제나 공식 문서가 기준입니다.</span>
+        <span class="mono-label callout__more">편집 기준 보기 <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+
+    {%- if firstGuide %}
+    {%- set guideToc = firstGuide.content | toc %}
+    <div class="hero__visual">
+      <nav class="window hero__window" aria-labelledby="preview-title">
+        <div class="window__bar">
+          <span class="window__dots" aria-hidden="true"></span>
+          <p id="preview-title" class="window__title"><span class="visually-hidden">첫 가이드 차례: </span>guides/first-task.md</p>
+        </div>
+        <div class="window__body">
+          <p class="window__heading">{{ firstGuide.data.title }}</p>
+          <ol class="window__list">
+            {%- for h in guideToc %}
+            <li><a href="{{ firstGuide.url }}#{{ h.id }}"><span class="window__num" aria-hidden="true">{{ "0" if loop.index < 10 else "" }}{{ loop.index }}</span>{{ h.text }}</a></li>
+            {%- endfor %}
+          </ol>
+        </div>
+        <p class="window__status"><span class="status-dot" aria-hidden="true"></span>공식 문서 확인 {{ firstGuide.data.verifiedAt | koDate }} · 출처 {{ firstGuide.data.sources.length }}개</p>
+      </nav>
+    </div>
+    {%- endif %}
+  </div>
+</section>
+
+<section class="band" aria-labelledby="now-title">
+  <div class="page-container">
+    <div class="frame split">
+      <div class="split__head">
+        <h2 id="now-title" class="t-h2"><span class="tone">지금 읽을 수 있는</span><br>첫 번째 가이드</h2>
+        <p class="section-desc">현재 공개한 글은 한 편입니다. 디자인 검토를 마친 뒤 차례로 늘려 갑니다.</p>
+      </div>
+      <div class="split__body">
+        {%- for guide in collections.guides %}
+        <article class="card guide-card" aria-labelledby="guide-{{ loop.index }}">
+          <div class="guide-card__top">
+            <span class="badge">{{ guide.data.series }} {{ guide.data.seriesNumber }}</span>
+            <span class="mono-label">약 {{ guide.content | readingMinutes }}분</span>
+          </div>
+          <h3 id="guide-{{ loop.index }}" class="t-h3 guide-card__title"><a href="{{ guide.url }}">{{ guide.data.title }}</a></h3>
+          <p class="guide-card__desc">{{ guide.data.description }}</p>
+          <dl class="meta-list">
+            <div><dt>공식 문서 확인</dt><dd>{{ guide.data.verifiedAt | koDate }} (KST)</dd></div>
+            <div><dt>상태</dt><dd>{{ guide.data.statusLabel }}</dd></div>
+          </dl>
+        </article>
+        {%- endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="roadmap-title">
+  <div class="page-container">
+    <div class="frame split">
+      <div class="split__head">
+        <h2 id="roadmap-title" class="t-h2"><span class="tone">이 가이드가</span><br>다룰 내용</h2>
+        <p class="section-desc">앞으로 채울 목차입니다. 아직 쓰지 않은 항목은 링크 없이 ‘준비 중’으로 둡니다.</p>
+      </div>
+      <ol class="split__body rows">
+        {%- for item in roadmap %}
+        <li class="row">
+          <div class="row__main">
+            <h3 class="t-h4 row__title">{%- if item.url %}<a href="{{ item.url }}">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}</h3>
+            <p class="row__note">{{ item.note }}</p>
+          </div>
+          <span class="badge{% if not item.url %} badge--neutral{% endif %}">{{ item.state }}</span>
+        </li>
+        {%- endfor %}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="editorial" aria-labelledby="editorial-title">
+  <div class="page-container">
+    <div class="frame">
+      <div class="split__head split__head--wide">
+        <h2 id="editorial-title" class="t-h2"><span class="tone">근거를 나눠 적는</span><br>편집 기준</h2>
+        <p class="section-desc">모든 글에서 근거의 종류를 같은 방식으로 표시합니다.</p>
+      </div>
+      <ul class="columns">
+        <li class="column">
+          <div class="column__sample sample sample--src" aria-hidden="true"><span class="src__label">근거</span><span class="sample__line"></span></div>
+          <h3 class="t-h4">공식 문서 확인</h3>
+          <p>공식 문서를 직접 읽고 요약하거나 옮긴 내용입니다. 표시 없는 본문이 여기에 해당하며, 단락 아래 ‘근거’에 해당 문서를 링크하고 글 끝에 확인 날짜를 적습니다.</p>
+        </li>
+        <li class="column">
+          <div class="column__sample sample sample--tip" aria-hidden="true"><span class="mono-label">필자 제안</span><span class="sample__line"></span></div>
+          <h3 class="t-h4">필자 제안</h3>
+          <p>공식 문서에 없는 필자의 의견이나 작업 습관입니다. 파란 테두리 상자로 구분합니다.</p>
+        </li>
+        <li class="column">
+          <div class="column__sample sample sample--exercise" aria-hidden="true"><span class="window__dots"></span><span class="mono-label">가상 실습</span></div>
+          <h3 class="t-h4">가상 실습</h3>
+          <p>설명을 위해 지어낸 예제입니다. 실제 저장소나 고객 사례가 아니며, 창 모양 상자로 구분합니다.</p>
+        </li>
+      </ul>
+      <ul class="plain-list">
+        <li>고객 사례, 성과 수치, 행사 일정은 출처를 확인할 수 있는 것만 싣습니다.</li>
+        <li>제품 화면의 메뉴 이름은 영어 원문을 그대로 쓰고, 뜻을 한국어로 덧붙입니다.</li>
+        <li>2026년 11월 7일 기준, 공식 문서 색인(<a href="https://docs.devin.ai/llms.txt">llms.txt</a>)에는 한국어판이 없습니다. 이 가이드는 그 빈자리를 메우려는 비공식 시도입니다.</li>
+      </ul>
+    </div>
+  </div>
+</section>

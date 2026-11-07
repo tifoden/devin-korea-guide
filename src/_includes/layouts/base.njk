@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="{{ site.lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if title and page.url != "/" %}{{ title }} — {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ description or site.description }}">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="light">
+  <link rel="preload" href="/assets/fonts/official/nb-international-pro-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body class="{{ bodyClass }}">
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <div class="page-container site-header__inner">
+      <a class="wordmark" href="/"{% if page.url == "/" %} aria-current="page"{% endif %}>
+        <span class="wordmark__name"><span lang="en">Devin</span> 한국어 가이드</span>
+        <span class="badge badge--neutral">{{ site.status }}</span>
+      </a>
+      <nav class="site-nav" aria-label="주 메뉴">
+        <ul>
+          <li><a class="nav-link" href="/"{% if page.url == "/" %} aria-current="page"{% endif %}>홈</a></li>
+          {%- for guide in collections.guides %}
+          <li><a class="nav-link" href="{{ guide.url }}"{% if page.url == guide.url %} aria-current="page"{% endif %}>{{ guide.data.navTitle or guide.data.title }}</a></li>
+          {%- endfor %}
+          <li><a class="nav-link" href="/#editorial">편집 기준</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn--sm btn--secondary site-header__docs" href="{{ site.officialDocs }}">공식 문서<span class="visually-hidden"> (docs.devin.ai, 영문)</span> <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    {{ content | safe }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="page-container">
+      <div class="site-footer__grid">
+        <p class="site-footer__brand"><span lang="en">Devin</span> 한국어 가이드</p>
+        <nav class="site-footer__col" aria-labelledby="footer-guide">
+          <h2 id="footer-guide" class="site-footer__heading">가이드</h2>
+          <ul>
+            <li><a href="/">홈</a></li>
+            {%- for guide in collections.guides %}
+            <li><a href="{{ guide.url }}">{{ guide.data.navTitle or guide.data.title }}</a></li>
+            {%- endfor %}
+            <li><a href="/#editorial">편집 기준</a></li>
+          </ul>
+        </nav>
+        <nav class="site-footer__col" aria-labelledby="footer-official">
+          <h2 id="footer-official" class="site-footer__heading">공식 자료 <span class="site-footer__hint">영문</span></h2>
+          <ul>
+            <li><a href="{{ site.officialDocs }}">Devin Docs</a></li>
+            <li><a href="{{ site.officialIndex }}">문서 색인 llms.txt</a></li>
+          </ul>
+        </nav>
+        <div class="site-footer__col">
+          <h2 class="site-footer__heading">이 사이트에 대해</h2>
+          <p class="site-footer__disclaimer">{{ site.maintainer }}이 주도해 만드는 초안입니다. Cognition이 발행하거나 검수·보증한 문서가 아니며, 제품 정보는 공식 문서를 기준으로 합니다.</p>
+        </div>
+      </div>
+      <p class="site-footer__legal mono-label">Devin은 Cognition의 제품입니다 · 한글 글꼴 Pretendard(<a href="/assets/fonts/pretendard/LICENSE.txt">OFL</a>) · 고정폭 글꼴 Geist Mono(<a href="/assets/fonts/geist-mono/LICENSE.txt">OFL</a>)</p>
+    </div>
+  </footer>
+</body>
+</html>

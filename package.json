@@ -1,0 +1,26 @@
+{
+  "name": "devin-korea-guide",
+  "version": "0.1.0",
+  "description": "Devin 한국어 가이드 — 앰버서더 주도 초안 (Cognition 공식 발행물 아님)",
+  "scripts": {
+    "build": "eleventy",
+    "dev": "eleventy --serve --port 8080",
+    "check:links": "node scripts/check-links.mjs",
+    "test:browser": "node tests/browser.mjs",
+    "test": "npm run build && npm run check:links && npm run test:browser",
+    "fonts:official": "node scripts/fetch-official-fonts.mjs"
+  },
+  "license": "UNLICENSED",
+  "type": "module",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.8",
+    "@axe-core/playwright": "^4.14.0",
+    "geist": "^1.9.2",
+    "markdown-it": "^14.3.3",
+    "markdown-it-anchor": "^10.1.0",
+    "markdown-it-container": "^4.0.0",
+    "playwright-core": "^1.65.0",
+    "pretendard": "^1.3.9"
+  },
+  "private": true
+}
