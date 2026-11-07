@@ -6,7 +6,7 @@ permalink: /features/
 series: 기능
 seriesNumber: "개요"
 statusLabel: 초안 · 앰버서더 검토 대기
-verifiedAt: 2026-11-08T02:02:00+09:00
+verifiedAt: 2026-11-08T02:05:00+09:00
 sources:
   - title: Introducing Devin
     url: https://docs.devin.ai/get-started/devin-intro
@@ -162,7 +162,7 @@ Devin 공식 개발자 계정(@devindevelopers)은 X 스레드에서 “20 thing
 
 ### 로컬과 클라우드를 잇기
 
-- **Local Hands**: 클라우드 세션이 내 컴퓨터에서 셸 명령을 실행하고 파일을 읽고 고칠 수 있게 합니다. 다만 무제한 접근이 아닙니다. 세션 소유자 본인이어야 하고, 같은 계정으로 로그인한 Devin Desktop이나 CLI가 필요하며, 조직의 Local Hands 설정이 켜져 있어야 하고, 도구 호출마다 승인을 받습니다. 화면·키보드·마우스는 제어하지 않습니다. 사용자 승인이 없는 세션(일정 실행, 자동화, API 세션 등), 보안 프로필을 쓰는 세션, 네이티브 배포가 꺼진 조직에서는 쓸 수 없고, 아직 점진 배포 중입니다.
+- **Local Hands**: 클라우드 세션이 내 컴퓨터에서 셸 명령을 실행하고 파일을 읽고 고칠 수 있게 합니다. 다만 무제한 접근이 아닙니다. 세션 소유자 본인이어야 하고, 같은 계정으로 로그인한 Devin Desktop이나 CLI가 필요하며, 조직의 Local Hands 설정이 켜져 있어야 하고, 도구 호출마다 승인을 받습니다. 화면·키보드·마우스는 제어하지 않습니다. 승인할 사용자가 없는 세션(일정 실행 세션, 자동화, 승인할 사용자가 없는 서비스 사용자 API 세션), 보안 프로필을 쓰는 세션, 네이티브 배포가 꺼진 조직에서는 쓸 수 없고, 아직 점진 배포 중입니다.
 - **Handoff**: CLI에서 `/handoff`를 실행하면 대화 맥락과 현재 git 브랜치를 묶어 클라우드 세션으로 넘깁니다. 로컬에서 계획하고 오래 걸리는 구현은 클라우드에 맡기는 식으로 쓸 수 있습니다. Claude Code, Codex 같은 다른 에이전트에서는 오픈소스 Devin Handoff 플러그인으로 넘깁니다.
 - **Agent Command Center**: Devin Desktop 안에서 로컬 에이전트와 클라우드 Devin 세션을 한 화면에서 관리합니다. ACP(Agent Client Protocol)를 지원하는 서드파티 에이전트도 여기서 실행할 수 있습니다. 문서 기준 Free, Pro, Max, Teams에서 쓸 수 있고 Enterprise는 기본적으로 꺼져 있습니다. 외부 ACP 에이전트를 쓰면 과금과 약관은 해당 제공사와의 관계로 넘어갑니다.
 
