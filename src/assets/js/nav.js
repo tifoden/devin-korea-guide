@@ -1,4 +1,4 @@
-// Mobile menu (disclosure with focus loop + Escape), grouped product panels (click/keyboard, never hover) and scroll-spy.
+// Mobile menu (disclosure with focus loop + Escape), grouped Product/Models panels (click/keyboard; hover only with a fine pointer, like devin.ai) and scroll-spy.
 (() => {
   const root = document.documentElement;
   const header = document.querySelector("[data-header]");
@@ -8,6 +8,7 @@
   const desktop = matchMedia("(min-width: 64rem)");
   const visible = (el) => el.getClientRects().length > 0;
 
+  const hoverCapable = matchMedia("(hover: hover) and (pointer: fine)");
   const triggers = header ? [...header.querySelectorAll(".nav-trigger")] : [];
   const panelOf = (t) => document.getElementById(t.getAttribute("aria-controls"));
   const panelLinks = (t) => [...panelOf(t).querySelectorAll("a")];
@@ -19,7 +20,10 @@
   };
   const openTrigger = () => triggers.find((t) => t.getAttribute("aria-expanded") === "true");
   for (const t of triggers) {
-    t.addEventListener("click", (e) => setPanel(t, t.getAttribute("aria-expanded") !== "true", e.detail === 0 && desktop.matches));
+    t.addEventListener("click", (e) => {
+      const hovering = e.detail > 0 && hoverCapable.matches && desktop.matches && t.parentElement.matches(":hover");
+      setPanel(t, hovering || t.getAttribute("aria-expanded") !== "true", e.detail === 0 && desktop.matches);
+    });
     t.addEventListener("keydown", (e) => {
       if (e.key === "ArrowDown") { e.preventDefault(); setPanel(t, true, true); }
     });
@@ -34,6 +38,19 @@
     });
     t.parentElement.addEventListener("focusout", (e) => {
       if (desktop.matches && e.relatedTarget && !t.parentElement.contains(e.relatedTarget)) setPanel(t, false);
+    });
+  }
+  for (const t of triggers) {
+    let timer;
+    const li = t.parentElement;
+    li.addEventListener("pointerenter", (e) => {
+      if (e.pointerType !== "mouse" || !hoverCapable.matches || !desktop.matches) return;
+      clearTimeout(timer);
+      if (t.getAttribute("aria-expanded") !== "true") setPanel(t, true);
+    });
+    li.addEventListener("pointerleave", (e) => {
+      if (e.pointerType !== "mouse" || !desktop.matches) return;
+      timer = setTimeout(() => { if (!li.contains(document.activeElement) || document.activeElement === t) setPanel(t, false); }, 150);
     });
   }
   document.addEventListener("click", (e) => {

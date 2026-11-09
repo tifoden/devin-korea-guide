@@ -9,6 +9,7 @@ OUT = os.path.join(HERE, "..", "src", "_includes", "replica")
 os.makedirs(OUT, exist_ok=True)
 amap = json.load(open(os.path.join(HERE, "asset-map.json")))
 ROUTES = {f"/{p}": f"/features/{p}/" for p in ["cloud", "desktop", "cli", "mobile", "review", "security", "oncall"]}
+ROUTES.update({"": "/", "/fusion": "/models/fusion/"})
 
 def local(u):
     full = urljoin("https://devin.ai/", u)
@@ -112,6 +113,8 @@ def build(name, fixups=None):
                 if l and not el.get("src", "").startswith("/assets"): el["src"] = l
             if el.get("sizes"): del el["sizes"]
         if el.get("style"):
+            fw = re.search(r"width:\s*([\d.]+)px;.*transform-origin:\s*left top;\s*transform:\s*scale\(", el["style"])
+            if fw and el.parent and "aspect-ratio" in (el.parent.get("style") or ""): el["data-fit-w"] = fw.group(1)
             m = re.search(r"opacity:\s*0(?![\d.]).*translateY\(([\d.]+)px\)", el["style"])
             if m: el["data-reveal"] = m.group(1)
             el["style"] = lift_opacity(el, fix_color_dark(unmotion(el["style"])) if in_dark(el) else fix_color(unmotion(el["style"])))
@@ -238,5 +241,5 @@ def security_fix(soup, root):
 FIX = {"desktop": desktop_fix, "mobile": mobile_fix, "review": review_fix, "security": security_fix}
 
 if __name__ == "__main__":
-    for n in sys.argv[1:] or ["cloud", "desktop", "cli", "mobile", "security", "oncall", "review"]:
+    for n in sys.argv[1:] or ["cloud", "desktop", "cli", "mobile", "security", "oncall", "review", "home", "fusion"]:
         build(n, FIX.get(n))

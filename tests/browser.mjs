@@ -14,11 +14,13 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const browser = await chromium.connectOverCDP(process.env.CDP_URL || "http://localhost:29229");
 
 const PAGES = [
-  { name: "home", path: "/", nav: "개요" },
-  { name: "article", path: "/guides/first-task/", nav: "시작하기" },
+  { name: "home", path: "/", nav: "" },
+  { name: "overview", path: "/overview/", nav: "개요" },
+  { name: "article", path: "/guides/first-task/", nav: "" },
   { name: "features", path: "/features/", nav: "제품" },
   ...["cloud", "desktop", "cli", "mobile", "review", "security", "oncall"].map((n) => ({ name: `features-${n}`, path: `/features/${n}/`, nav: "제품" })),
   { name: "models", path: "/models/", nav: "모델" },
+  { name: "models-fusion", path: "/models/fusion/", nav: "모델" },
   { name: "use-cases", path: "/use-cases/", nav: "활용사례" },
   { name: "startups", path: "/startups/", nav: "스타트업 프로그램" },
 ];
@@ -130,7 +132,7 @@ for (const vp of VIEWPORTS) {
     const closed = await page.evaluate(() => ({ exp: document.querySelector(".menu-toggle").getAttribute("aria-expanded"), focus: document.activeElement.className }));
     check(`menu/mobile Escape closes and returns focus`, closed.exp === "false" && closed.focus === "menu-toggle", JSON.stringify(closed));
     await page.locator(".menu-toggle").click();
-    const trig = page.locator("#site-menu .nav-trigger");
+    const trig = page.locator("#site-menu .nav-trigger").first();
     check(`menu/mobile product group collapsed on non-product page`, (await trig.getAttribute("aria-expanded")) === "false");
     await trig.click();
     const grp = await page.evaluate(() => ({ exp: document.querySelector(".nav-trigger").getAttribute("aria-expanded"), heads: [...document.querySelectorAll(".nav-panel__heading")].filter((h) => h.getClientRects().length).map((h) => h.textContent), links: [...document.querySelectorAll(".nav-panel__link")].filter((a) => a.getClientRects().length).length, overflow: document.getElementById("site-menu").scrollWidth - document.getElementById("site-menu").clientWidth }));
@@ -143,7 +145,7 @@ for (const vp of VIEWPORTS) {
     check(`menu/mobile product link navigates and closes menu`, rv.exp === "false" && rv.cur === "제품", JSON.stringify(rv));
     await page.locator(".menu-toggle").click();
     check(`menu/mobile product group auto-expanded on product page`, (await trig.getAttribute("aria-expanded")) === "true");
-    await page.locator("#site-menu .nav-panel__overview").click();
+    await page.locator("#site-menu .nav-panel__overview").first().click();
     await page.waitForURL("**/features/");
     await page.waitForLoadState("networkidle");
     const mr = await page.evaluate(() => ({ path: location.pathname, cur: document.querySelector(".nav-trigger.is-current")?.firstChild.textContent, exp: document.querySelector(".menu-toggle").getAttribute("aria-expanded") }));
@@ -167,12 +169,17 @@ for (const vp of VIEWPORTS) {
     await page.screenshot({ path: `${OUT}use-cases-desktop-toc.png` });
     // Product dropdown: click, keyboard, Escape, focus return, outside click, Tab out, navigation.
     await page.goto(base + "/", { waitUntil: "networkidle" });
-    const trig = page.locator(".nav-trigger");
+    const trig = page.locator(".nav-trigger").first();
     const state = () => page.evaluate(() => { const t = document.querySelector(".nav-trigger"); const p = document.getElementById(t.getAttribute("aria-controls")); const r = p.getBoundingClientRect(); return { exp: t.getAttribute("aria-expanded"), shown: getComputedStyle(p).display !== "none", focus: document.activeElement.textContent.trim().slice(0, 16), cls: document.activeElement.className, right: r.right, vw: innerWidth, bg: getComputedStyle(p).backgroundColor }; });
     check(`dropdown/desktop closed by default`, (await state()).exp === "false" && !(await state()).shown);
     await trig.hover();
-    check(`dropdown/desktop hover alone does not open`, !(await state()).shown);
+    await page.waitForTimeout(150);
+    check(`dropdown/desktop mouse hover opens (official devin.ai behaviour)`, (await state()).shown);
+    await page.mouse.move(1200, 700);
+    await page.waitForTimeout(400);
+    check(`dropdown/desktop mouse leave closes`, (await state()).exp === "false");
     await trig.click();
+    await page.waitForTimeout(150);
     const o1 = await state();
     check(`dropdown/desktop click opens white panel inside viewport`, o1.exp === "true" && o1.shown && o1.right <= o1.vw && o1.bg === "rgb(255, 255, 255)", JSON.stringify(o1));
     await page.screenshot({ path: `${OUT}nav-desktop-product.png` });
@@ -192,7 +199,7 @@ for (const vp of VIEWPORTS) {
     await page.keyboard.press("Escape");
     await page.keyboard.press("ArrowDown");
     check(`dropdown/desktop ArrowDown on trigger opens`, (await state()).exp === "true");
-    const nTab = await page.locator(".nav-panel a").count();
+    const nTab = await page.locator("#product-menu a").count();
     for (let i = 0; i < nTab; i++) await page.keyboard.press("Tab");
     const t1 = await state();
     check(`dropdown/desktop Tab past last link closes panel`, t1.exp === "false" && t1.focus === "모델", JSON.stringify(t1));
@@ -213,6 +220,31 @@ for (const vp of VIEWPORTS) {
       await page.keyboard.press("Escape");
     }
     await page.setViewportSize({ width: 1440, height: 900 });
+    // Models dropdown + official nav metrics: identical tab text, no current-page background.
+    await page.goto(base + "/use-cases/", { waitUntil: "networkidle" });
+    const mt = page.locator(".nav-trigger", { hasText: "모델" });
+    await mt.focus();
+    await page.keyboard.press("Enter");
+    const m1 = await page.evaluate(() => ({ exp: document.querySelector('[aria-controls="models-menu"]').getAttribute("aria-expanded"), links: [...document.querySelectorAll("#models-menu .nav-panel__label")].map((l) => l.textContent), focus: document.activeElement.textContent.trim().slice(0, 12) }));
+    check(`models/desktop Enter opens Models panel with Fusion + SWE family`, m1.exp === "true" && ["Fusion", "SWE-2", "SWE-2 Flash"].every((n) => m1.links.includes(n)) && m1.focus.startsWith("Fusion"), JSON.stringify(m1));
+    await page.keyboard.press("Escape");
+    check(`models/desktop Escape closes and returns focus`, await page.evaluate(() => document.activeElement.getAttribute("aria-controls") === "models-menu" && document.activeElement.getAttribute("aria-expanded") === "false"));
+    await mt.click();
+    await page.waitForTimeout(150);
+    check(`models/desktop click opens; only one panel open`, await page.evaluate(() => [...document.querySelectorAll(".nav-trigger")].map((t) => t.getAttribute("aria-expanded")).join() === "false,true"));
+    await page.locator("#models-menu .nav-panel__link", { hasText: "Fusion" }).click();
+    await page.waitForURL("**/models/fusion/");
+    await page.mouse.move(1200, 700);
+    await page.waitForTimeout(400);
+    for (const path of ["/use-cases/", "/models/fusion/", "/features/cli/", "/overview/"]) {
+      await page.goto(base + path, { waitUntil: "networkidle" });
+      await page.mouse.move(1200, 700);
+      const nm = await page.evaluate(() => [...document.querySelectorAll(".site-nav > ul > li > .nav-link")].filter((e) => e.getClientRects().length).map((e) => { const s = getComputedStyle(e); return { t: e.firstChild.textContent.trim(), k: [s.fontSize, s.fontWeight, s.letterSpacing, s.lineHeight, e.getBoundingClientRect().height].join("/"), bg: s.backgroundColor, cur: e.matches('[aria-current], .is-current') }; }));
+      check(`navstyle/desktop ${path} tabs = 개요,제품,모델,활용사례,스타트업 프로그램 with identical 14px/400/normal/19.6px/28`, nm.map((n) => n.t).join() === "개요,제품,모델,활용사례,스타트업 프로그램" && nm.every((n) => n.k === "14px/400/normal/19.6px/28"), JSON.stringify(nm));
+      check(`navstyle/desktop ${path} current tab has no background`, nm.some((n) => n.cur) && nm.every((n) => n.bg === "rgba(0, 0, 0, 0)"), JSON.stringify(nm.filter((n) => n.cur)));
+    }
+    const logo = await page.evaluate(() => { const i = document.querySelector(".wordmark__logo"); const r = i.getBoundingClientRect(); return { h: r.height, alt: i.alt, ok: i.complete && i.naturalWidth > 0 }; });
+    check(`navstyle/desktop logo 20px high with accessible name`, logo.h === 20 && logo.alt === "Devin 한국어 가이드" && logo.ok, JSON.stringify(logo));
   }
   await context.close();
 }

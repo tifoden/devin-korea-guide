@@ -143,17 +143,18 @@ main:focus { outline: none; }
 .site-header__inner { display: flex; align-items: center; gap: 12px; min-height: var(--header-h); }
 .wordmark { display: inline-flex; align-items: center; gap: 8px; flex: none; min-height: 36px; text-decoration: none; }
 .wordmark:hover { color: var(--text-primary); }
-.wordmark__name { font-size: 18px; font-weight: 500; letter-spacing: -.02em; line-height: 1.2; }
+.wordmark__logo { display: block; width: auto; height: 20px; }
 .site-menu { display: flex; align-items: center; gap: 16px; flex: 1; min-width: 0; }
 .site-nav { flex: 1; min-width: 0; }
 .site-nav ul { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0; }
+/* Official devin.ai nav (computed 2026-11-09): 14px/19.6px, 400, normal tracking, 28px pill, hover tint .06, no current-page chrome. */
 .nav-link {
   display: inline-flex; align-items: center; min-height: 28px; padding: 1px 12px 0;
-  border-radius: 200px; font-size: 14px; line-height: 1.4; white-space: nowrap; text-decoration: none; color: var(--black);
-  transition: background-color var(--dur) var(--ease);
+  border-radius: 200px; font-size: 14px; font-weight: 400; line-height: 19.6px; letter-spacing: normal;
+  white-space: nowrap; text-decoration: none; color: var(--black);
+  transition: color .15s cubic-bezier(.4, 0, .2, 1), background-color .15s cubic-bezier(.4, 0, .2, 1);
 }
-.nav-link:hover { background: var(--tint); color: var(--black); }
-.nav-link[aria-current] { background: var(--tint-strong); }
+.nav-link:hover { background: rgba(0, 0, 0, .06); color: var(--black); }
 .menu-toggle { display: none; }
 @media (min-width: 64rem) { .site-nav { margin-left: 28px; } }
 @media (max-width: 63.99rem) {
@@ -177,7 +178,6 @@ main:focus { outline: none; }
   .js .is-open .site-nav { flex: none; }
   .js .is-open .site-nav ul { flex-direction: column; gap: 0; }
   .js .is-open .nav-link { display: flex; gap: 10px; min-height: 52px; padding: 0; border-radius: 0; border-bottom: 1px solid var(--border-secondary); background: none; font-size: 17px; }
-  .js .is-open .nav-link[aria-current]::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
   .js .is-open .site-header__docs { align-self: flex-start; margin-top: 24px; height: 42px; padding: 0 20px; font-size: 16px; }
 }
 .menu-toggle__bars { position: relative; width: 18px; height: 8px; }
@@ -306,7 +306,8 @@ main:focus { outline: none; }
 .site-footer { border-top: 1px solid var(--border-secondary); margin-top: 0; padding: 56px 0 40px; }
 .site-footer__grid { display: grid; gap: 32px; }
 @media (min-width: 48rem) { .site-footer__grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 24px; } }
-.site-footer__brand { font-size: 24px; letter-spacing: -.02em; color: var(--text-tone); }
+.site-footer__brand { margin: 0; }
+.site-footer__logo { display: block; width: auto; height: 32px; }
 .site-footer__heading { font-size: 14px; font-weight: 400; line-height: 1.4; margin-bottom: 8px; }
 .site-footer__hint { font-family: var(--font-label); font-size: 11px; color: var(--text-secondary); margin-left: 4px; }
 .site-footer__col ul { list-style: none; display: grid; gap: 2px; }
@@ -420,12 +421,12 @@ main:focus { outline: none; }
   appearance: none;
   border: 0;
   background: none;
-  font: inherit;
+  font-family: inherit;
   cursor: pointer;
   gap: 6px;
+  padding: 1px 8px 0 12px;
 }
-.nav-trigger.is-current,
-.nav-trigger[aria-expanded="true"] { background: var(--tint-strong); }
+.nav-trigger[aria-expanded="true"] { background: rgba(0, 0, 0, .06); }
 .nav-trigger__chevron {
   width: 6px;
   height: 6px;
@@ -474,8 +475,8 @@ html:not(.js) .nav-panel,
   line-height: 1.45;
   color: var(--text-secondary);
 }
-.nav-panel__link:hover { background: var(--tint); }
-.nav-panel__link[aria-current] { background: var(--tint-strong); }
+.nav-panel__label { transition: color .15s cubic-bezier(.4, 0, .2, 1); }
+.nav-panel__link:hover .nav-panel__label { color: #317cff; }
 .nav-panel__overview {
   grid-column: 1 / -1;
   display: flex;
@@ -490,7 +491,6 @@ html:not(.js) .nav-panel,
   text-decoration: none;
 }
 .nav-panel__overview:hover { text-decoration: underline; text-underline-offset: 3px; }
-.nav-panel__overview[aria-current] { color: var(--accent-text); }
 
 @media (min-width: 64rem) {
   .nav-panel {
@@ -604,3 +604,6 @@ html:not(.js) .nav-panel,
 .reveal-pending { opacity: 0 !important; transform: translateY(var(--reveal-y, 8px)) !important; }
 .reveal-pending.is-revealed { opacity: 1 !important; transform: none !important; transition: opacity .45s ease var(--reveal-delay, 0ms), transform .45s ease !important; }
 @media (prefers-reduced-motion: reduce) { .reveal-pending { opacity: 1 !important; transform: none !important; } .nav-scrim { display: none; } }
+
+/* Home replica: official Slack-thread link blue (#088bd7, 3.6:1) darkened to pass AA on the light mock. */
+.page-replica .official .text-\[var\(--thread-link\)\] { color: #0b6aa6; }

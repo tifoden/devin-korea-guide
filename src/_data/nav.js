@@ -1,9 +1,8 @@
 // Primary navigation. Add an entry only when the page or section it points to exists.
 // `match` marks a whole URL prefix as current; `section` is an in-page id used for scroll-spy on that page.
-// `menu` renders a click-to-open grouped panel (no hover dependency); `url` stays the no-JS fallback.
+// `menu` renders a grouped panel that opens on click/keyboard (and hover with a fine pointer); `url` stays the no-JS fallback.
 export default [
-  { label: "개요", url: "/", section: "overview" },
-  { label: "시작하기", url: "/guides/first-task/", match: "/guides/" },
+  { label: "개요", url: "/overview/" },
   {
     label: "제품",
     url: "/features/",
@@ -30,7 +29,29 @@ export default [
     ],
     overview: { label: "제품·기능 전체 보기", url: "/features/" },
   },
-  { label: "모델", url: "/models/" },
+  {
+    label: "모델",
+    url: "/models/",
+    match: "/models/",
+    id: "models-menu",
+    menu: [
+      {
+        heading: "모델 조합",
+        items: [
+          { label: "Fusion", url: "/models/fusion/", desc: "lead와 sidekick 두 모델을 짝짓는 방식" },
+        ],
+      },
+      {
+        heading: "SWE 계열",
+        items: [
+          { label: "SWE-2", url: "/models/#swe-2", desc: "Cognition의 최신 소프트웨어 엔지니어링 모델" },
+          { label: "SWE-2 Flash", url: "/models/#swe-2-flash", desc: "Desktop·CLI 전용 경량 변형" },
+          { label: "SWE-1.7 · 보조 모델", url: "/models/#이전-세대와-보조-모델", desc: "이전 세대와 swe-grep · swe-check" },
+        ],
+      },
+    ],
+    overview: { label: "모델 개요 전체 보기", url: "/models/" },
+  },
   { label: "활용사례", url: "/use-cases/" },
   { label: "스타트업 프로그램", url: "/startups/" },
 ];

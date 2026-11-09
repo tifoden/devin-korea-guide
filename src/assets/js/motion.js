@@ -66,3 +66,13 @@
     for (const parent of groups.keys()) io.observe(parent);
   }
 })();
+
+// Official mock UIs are drawn at a fixed size and scaled to their aspect-ratio box (devin.ai does this in JS).
+(() => {
+  const els = [...document.querySelectorAll("[data-fit-w]")];
+  if (!els.length) return;
+  const fit = (el) => { const w = el.parentElement.clientWidth; if (w) el.style.transform = `scale(${w / +el.dataset.fitW})`; };
+  const ro = new ResizeObserver((entries) => { for (const e of entries) for (const el of els) if (el.parentElement === e.target) fit(el); });
+  for (const el of els) { fit(el); ro.observe(el.parentElement); }
+})();
+

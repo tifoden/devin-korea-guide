@@ -115,30 +115,38 @@ Font file metadata (read with fontTools):
 | Icons | SVG icons (`/assets/images/desktop/hero/icons/*.svg`) inside product UI | Not used. Arrows are text glyphs (→ ↗). |
 | Background image | `/assets/images/new-home/graphic-backgrounds/bg-1.jpg` behind product windows | Reused behind the home preview window (`src/assets/img/devin-bg-1.jpg`) |
 
-## 6a. Navigation (observed + adapted)
+## 6a. Navigation (re-measured 2026-11-09 ~22:00 KST on devin.ai/, /pricing, /desktop at 1440×900; `replica/tools/_navmeasure.mjs`, `_navstates.mjs`)
 
-| Item | Observed (devin.ai/desktop) | Implementation |
+| Item | Observed (devin.ai) | Implementation |
 | --- | --- | --- |
-| Bar | `nav.fixed … bg-dt-bg`, h 52px desktop, 60px mobile, `rgb(248,248,248)` | `.site-header` sticky, h 52 / 60 (`--header-h`), same colour |
-| Items | buttons 14px / 19.6px, h 28, pad `1px 8px 0 12px`, radius 200px | `.nav-link` 14px / 19.6px, h 28, pad `1px 12px 0`, radius 200px. Current page: `aria-current="page"` + `rgba(0,0,0,.06)` pill. |
-| Item source | Product / Solutions / Resources / … dropdowns | `src/_data/nav.js`. **Rule: add an entry only when its page or section exists.** Today: 개요(/), 시작하기(/guides/first-task/), 기능(/features/), 모델(/models/), 활용사례(/use-cases/), 스타트업 프로그램(/startups/). Category pages reuse the article layout (breadcrumb, meta, sidebar TOC / mobile section tabs, sources). No dropdowns until there are ≥2 pages per group. |
-| Mobile | 36px menu button, full-height panel, stacked rows with 1px separators, CTAs at bottom | `.menu-toggle` 36px disclosure (`aria-expanded`, `aria-controls`), full-height panel, 1px row rules, docs button last. Escape closes and returns focus; Tab loops inside; link click closes; resets at ≥64rem. Without JS the links stay as a horizontally scrollable row. |
-| Section state | – | `assets/js/nav.js` scroll-spy sets `aria-current="location"` on in-page links (home sections, article TOC, article tabs). |
-| Article section tabs (adapted) | segmented control: white active chip + 1px border, 4px radius | `.subnav` under the header on < 64rem only, generated from the article's own headings + 출처. Horizontally scrollable; the active tab scrolls into view. Desktop keeps the sticky sidebar TOC. |
-| Anchor offset | – | `scroll-padding-top: header + 16px`; on mobile article pages header + tabs (45px) + 16px. Tested. |
+| Bar | product pages: fixed 52px; home: 94px incl. a promo announcement strip | `.site-header` sticky 52 / 60. The announcement strip is **not** reproduced (it is a credits promotion; see owner rule) |
+| Logo | `h-5 w-[76px]` → 76×20px | Owner-supplied `src/assets/brand/devin-korea-logo.svg` (unmodified, 773×120 viewBox) as `<img alt="Devin 한국어 가이드">`, `height: 20px` (≈129px wide). Footer uses the same file at 32px. Favicon unchanged |
+| Item text | 14px, weight 400, letter-spacing normal, line-height 19.6px, colour `#000` (`#191919` on /pricing) | `.nav-link` 14px / 400 / normal / 19.6px, `--black`. Identical on all five tabs (test `navstyle/desktop …`) |
+| Item box | h 28, radius 200px. Links `padding: 1px 12px 0`; dropdown buttons `1px 8px 0 12px` (+ chevron, 4px gap) | same values: `.nav-link` `1px 12px 0`, `.nav-trigger` `1px 8px 0 12px` |
+| Hover | background `rgba(0,0,0,.06)`, colour unchanged, `color, background-color .15s cubic-bezier(.4,0,.2,1)` | same |
+| Open trigger | same `rgba(0,0,0,.06)` while `aria-expanded="true"` | same |
+| Current page | none: on /pricing the Pricing link has transparent bg, weight 400, no underline, no `aria-current` | **no visual current state at all** (previous `.06` pill and mobile dot removed). `aria-current="page"` kept for assistive tech only |
+| Items | Product · Solutions · Resources (dropdowns) · Customers · Pricing · Blog | `src/_data/nav.js`: 개요(/overview/) · 제품 ▾ · 모델 ▾ · 활용사례 · 스타트업 프로그램. "시작하기" removed from the bar (first-task guide linked from /overview/, footer, home note). Rule unchanged: add an entry only when its page or section exists |
+| Mobile | 36px menu button, full-height panel | unchanged; both dropdowns are accordions inside the disclosure menu |
 
-### 6b. Product dropdown (observed 2026-11-08 KST on devin.ai, 1425px viewport; adapted)
+### 6b. Product / Models dropdowns (observed 2026-11-09 KST; adapted)
 
-| Aspect | Official (observed) | This guide (adapted) |
+| Aspect | Official (observed) | This guide |
 | --- | --- | --- |
-| Trigger | `Product` button, `aria-expanded` toggles on click, Escape resets to `false` | `제품` button, same; also ArrowDown opens, Escape returns focus to trigger, outside click / Tab-out close. Never opens on hover |
-| Groups | Surfaces (Cloud, Desktop, CLI, Mobile) · Features (DeepWiki, Review, Security, Oncall, …) · Platform · Models | 사용 환경 (Cloud, Desktop, CLI, Mobile) · 업무 기능 (Review, Security, Oncall) · 전체 보기 → `/features/`. Only routes that exist here; models stay a top-level item |
-| Group heading | 14px / 400, black at .56 | 14px / 400 Pretendard, `--text-secondary` (.68, raised for 4.5:1) |
-| Link | 16px / 22.4px, black, radius 4px | 16px/1.4 Pretendard 500, black, radius `--radius-sm`, plus one-line Korean description (13px) and min-height 44px touch target |
-| Panel | full-width white panel under 52px header, soft shadow | anchored white card 560px, 1px `--border`, `--radius-window`, shadow `0 10px 15px -3px rgb(0 0 0/.06)` — narrower because there are 7 links, not 20 |
-| Latin font | NB International Pro | Pretendard (NB International Pro not used: no Hangul, licensing) |
-| Mobile | — | inside the existing disclosure menu as an accordion; auto-expanded on `/features/*` pages |
-| No JS | — | `제품` renders as a plain link to `/features/` |
+| Open | mouse hover opens (`aria-expanded="true"` on hover), click also opens; Escape closes | mouse hover opens on `(hover: hover) and (pointer: fine)` desktops, leave closes after 150ms; click / Enter / Space / ArrowDown open; Escape closes and returns focus; outside click and Tab-out close; touch = tap only. Only one panel open at a time |
+| Motion | popup opacity / height / translate `.1s cubic-bezier(0,0,.2,1)`; backdrop `blur(4px)` fading over .1s | unchanged from the motion pass (§7): opacity + 4px translate .1s, same scrim |
+| Groups | one sheet: Surfaces · Features · Platform · **Models** (Fusion → /fusion, SWE → cognition.com/blog/swe-2, Evals → cognition.com/frontiercode) | 제품: 사용 환경 · 업무 기능 · 전체 보기. 모델 (separate trigger per owner request): 모델 조합 → Fusion (/models/fusion/) · SWE 계열 → SWE-2, SWE-2 Flash, SWE-1.7 · 보조 모델 (anchors on /models/) · 모델 개요 전체 보기 |
+| Group heading | 14px / 400, `oklab(0 0 0 / .56)`, no uppercase | 14px / 400, `--text-secondary` (raised for 4.5:1) |
+| Link | 16px / 400, `#000`, padding `4px 0`, radius 4px; hover colour `rgb(49,124,255)`, no background | 16px label, hover colour `#317cff`, no background, no current-page background; plus a 13px Korean description and 44px touch target |
+| Panel | full-width sheet | anchored 560px card (fewer links) |
+
+### 6c. Home and model routes (2026-11-09 KST)
+
+- `/` is now a Korean replica of https://devin.ai/ (`replica/src/home-main.html`, `replica/i18n/home.json`, layout `replica.njk`): hero + product collage, customer logo marquee, "동료들이 가장 아끼는 동료" 5-card grid, 01–04 workflow sections, integrations grid, Recently shipped list, enterprise security grid, final CTA — official order, local assets (`src/assets/official/`), official animations, reduced motion honoured. The promo announcement strip lives in the official header, outside `<main>`, and is not reproduced.
+- The previous home overview moved unchanged to `/overview/` (`src/overview.njk`); `/#editorial` links now point to `/overview/#editorial`.
+- `/models/fusion/` replicates https://devin.ai/fusion. No dedicated SWE page exists (`devin.ai/swe`, `/swe-2`, `/models`, `/evals` → 404; the official nav links SWE to a blog post), so SWE stays as anchored sections on `/models/`.
+- Official mock UIs are drawn at a fixed pixel size and scaled into an `aspect-ratio` box by JS on devin.ai. `build.py` marks them `data-fit-w` and `motion.js` rescales with a ResizeObserver so they shrink on mobile like the official page.
+- Home Slack-thread link colour `#088bd7` (3.6:1) darkened to `#0b6aa6` for AA.
 
 ## 7. Motion (measured 2026-11-09 KST, Chrome via CDP, 1440×900 and 390×844)
 

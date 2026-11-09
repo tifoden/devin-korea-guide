@@ -4,7 +4,7 @@ const b = await chromium.connectOverCDP("http://localhost:29229");
 const page = await b.contexts()[0].newPage();
 await page.setViewportSize({ width: 1440, height: 900 });
 for (const n of process.argv.slice(2)) {
-  await page.goto(`http://localhost:8080/features/${n}/`, { waitUntil: "networkidle" });
+  await page.goto(`http://localhost:8080${n.startsWith("/") ? n : `/features/${n}/`}`, { waitUntil: "networkidle" });
   const axe = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
   for (const v of axe.violations) {
     console.log(n, v.id, v.nodes.length);

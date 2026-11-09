@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="gemini">
+<path id="Union" d="M7.9865 1C7.76 4.755 4.755 7.76 1 7.9865V8.0135C4.755 8.24 7.76 11.245 7.9865 15H8.0135C8.24 11.245 11.245 8.24 15 8.0135V7.9865C11.245 7.76 8.24 4.755 8.0135 1H7.9865Z" fill="url(#paint0_linear_0_452)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_452" x1="6.24869" y1="10.0256" x2="11.5403" y2="4.54988" gradientUnits="userSpaceOnUse">
+<stop stop-color="#217BFE"/>
+<stop offset="0.14" stop-color="#1485FC"/>
+<stop offset="0.27" stop-color="#078EFB"/>
+<stop offset="0.52" stop-color="#548FFD"/>
+<stop offset="0.78" stop-color="#A190FF"/>
+<stop offset="0.89" stop-color="#AF94FE"/>
+<stop offset="1" stop-color="#BD99FE"/>
+</linearGradient>
+</defs>
+</svg>

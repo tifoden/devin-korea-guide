@@ -21,8 +21,7 @@
   <header class="site-header" data-header>
     <div class="page-container site-header__inner">
       <a class="wordmark" href="/">
-        <span class="wordmark__name"><span lang="en">Devin</span> 한국어 가이드</span>
-        <span class="badge badge--neutral">{{ site.status }}</span>
+        <img class="wordmark__logo" src="/assets/brand/devin-korea-logo.svg" alt="Devin 한국어 가이드" width="773" height="120">
       </a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
         <span class="menu-toggle__bars" aria-hidden="true"></span><span class="visually-hidden">메뉴</span>
@@ -35,7 +34,7 @@
             {%- if item.menu %}
           <li class="nav-item">
             <a class="nav-link nav-fallback" href="{{ item.url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.label }}</a>
-            <button class="nav-link nav-trigger{% if current %} is-current{% endif %}" type="button" aria-expanded="false" aria-controls="{{ item.id }}">{{ item.label }}{% if current %}<span class="visually-hidden"> (현재 섹션)</span>{% endif %}<span class="nav-trigger__chevron" aria-hidden="true"></span></button>
+            <button class="nav-link nav-trigger{% if current %} is-current{% endif %}"{% if current %} data-current{% endif %} type="button" aria-expanded="false" aria-controls="{{ item.id }}">{{ item.label }}{% if current %}<span class="visually-hidden"> (현재 섹션)</span>{% endif %}<span class="nav-trigger__chevron" aria-hidden="true"></span></button>
             <div class="nav-panel" id="{{ item.id }}">
               {%- for group in item.menu %}
               <div class="nav-panel__group">
@@ -69,15 +68,16 @@
   <footer class="site-footer">
     <div class="page-container">
       <div class="site-footer__grid">
-        <p class="site-footer__brand"><span lang="en">Devin</span> 한국어 가이드</p>
+        <p class="site-footer__brand"><img class="site-footer__logo" src="/assets/brand/devin-korea-logo.svg" alt="Devin 한국어 가이드" width="773" height="120"></p>
         <nav class="site-footer__col" aria-labelledby="footer-guide">
           <h2 id="footer-guide" class="site-footer__heading">가이드</h2>
           <ul>
             <li><a href="/">홈</a></li>
+            <li><a href="/overview/">가이드 개요</a></li>
             {%- for guide in collections.guides %}
             <li><a href="{{ guide.url }}">{{ guide.data.navTitle or guide.data.title }}</a></li>
             {%- endfor %}
-            <li><a href="/#editorial">편집 기준</a></li>
+            <li><a href="/overview/#editorial">편집 기준</a></li>
           </ul>
         </nav>
         <nav class="site-footer__col" aria-labelledby="footer-official">

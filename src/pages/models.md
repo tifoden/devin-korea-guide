@@ -6,7 +6,7 @@ permalink: /models/
 series: 모델
 seriesNumber: "개요"
 statusLabel: 초안 · 앰버서더 검토 대기
-verifiedAt: 2026-11-08T00:54:00+09:00
+verifiedAt: 2026-11-09T22:00:00+09:00
 sources:
   - title: AI Models (Devin Desktop)
     url: https://docs.devin.ai/desktop/models
@@ -18,6 +18,10 @@ sources:
     url: https://docs.devin.ai/cli/fusion
   - title: Adaptive (Devin Desktop)
     url: https://docs.devin.ai/desktop/adaptive
+  - title: Introducing SWE-2
+    url: https://cognition.com/blog/swe-2
+  - title: Devin Fusion (product page)
+    url: https://devin.ai/fusion
   - title: Introducing SWE-1.5
     url: https://devin.ai/blog/swe-1-5
   - title: Your First Session
@@ -50,6 +54,8 @@ Devin을 쓰다 보면 SWE-2, Fusion, Adaptive, Agent 같은 이름이 한 화�
 
 ## Fusion: 두 모델이 함께 일하는 방식
 
+공식 제품 페이지를 한국어로 옮긴 [Fusion 페이지](/models/fusion/)에서 작업 분담과 공개 벤치마크를 그림으로 볼 수 있습니다.
+
 Fusion을 고르면 모든 세션에서 두 모델이 함께 일합니다.
 
 - **Lead**: 프런티어 모델입니다. 계획, 설계 결정, 조사, 정확성이 중요한 작업을 맡고 결과를 검토합니다.
@@ -76,26 +82,45 @@ CLI 문서는 Adaptive를 모델 설정의 **라우팅(Adaptive routing)** 으�
 [Models (Devin CLI)](https://docs.devin.ai/cli/models), [Adaptive](https://docs.devin.ai/desktop/adaptive)
 :::
 
-## SWE 계열 모델
+<h2 id="swe">SWE 계열 모델</h2>
 
-공식 모델 문서에 나오는 Cognition 자체 모델 이름은 다음과 같습니다.
+[AI Models](https://docs.devin.ai/desktop/models) 문서는 SWE 계열을 “소프트웨어 엔지니어링 작업에 맞춰 만든 Cognition 자체 프런티어 모델”로 소개합니다. SWE-2와 SWE-2 Flash는 각각 Medium, High, Max 세 가지 추론 강도(reasoning effort)로 제공됩니다. 공식 홈페이지 내비게이션의 SWE 항목은 별도 제품 페이지가 아니라 Cognition 블로그의 [Introducing SWE-2](https://cognition.com/blog/swe-2) 글로 연결됩니다.
 
-- **SWE-2**: [AI Models](https://docs.devin.ai/desktop/models) 문서의 “The following models are available in Devin Desktop and Devin CLI” 목록에 있습니다. 같은 문서에 가격 공지가 서로 다르게 두 가지 실려 있어, 이 가이드는 어느 쪽도 현재 혜택으로 안내하지 않습니다(아래 ‘확인하지 못한 것’ 참고).
-- **SWE-2 Flash**: Medium, High, Max 세 가지 변형이 있습니다. [AI Models](https://docs.devin.ai/desktop/models) 문서는 <span lang="en">“SWE-2 Flash Medium is available on the Free plan. SWE-2 Flash High and Max require a paid plan.”</span>이라고 적고 있습니다.
-- **SWE-1.6**: CLI 설정 예시에 `swe-1-6-fast`라는 모델 ID로 나옵니다.
-- **SWE-1.5**: 공식 블로그가 소개한 빠른 에이전트 모델입니다. 블로그는 수천억 개 파라미터 규모의 모델이며 주요 모델보다 최대 13배 빠르다고 밝혔습니다. 발표 당시 Windsurf(현재 Devin Desktop)용으로 최적화되었다고 설명했습니다.
-- **swe-grep, swe-check**: 모델 문서의 SWE 계열 항목에 함께 나오는 이름입니다.
+### SWE-2
+
+- **위상**: 모델 문서는 “Cognition's software engineering model”로, 출시 글은 “지금까지 가장 앞선 코딩 모델”로 소개합니다(2026.09.10 발표).
+- **기반 모델**: 출시 글에 따르면 2.8T 파라미터 모델 Kimi K3에서 사후 학습했고, SWE-1.7의 학습 인프라와 방법을 이어받아 강화 학습(RL)을 수조 파라미터 규모로 처음 키웠습니다. 모든 추론 강도를 한 번의 RL 실행에서 함께 학습하는 알고리즘이 핵심 변화라고 설명합니다.
+- **공개된 벤치마크**(Cognition 발표 수치): FrontierCode 1.1 Main 50.0%, DeepSWE 1.1 73.0%, Terminal-Bench 2.1 92.8%, Terminal-Bench 4.0 27.3%. 같은 표에서 SWE-1.7은 각각 42.0%, 37.7%, 81.5%, 7.6%입니다.
+- **효율**: FrontierCode 1.1 Main에서 SWE-2 medium은 SWE-1.7보다 점수가 높으면서 턴 수는 58%, 평균 비용은 81% 적었다고 합니다. 실행당 평균 단계는 SWE-1.7 127, SWE-2 medium 53, high 80, max 98이며, 첫 실제 수정까지의 단계 중앙값은 18(SWE-1.7은 48)입니다.
+- **추론 강도별 차이**: 출시 글은 medium이 단순·중간 난도 작업에 빠르고 비용 효율적이며, high와 max는 계획과 탐색, 검증을 더 많이 해 복잡한 작업에 유리하다고 설명합니다.
+- **제공 범위**: 출시 글 기준 Devin Desktop과 CLI에서 바로 쓸 수 있고, Devin Web과 Fusion에도 순차 적용 중이라고 밝혔습니다. 공식 [Fusion](/models/fusion/) 페이지의 예시에서는 SWE-2가 sidekick 역할을 맡습니다.
+
+### SWE-2 Flash
+
+- 모델 문서 기준 Devin Desktop과 Devin CLI에서 쓸 수 있고, **Devin Cloud에서는 쓸 수 없습니다.**
+- Medium, High, Max 세 변형이 있습니다. 문서 원문: <span lang="en">“SWE-2 Flash Medium is available on the Free plan. SWE-2 Flash High and Max require a paid plan.”</span>
+- 파라미터 수, 컨텍스트 길이, 벤치마크 수치는 확인한 공식 자료에 나오지 않아 적지 않았습니다.
+
+### 이전 세대와 보조 모델
+
+- **SWE-1.7**: 모델 문서가 “이전 플래그십 소프트웨어 엔지니어링 모델”이라고 부르는 직전 세대입니다.
+- **SWE-1.6**: 소프트웨어 엔지니어링 에이전트용 이전 세대 모델입니다. CLI 설정 예시에는 `swe-1-6-fast`라는 모델 ID로 나옵니다.
+- **SWE-1.5**: 공식 블로그가 소개한 빠른 에이전트 모델입니다. 블로그는 수천억 개 파라미터 규모이며 주요 모델보다 최대 13배 빠르다고 밝혔고, 발표 당시 Windsurf(현재 Devin Desktop)용으로 최적화되었다고 설명했습니다.
+- **SWE-1-mini**: Desktop의 Tab(자동 완성 제안)을 구동하며 실시간 지연 시간에 맞춰 최적화되었습니다.
+- **swe-grep**: 컨텍스트 검색과 Fast Context를 구동합니다.
+- **swe-check**: 흔한 코드 문제를 빠르게 훑는 Quick Review를 구동합니다.
 
 CLI에서 `swe` 같은 짧은 이름은 항상 해당 계열의 최신 버전을 가리킵니다.
 
 ::: src
-[AI Models](https://docs.devin.ai/desktop/models), [Models (Devin CLI)](https://docs.devin.ai/cli/models), [Introducing SWE-1.5](https://devin.ai/blog/swe-1-5)
+[AI Models](https://docs.devin.ai/desktop/models), [Models (Devin CLI)](https://docs.devin.ai/cli/models), [Introducing SWE-2](https://cognition.com/blog/swe-2), [Introducing SWE-1.5](https://devin.ai/blog/swe-1-5)
 :::
 
 ### 확인하지 못한 것
 
 - **“SWE Flash”라는 이름은 공식 문서에서 찾지 못했습니다.** 공식 이름은 **SWE-2 Flash**입니다.
-- SWE-2와 SWE-2 Flash의 파라미터 수, 컨텍스트 길이 같은 사양은 확인한 공식 자료에 나오지 않아 적지 않았습니다.
+- SWE-2 Flash의 파라미터 수, 컨텍스트 길이, 그리고 SWE-2의 컨텍스트 길이는 확인한 공식 자료에 나오지 않아 적지 않았습니다.
+- 위 벤치마크와 비용 수치는 Cognition이 발표한 값이며 이 가이드가 직접 측정하지 않았습니다.
 - 확인일 기준 같은 모델 문서 안에 SWE-2 Flash 프로모션 공지가 두 가지(‘2026년 12월 4일까지 무료’와 ‘2026년 11월 18일까지 25% 할인’) 함께 실려 있고, SWE-2 가격 공지도 두 가지가 함께 있습니다. 공지가 서로 엇갈리므로 이 가이드는 어느 쪽도 지금 받을 수 있는 혜택으로 안내하지 않습니다. 실제 가격은 사용 전에 모델 선택기와 공식 문서에서 직접 확인해야 합니다.
 
 ::: tip 모델보다 지시문부터
