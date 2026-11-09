@@ -14,13 +14,13 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const browser = await chromium.connectOverCDP(process.env.CDP_URL || "http://localhost:29229");
 
 const PAGES = [
-  { name: "home", path: "/", nav: "" },
-  { name: "overview", path: "/overview/", nav: "개요" },
+  { name: "home", path: "/", nav: "개요" },
   { name: "article", path: "/guides/first-task/", nav: "" },
   { name: "features", path: "/features/", nav: "제품" },
   ...["cloud", "desktop", "cli", "mobile", "review", "security", "oncall"].map((n) => ({ name: `features-${n}`, path: `/features/${n}/`, nav: "제품" })),
   { name: "models", path: "/models/", nav: "모델" },
   { name: "models-fusion", path: "/models/fusion/", nav: "모델" },
+  { name: "models-third-party", path: "/models/third-party/", nav: "모델" },
   { name: "use-cases", path: "/use-cases/", nav: "활용사례" },
   { name: "startups", path: "/startups/", nav: "스타트업 프로그램" },
 ];
@@ -226,7 +226,8 @@ for (const vp of VIEWPORTS) {
     await mt.focus();
     await page.keyboard.press("Enter");
     const m1 = await page.evaluate(() => ({ exp: document.querySelector('[aria-controls="models-menu"]').getAttribute("aria-expanded"), links: [...document.querySelectorAll("#models-menu .nav-panel__label")].map((l) => l.textContent), focus: document.activeElement.textContent.trim().slice(0, 12) }));
-    check(`models/desktop Enter opens Models panel with Fusion + SWE family`, m1.exp === "true" && ["Fusion", "SWE-2", "SWE-2 Flash"].every((n) => m1.links.includes(n)) && m1.focus.startsWith("Fusion"), JSON.stringify(m1));
+    check(`models/desktop Enter opens Models panel: Fusion, 타사 모델 directly under it, SWE family`, m1.exp === "true" && m1.links.slice(0, 2).join() === "Fusion,타사 모델" && ["SWE-2", "SWE-2 Flash"].every((n) => m1.links.includes(n)) && m1.focus.startsWith("Fusion"), JSON.stringify(m1));
+    check(`models/desktop 타사 모델 subtitle verbatim`, await page.evaluate(() => [...document.querySelectorAll('#models-menu .nav-panel__link')].find((a) => a.getAttribute("href") === "/models/third-party/")?.querySelector(".nav-panel__desc").textContent === "OpenAI, Anthropic, Google, SpaceXSI 및 오픈소스 최신 모델에 액세스"));
     await page.keyboard.press("Escape");
     check(`models/desktop Escape closes and returns focus`, await page.evaluate(() => document.activeElement.getAttribute("aria-controls") === "models-menu" && document.activeElement.getAttribute("aria-expanded") === "false"));
     await mt.click();
@@ -236,13 +237,20 @@ for (const vp of VIEWPORTS) {
     await page.waitForURL("**/models/fusion/");
     await page.mouse.move(1200, 700);
     await page.waitForTimeout(400);
-    for (const path of ["/use-cases/", "/models/fusion/", "/features/cli/", "/overview/"]) {
+    for (const path of ["/", "/use-cases/", "/models/fusion/", "/models/third-party/", "/features/cli/"]) {
       await page.goto(base + path, { waitUntil: "networkidle" });
       await page.mouse.move(1200, 700);
       const nm = await page.evaluate(() => [...document.querySelectorAll(".site-nav > ul > li > .nav-link")].filter((e) => e.getClientRects().length).map((e) => { const s = getComputedStyle(e); return { t: e.firstChild.textContent.trim(), k: [s.fontSize, s.fontWeight, s.letterSpacing, s.lineHeight, e.getBoundingClientRect().height].join("/"), bg: s.backgroundColor, cur: e.matches('[aria-current], .is-current') }; }));
       check(`navstyle/desktop ${path} tabs = 개요,제품,모델,활용사례,스타트업 프로그램 with identical 14px/400/normal/19.6px/28`, nm.map((n) => n.t).join() === "개요,제품,모델,활용사례,스타트업 프로그램" && nm.every((n) => n.k === "14px/400/normal/19.6px/28"), JSON.stringify(nm));
       check(`navstyle/desktop ${path} current tab has no background`, nm.some((n) => n.cur) && nm.every((n) => n.bg === "rgba(0, 0, 0, 0)"), JSON.stringify(nm.filter((n) => n.cur)));
     }
+    await page.goto(base + "/overview/", { waitUntil: "load" });
+    await page.waitForURL(base + "/", { timeout: 5000 }).catch(() => {});
+    check(`redirect/desktop /overview/ → / (개요)`, await page.evaluate(() => location.pathname === "/" && document.querySelector('.site-nav a[aria-current="page"]')?.textContent.trim() === "개요"));
+    check(`logo/desktop links to / (개요)`, await page.evaluate(() => document.querySelector(".wordmark").getAttribute("href") === "/"));
+    await page.goto(base + "/models/third-party/", { waitUntil: "networkidle" });
+    const tp = await page.evaluate(() => ({ providers: [...document.querySelectorAll("[data-provider] h2")].map((h) => h.textContent.trim()), families: document.querySelectorAll("[data-family]").length, chips: document.querySelectorAll("[data-family] .tp-chip").length, fusion: !!document.querySelector('.tp-fusion a[href="/models/fusion/"]') }));
+    check(`third-party/desktop lists 9 providers, 53 families, Fusion recommended block`, tp.providers.join() === "Cognition,Anthropic,OpenAI,Google,xAI,DeepSeek,Kimi (Moonshot AI),GLM (Z.ai),NVIDIA" && tp.families === 53 && tp.fusion, JSON.stringify(tp));
     const logo = await page.evaluate(() => { const i = document.querySelector(".wordmark__logo"); const r = i.getBoundingClientRect(); return { h: r.height, alt: i.alt, ok: i.complete && i.naturalWidth > 0 }; });
     check(`navstyle/desktop logo 20px high with accessible name`, logo.h === 20 && logo.alt === "Devin 한국어 가이드" && logo.ok, JSON.stringify(logo));
   }

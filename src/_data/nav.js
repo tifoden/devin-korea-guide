@@ -2,7 +2,7 @@
 // `match` marks a whole URL prefix as current; `section` is an in-page id used for scroll-spy on that page.
 // `menu` renders a grouped panel that opens on click/keyboard (and hover with a fine pointer); `url` stays the no-JS fallback.
 export default [
-  { label: "개요", url: "/overview/" },
+  { label: "개요", url: "/" },
   {
     label: "제품",
     url: "/features/",
@@ -36,9 +36,10 @@ export default [
     id: "models-menu",
     menu: [
       {
-        heading: "모델 조합",
+        heading: "모델 선택",
         items: [
           { label: "Fusion", url: "/models/fusion/", desc: "lead와 sidekick 두 모델을 짝짓는 방식" },
+          { label: "타사 모델", lang: "ko", url: "/models/third-party/", desc: "OpenAI, Anthropic, Google, SpaceXSI 및 오픈소스 최신 모델에 액세스" },
         ],
       },
       {

@@ -41,7 +41,7 @@
                 <p class="nav-panel__heading" id="{{ item.id }}-g{{ loop.index }}">{{ group.heading }}</p>
                 <ul aria-labelledby="{{ item.id }}-g{{ loop.index }}">
                   {%- for link in group.items %}
-                  <li><a class="nav-panel__link" href="{{ link.url }}"{% if page.url == link.url %} aria-current="page"{% endif %}><span class="nav-panel__label" lang="en">{{ link.label }}</span>{% if link.tag %} <span class="badge badge--neutral">{{ link.tag }}</span>{% endif %}<span class="nav-panel__desc">{{ link.desc }}</span></a></li>
+                  <li><a class="nav-panel__link" href="{{ link.url }}"{% if page.url == link.url %} aria-current="page"{% endif %}><span class="nav-panel__label"{% if link.lang != "ko" %} lang="en"{% endif %}>{{ link.label }}</span>{% if link.tag %} <span class="badge badge--neutral">{{ link.tag }}</span>{% endif %}<span class="nav-panel__desc">{{ link.desc }}</span></a></li>
                   {%- endfor %}
                 </ul>
               </div>
@@ -73,11 +73,9 @@
           <h2 id="footer-guide" class="site-footer__heading">가이드</h2>
           <ul>
             <li><a href="/">홈</a></li>
-            <li><a href="/overview/">가이드 개요</a></li>
             {%- for guide in collections.guides %}
             <li><a href="{{ guide.url }}">{{ guide.data.navTitle or guide.data.title }}</a></li>
             {%- endfor %}
-            <li><a href="/overview/#editorial">편집 기준</a></li>
           </ul>
         </nav>
         <nav class="site-footer__col" aria-labelledby="footer-official">

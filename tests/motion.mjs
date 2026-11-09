@@ -57,8 +57,8 @@ const dims = await page.evaluate(async () => {
 });
 check("cloud stacked-card dim ramps to captured caps", dims.out[0].split(",").every((v) => v === "0.00") && dims.out[3] === dims.caps.split(",").map((v) => (+v).toFixed(2)).join(","), JSON.stringify(dims));
 
-// Dropdown timing is sampled on /overview/: the home replica's collage animations drop this VM's software renderer to ~14 fps (devin.ai itself: ~9 fps), which stretches any 0.1s transition.
-await page.goto(`${base}/overview/`, { waitUntil: "networkidle" });
+// Dropdown timing is sampled on /use-cases/: the home replica's collage animations drop this VM's software renderer to ~14 fps (devin.ai itself: ~9 fps), which stretches any 0.1s transition.
+await page.goto(`${base}/use-cases/`, { waitUntil: "networkidle" });
 const trig = page.locator(".nav-trigger").first();
 await trig.click();
 const sample = await page.evaluate(() => new Promise((res) => { const p = document.querySelector(".nav-trigger + .nav-panel"); const s = document.querySelector(".nav-scrim"); const seq = []; const t0 = performance.now(); (function f() { seq.push([Math.round(performance.now() - t0), +getComputedStyle(p).opacity, +getComputedStyle(s).opacity]); performance.now() - t0 < 250 ? requestAnimationFrame(f) : res(seq); })(); }));
@@ -71,20 +71,10 @@ const escOp = await page.evaluate(() => [+getComputedStyle(document.querySelecto
 check("Escape: panel + scrim faded out", escOp[0] < 0.05 && escOp[1] < 0.05, JSON.stringify(escOp));
 const esc = await page.evaluate(() => [document.documentElement.classList.contains("nav-panel-open"), getComputedStyle(document.querySelector(".nav-trigger + .nav-panel")).display, getComputedStyle(document.querySelector(".nav-scrim")).visibility]);
 check("Escape closes panel and scrim", !esc[0] && esc[1] === "none" && esc[2] === "hidden", JSON.stringify(esc));
-await page.goto(`${base}/overview/`, { waitUntil: "networkidle" });
-const dots = await page.evaluate(() => getComputedStyle(document.querySelector(".status-dot")).animationName + " " + getComputedStyle(document.querySelector(".window__list li")).animationName);
-check("overview status pulse + list fade-in-up", dots === "pulse dt-fade-in-up", dots);
-const lis = await page.$$eval(".window__list li", (els) => els.map((e) => getComputedStyle(e).opacity));
-await page.waitForTimeout(800);
-const lis2 = await page.$$eval(".window__list li", (els) => els.map((e) => getComputedStyle(e).opacity));
-check("overview list ends fully visible", lis2.every((o) => o === "1"), lis2.join(","));
 
 const rm = await b.newPage({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
 await rm.goto(`${base}/features/desktop/`, { waitUntil: "networkidle" });
 check("reduced motion: no pending reveals", (await rm.locator(".reveal-pending").count()) === 0);
-await rm.goto(`${base}/overview/`, { waitUntil: "networkidle" });
-const rmLi = await rm.$$eval(".window__list li", (els) => els.map((e) => getComputedStyle(e).opacity));
-check("reduced motion: overview list visible immediately", rmLi.every((o) => o === "1"), rmLi.join(","));
 await rm.locator(".nav-trigger").first().click();
 check("reduced motion: panel opaque immediately, no scrim", (await rm.evaluate(() => getComputedStyle(document.querySelector(".nav-trigger + .nav-panel")).opacity)) === "1" && (await rm.evaluate(() => getComputedStyle(document.querySelector(".nav-scrim")).display)) === "none");
 await rm.goto(`${base}/features/security/`, { waitUntil: "networkidle" });
@@ -94,7 +84,7 @@ check("reduced motion: security triage animation off", tri.length > 0 && tri.eve
 const cls = await (async () => {
   const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
   const out = {};
-  for (const r of ["/", "/overview/", "/models/fusion/", "/features/cloud/", "/features/desktop/", "/features/cli/", "/features/mobile/", "/features/review/", "/features/security/", "/features/oncall/"]) {
+  for (const r of ["/", "/models/fusion/", "/models/third-party/", "/features/cloud/", "/features/desktop/", "/features/cli/", "/features/mobile/", "/features/review/", "/features/security/", "/features/oncall/"]) {
     await p.goto(base + r, { waitUntil: "networkidle" });
     out[r] = await p.evaluate(async () => {
       let v = 0; new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!e.hadRecentInput) v += e.value; }).observe({ type: "layout-shift", buffered: true });
@@ -105,7 +95,7 @@ const cls = await (async () => {
   }
   return out;
 })();
-check("CLS < 0.1 on home, overview, Fusion + 7 feature pages (load + full scroll)", Object.values(cls).every((v) => v < 0.1), JSON.stringify(cls));
+check("CLS < 0.1 on home, Fusion, third-party + 7 feature pages (load + full scroll)", Object.values(cls).every((v) => v < 0.1), JSON.stringify(cls));
 console.log("CLS", JSON.stringify(cls));
 console.log(`${pass}/${pass + fail} motion checks passed`);
 await b.close();

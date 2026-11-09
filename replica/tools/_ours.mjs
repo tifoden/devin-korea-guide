@@ -6,7 +6,7 @@ for (const spec of process.argv.slice(2)) {
   const [name, w] = spec.split(":");
   const p = await ctx.newPage();
   await p.setViewportSize({ width: +w || 1440, height: 900 });
-  const path = name === "home" ? "/" : name === "fusion" ? "/models/fusion/" : name === "overview" ? "/overview/" : `/features/${name}/`;
+  const path = name === "third-party" ? "/models/third-party/" : name === "home" ? "/" : name === "fusion" ? "/models/fusion/" : name === "overview" ? "/overview/" : `/features/${name}/`;
   await p.goto(`http://localhost:8080${path}`, { waitUntil: "networkidle" });
   for (let y = 0; y < 12000; y += 700) { await p.evaluate((y) => scrollTo(0, y), y); await p.waitForTimeout(60); }
   await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(400);

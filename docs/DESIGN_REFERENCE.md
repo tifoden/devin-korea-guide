@@ -126,7 +126,7 @@ Font file metadata (read with fontTools):
 | Hover | background `rgba(0,0,0,.06)`, colour unchanged, `color, background-color .15s cubic-bezier(.4,0,.2,1)` | same |
 | Open trigger | same `rgba(0,0,0,.06)` while `aria-expanded="true"` | same |
 | Current page | none: on /pricing the Pricing link has transparent bg, weight 400, no underline, no `aria-current` | **no visual current state at all** (previous `.06` pill and mobile dot removed). `aria-current="page"` kept for assistive tech only |
-| Items | Product · Solutions · Resources (dropdowns) · Customers · Pricing · Blog | `src/_data/nav.js`: 개요(/overview/) · 제품 ▾ · 모델 ▾ · 활용사례 · 스타트업 프로그램. "시작하기" removed from the bar (first-task guide linked from /overview/, footer, home note). Rule unchanged: add an entry only when its page or section exists |
+| Items | Product · Solutions · Resources (dropdowns) · Customers · Pricing · Blog | `src/_data/nav.js`: 개요(/ — the home replica; logo also links /) · 제품 ▾ · 모델 ▾ · 활용사례 · 스타트업 프로그램. "시작하기" removed from the bar (first-task guide linked from the footer and the home note). Rule unchanged: add an entry only when its page or section exists |
 | Mobile | 36px menu button, full-height panel | unchanged; both dropdowns are accordions inside the disclosure menu |
 
 ### 6b. Product / Models dropdowns (observed 2026-11-09 KST; adapted)
@@ -135,7 +135,7 @@ Font file metadata (read with fontTools):
 | --- | --- | --- |
 | Open | mouse hover opens (`aria-expanded="true"` on hover), click also opens; Escape closes | mouse hover opens on `(hover: hover) and (pointer: fine)` desktops, leave closes after 150ms; click / Enter / Space / ArrowDown open; Escape closes and returns focus; outside click and Tab-out close; touch = tap only. Only one panel open at a time |
 | Motion | popup opacity / height / translate `.1s cubic-bezier(0,0,.2,1)`; backdrop `blur(4px)` fading over .1s | unchanged from the motion pass (§7): opacity + 4px translate .1s, same scrim |
-| Groups | one sheet: Surfaces · Features · Platform · **Models** (Fusion → /fusion, SWE → cognition.com/blog/swe-2, Evals → cognition.com/frontiercode) | 제품: 사용 환경 · 업무 기능 · 전체 보기. 모델 (separate trigger per owner request): 모델 조합 → Fusion (/models/fusion/) · SWE 계열 → SWE-2, SWE-2 Flash, SWE-1.7 · 보조 모델 (anchors on /models/) · 모델 개요 전체 보기 |
+| Groups | one sheet: Surfaces · Features · Platform · **Models** (Fusion → /fusion, SWE → cognition.com/blog/swe-2, Evals → cognition.com/frontiercode) | 제품: 사용 환경 · 업무 기능 · 전체 보기. 모델 (separate trigger per owner request): 모델 선택 → Fusion (/models/fusion/), 타사 모델 (/models/third-party/, owner-supplied subtitle kept verbatim incl. "SpaceXSI") · SWE 계열 → SWE-2, SWE-2 Flash, SWE-1.7 · 보조 모델 (anchors on /models/) · 모델 개요 전체 보기 |
 | Group heading | 14px / 400, `oklab(0 0 0 / .56)`, no uppercase | 14px / 400, `--text-secondary` (raised for 4.5:1) |
 | Link | 16px / 400, `#000`, padding `4px 0`, radius 4px; hover colour `rgb(49,124,255)`, no background | 16px label, hover colour `#317cff`, no background, no current-page background; plus a 13px Korean description and 44px touch target |
 | Panel | full-width sheet | anchored 560px card (fewer links) |
@@ -143,7 +143,8 @@ Font file metadata (read with fontTools):
 ### 6c. Home and model routes (2026-11-09 KST)
 
 - `/` is now a Korean replica of https://devin.ai/ (`replica/src/home-main.html`, `replica/i18n/home.json`, layout `replica.njk`): hero + product collage, customer logo marquee, "동료들이 가장 아끼는 동료" 5-card grid, 01–04 workflow sections, integrations grid, Recently shipped list, enterprise security grid, final CTA — official order, local assets (`src/assets/official/`), official animations, reduced motion honoured. The promo announcement strip lives in the official header, outside `<main>`, and is not reproduced.
-- The previous home overview moved unchanged to `/overview/` (`src/overview.njk`); `/#editorial` links now point to `/overview/#editorial`.
+- `/` is the 개요 tab (owner decision 2026-11-09). The old guide overview content was deleted; `/overview/` is a static redirect to `/` (meta refresh + `location.replace`, `noindex`, canonical `/`), and footer links to it were removed.
+- `/models/third-party/` is a white landing page (not a replica): official utilities (`page-container`, `text-h2`, bordered sections, 42px pill CTAs) plus `.tp-*` cards/chips in `site.css`. Data: `src/_data/thirdPartyModels.js`, the 259 TEAMS_TIER_PRO labels from the docs page's `modelCostData`, grouped into 53 families across 9 providers (Cognition, Anthropic, OpenAI, Google, xAI, DeepSeek, Kimi, GLM, NVIDIA). Variant suffixes render as chips; `is_recommended` renders as 문서 추천. Prices and promo windows are not shown (only the owner-requested SWE-2 / SWE-2 Flash availability notes).
 - `/models/fusion/` replicates https://devin.ai/fusion. No dedicated SWE page exists (`devin.ai/swe`, `/swe-2`, `/models`, `/evals` → 404; the official nav links SWE to a blog post), so SWE stays as anchored sections on `/models/`.
 - Official mock UIs are drawn at a fixed pixel size and scaled into an `aspect-ratio` box by JS on devin.ai. `build.py` marks them `data-fit-w` and `motion.js` rescales with a ResizeObserver so they shrink on mobile like the official page.
 - Home Slack-thread link colour `#088bd7` (3.6:1) darkened to `#0b6aa6` for AA.
