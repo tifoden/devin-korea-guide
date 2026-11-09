@@ -15,6 +15,7 @@
     if (open) triggers.forEach((o) => o !== t && setPanel(o, false));
     t.setAttribute("aria-expanded", String(open));
     if (open && focusFirst) panelLinks(t)[0].focus();
+    root.classList.toggle("nav-panel-open", desktop.matches && triggers.some((o) => o.getAttribute("aria-expanded") === "true"));
   };
   const openTrigger = () => triggers.find((t) => t.getAttribute("aria-expanded") === "true");
   for (const t of triggers) {

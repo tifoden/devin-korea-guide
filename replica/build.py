@@ -112,6 +112,8 @@ def build(name, fixups=None):
                 if l and not el.get("src", "").startswith("/assets"): el["src"] = l
             if el.get("sizes"): del el["sizes"]
         if el.get("style"):
+            m = re.search(r"opacity:\s*0(?![\d.]).*translateY\(([\d.]+)px\)", el["style"])
+            if m: el["data-reveal"] = m.group(1)
             el["style"] = lift_opacity(el, fix_color_dark(unmotion(el["style"])) if in_dark(el) else fix_color(unmotion(el["style"])))
             el["style"] = re.sub(r"url\(['\"]?([^'\")]+)['\"]?\)", lambda m: f"url({local(m.group(1)) or m.group(1)})", el["style"])
         if el.name == "a" and el.get("href"):
@@ -123,6 +125,7 @@ def build(name, fixups=None):
             if a.startswith(("data-tally", "data-nimg")) or a in ("decoding", "fetchpriority"): del el[a]
         if el.name == "img" and not el.get("loading"): el["loading"] = "lazy"
     if fixups: fixups(soup, root)
+    accordion_fix(soup, root, name)
     common_fix(soup, root)
     html = str(root)
     open(os.path.join(OUT, f"{name}.html"), "w").write(html)
@@ -171,6 +174,8 @@ def common_fix(soup, root):
     for el in root.find_all("div", class_="pointer-events-none"):  # scroll-dim overlays captured mid-animation
         c = el.get("class", [])
         if "absolute" in c and "inset-0" in c and "bg-white" in c and not el.find(True) and "opacity" in (el.get("style") or ""):
+            m = re.search(r"opacity:\s*([\d.]+)", el["style"])
+            el["data-dim-cap"] = m.group(1)
             el["style"] = re.sub(r"opacity:\s*[\d.]+", "opacity: 0", el["style"])
     for el in root.find_all(["dl", "dt", "dd"]):
         el.name = "div"
@@ -183,6 +188,42 @@ def common_fix(soup, root):
     for i, h in enumerate(root.find_all("h1")):
         if i: h.name = "p"
 
+def accordion_fix(soup, root, name):
+    """Make the official div-based FAQ rows operable (button semantics, aria-expanded) for motion.js."""
+    rows = [e for e in root.find_all("div", class_="cursor-pointer") if "border-t" in e.get("class", [])]
+    panels = [next((c for c in r.find_all("div", recursive=False) if "grid" in c.get("class", [])), None) for r in rows]
+    on = next((c for p in panels if p and "grid-rows-[1fr]" in p.get("class", []) for d in p.find_all(True) for c in d.get("class", []) if c in ("opacity-100", "opacity-80")), "opacity-100")
+    paths = {}
+    for r, p in zip(rows, panels):
+        q = next((c for c in r.find_all("div", recursive=False) if c is not p), None)
+        path = q and q.find("path")
+        if path: paths["open" if p and "grid-rows-[1fr]" in p.get("class", []) else "closed"] = path["d"]
+    for i, (r, p) in enumerate(zip(rows, panels)):
+        if not p: continue
+        q = next((c for c in r.find_all("div", recursive=False) if c is not p), None)
+        if not q: continue
+        pid = f"{name}-faq-{i + 1}"
+        r["data-acc"] = ""
+        q.attrs.update({"data-acc-trigger": "", "role": "button", "tabindex": "0", "aria-controls": pid,
+                  "aria-expanded": "true" if "grid-rows-[1fr]" in p.get("class", []) else "false"})
+        p["id"] = pid
+        p["data-acc-on"] = on
+        for d in p.find_all(True):
+            if any(c in ("opacity-0", "opacity-100", "opacity-80") for c in d.get("class", [])): d["data-acc-fade"] = ""
+        path = q.find("path")
+        if path and len(paths) == 2:
+            path.attrs.update({"data-acc-path": "", "data-d-open": paths["open"], "data-d-closed": paths["closed"]})
+
+def desktop_fix(soup, root):
+    """Official in-view reveal targets that were already revealed in the capture (rows fade up 8px)."""
+    for el in root.find_all(class_="hm-clickable"):
+        c = el.get("class", [])
+        st = el.get("style") or ""
+        if "hm-hover" in c and "items-start" in c and re.search(r"width:\s*100%", st):
+            el["data-reveal"] = "8"
+            m = re.search(r"opacity [\d.]+s ([\d.]+)s", st)
+            if m: el["data-reveal-delay"] = str(round(float(m.group(1)) * 1000))
+
 def security_fix(soup, root):
     """Drop the promotional credits banner and its FAQ item (not presented as an offer in this guide)."""
     for t in root.find_all(string=re.compile(r"Devin Security (credits|크레딧)", re.I)):
@@ -194,7 +235,7 @@ def security_fix(soup, root):
             d.decompose()
 
 
-FIX = {"mobile": mobile_fix, "review": review_fix, "security": security_fix}
+FIX = {"desktop": desktop_fix, "mobile": mobile_fix, "review": review_fix, "security": security_fix}
 
 if __name__ == "__main__":
     for n in sys.argv[1:] or ["cloud", "desktop", "cli", "mobile", "security", "oncall", "review"]:

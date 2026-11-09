@@ -140,11 +140,29 @@ Font file metadata (read with fontTools):
 | Mobile | — | inside the existing disclosure menu as an accordion; auto-expanded on `/features/*` pages |
 | No JS | — | `제품` renders as a plain link to `/features/` |
 
-## 7. Motion
+## 7. Motion (measured 2026-11-09 KST, Chrome via CDP, 1440×900 and 390×844)
 
-- `--default-transition-duration: .15s`, `--default-transition-timing-function: cubic-bezier(.4,0,.2,1)`.
-- Buttons use `duration-200`. Links use `transition-opacity duration-200 hover:opacity-80`.
-- Used here: 0.2s with the same easing, on opacity, color and background only. No entrance or scroll animation. `prefers-reduced-motion` turns transitions off.
+Measured with `replica/tools/_motion.mjs`, `_motion2.mjs`, `_panel2.mjs` and `_stack.mjs` (computed styles sampled every animation frame or every ~50 ms). Raw JSON is kept outside the repo in `research/motion/`.
+
+| Area | Observed on devin.ai | Used in this guide |
+| --- | --- | --- |
+| Default transition | `--default-transition-duration: .15s`, `cubic-bezier(.4,0,.2,1)` | `--ease` = same curve; `--dur: .2s` for links/buttons (official buttons use `duration-200`) |
+| Button / nav hover | opacity → `.8` (`hover:opacity-80`), 0.2s; secondary text colour fades to 56% black | Unchanged: primary button and links fade to `.8` |
+| Header | product pages: fixed, 52px, `#f8f8f8`, no blur, no border. Home: 94px including the announcement strip | Sticky, `--header-h` unchanged (guide header, not the official one) |
+| Product dropdown | Base UI popup: full-width sheet under the bar; `opacity`, `height`, `translate` 0.1s `cubic-bezier(0,0,.2,1)`; enters from 4px above (top 48→52px); fixed backdrop with `backdrop-filter: blur(4px)` fading in over 0.1s, `pointer-events: none`; closes in ~0.1s | Card-style panel kept (grouped layout from §6b). Desktop: `opacity` + `translate: 0 -4px` 0.1s `--ease-out` with `@starting-style` and `display … allow-discrete` so it also animates out; new `.nav-scrim` (blur 4px, 0.1s fade, no pointer events). Mobile menu unchanged (no motion observed there worth copying) |
+| Page / route transitions | None (full page loads, no View Transitions) | None |
+| Hero text | No entrance animation: h1, lead and buttons are opacity 1 from the first frame | None on text |
+| Product mock rows (Desktop) | Rows start at `opacity:0; translateY(8px)` (a card at 6px), inline `transition: opacity .45s <delay>, transform .45s` with delays .08s, .17s, .26s…; triggered as soon as the group enters the viewport (sampled at 98% viewport height); ~450 ms `ease` | `data-reveal` from the capture; `motion.js` observes each group (`IntersectionObserver`, threshold 0, rootMargin −8% bottom); same 0.45s `ease`, official per-row delays; rows already on screen at load are left static |
+| Stacked cards (Cloud) | `lg:` sticky cards pinned at 120 + 24px·n; white overlay opacity grows 0.1 per 100px scrolled after a card pins, capped at .95/.95/.9/.45/0 | Same rule in `motion.js` (caps read from the capture as `data-dim-cap`); off when the container is not sticky (mobile) |
+| FAQ (Desktop, CLI) | Div rows, `grid-template-rows` 0fr↔1fr 0.2s ease-out + answer opacity 0.2s; plus/minus icon swaps | Same classes toggled by `motion.js`; rows get `role="button"`, `tabindex=0`, `aria-expanded`, `aria-controls`; closed answers are `inert`; Enter/Space work |
+| FAQ (Security) | Native `<details>`; 64→182px with no height animation | Native `<details>`, unchanged |
+| Security workflow | `Vj0Jqq_triage-stream` 6.4s linear infinite, `Vj0Jqq_remediate-sequence` 8s, `@property --security-triage-progress`; official CSS disables them under reduced motion | Static override removed, official animation runs; disabled under reduced motion by the official rule |
+| Logo marquees / home collage | `new-home-logo-scroll` linear infinite 54s, 67.5s, 108s, 114s; `hero-collage-pan` 55–242s; `hm-shimmer` 2.5s, `pulse` 2s, `shine` 5s, `sc-blink` .8s | Replica pages keep whatever official classes they contain. The guide home has no logo strip (no customer claims on the home page), so no marquee was added |
+| Home preview window | (official equivalent: animated product mocks; `dt-fade-in-up` keyframes .35s, 6px) | Chapter rows use `dt-fade-in-up` .35s `--ease-out`, 120ms + 40ms·n stagger, once at load; status dot uses official `pulse` 2s `cubic-bezier(.4,0,.6,1)` |
+| Counters | None found animating (numbers are static text) | None |
+| Reduced motion | Official CSS stops its own keyframe animations | Global rule: transitions off, animations reduced to .01ms × 1; no reveals (content shown immediately), no scrim |
+
+Layout stability: all motion uses `opacity`/`transform`/`translate` only. Cumulative Layout Shift measured by `tests/motion.mjs` while loading and scrolling each page stays below 0.03.
 
 ## 8. Deliberately not reused
 

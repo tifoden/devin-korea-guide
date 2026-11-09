@@ -38,7 +38,7 @@ bodyClass: page-home
           <p class="window__heading">{{ firstGuide.data.title }}</p>
           <ol class="window__list">
             {%- for h in guideToc %}
-            <li><a href="{{ firstGuide.url }}#{{ h.id }}"><span class="window__num" aria-hidden="true">{{ "0" if loop.index < 10 else "" }}{{ loop.index }}</span>{{ h.text }}</a></li>
+            <li style="--i: {{ loop.index0 }}"><a href="{{ firstGuide.url }}#{{ h.id }}"><span class="window__num" aria-hidden="true">{{ "0" if loop.index < 10 else "" }}{{ loop.index }}</span>{{ h.text }}</a></li>
             {%- endfor %}
           </ol>
         </div>

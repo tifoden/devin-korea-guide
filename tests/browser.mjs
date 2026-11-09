@@ -63,9 +63,14 @@ for (const vp of VIEWPORTS) {
     check(`${tag} block-level targets ≥ 24px`, info.smallTargets.length === 0, info.smallTargets.join(", "));
     if (p.name === "article") check(`${tag} prose font-size 17px`, info.proseSize === "17px", info.proseSize);
 
+    await page.evaluate(async () => { for (let y = 0; y < document.documentElement.scrollHeight; y += 500) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } await new Promise((r) => setTimeout(r, 1000)); scrollTo(0, 0); });
+    check(`${tag} in-view reveals all completed after scrolling`, await page.evaluate(() => [...document.querySelectorAll(".reveal-pending")].every((e) => getComputedStyle(e).opacity === "1")));
+    // Contrast is checked at rest: looping official mock animations (e.g. Security remediate-sequence) pass through faded frames by design.
+    await page.emulateMedia({ reducedMotion: "reduce" });
     const axe = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
     check(`${tag} axe WCAG A/AA violations = 0`, axe.violations.length === 0, axe.violations.map((v) => `${v.id}(${v.nodes.length})`).join(", "));
 
+    await page.emulateMedia({ reducedMotion: null });
     await page.screenshot({ path: `${OUT}${p.name}-${vp.name}.png`, fullPage: true });
     await page.screenshot({ path: `${OUT}${p.name}-${vp.name}-fold.png` });
   }
