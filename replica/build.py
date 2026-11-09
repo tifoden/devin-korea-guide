@@ -183,7 +183,18 @@ def common_fix(soup, root):
     for i, h in enumerate(root.find_all("h1")):
         if i: h.name = "p"
 
-FIX = {"mobile": mobile_fix, "review": review_fix}
+def security_fix(soup, root):
+    """Drop the promotional credits banner and its FAQ item (not presented as an offer in this guide)."""
+    for t in root.find_all(string=re.compile(r"Devin Security (credits|크레딧)", re.I)):
+        a = t.find_parent("a")
+        if a and t.find_parent("details") is None:
+            a.decompose()
+    for d in root.find_all("details"):
+        if re.search(r"credits program|크레딧 프로그램", d.get_text(), re.I):
+            d.decompose()
+
+
+FIX = {"mobile": mobile_fix, "review": review_fix, "security": security_fix}
 
 if __name__ == "__main__":
     for n in sys.argv[1:] or ["cloud", "desktop", "cli", "mobile", "security", "oncall", "review"]:
