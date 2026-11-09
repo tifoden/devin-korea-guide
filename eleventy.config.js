@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import markdownIt from "markdown-it";
 import markdownItAnchor from "markdown-it-anchor";
 import markdownItContainer from "markdown-it-container";
@@ -17,6 +18,8 @@ function slugify(text) {
 }
 
 export default function (eleventyConfig) {
+  eleventyConfig.addShortcode("replica", (name) => readFileSync(`src/_includes/replica/${name}.html`, "utf8"));
+  eleventyConfig.ignores.add("src/_includes/replica/**");
   const md = markdownIt({ html: true, linkify: false, typographer: false })
     .use(markdownItAnchor, { slugify, tabIndex: false });
 

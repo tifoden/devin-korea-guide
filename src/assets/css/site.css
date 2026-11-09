@@ -522,3 +522,64 @@ html:not(.js) .nav-panel,
 }
 .js .site-nav .nav-fallback { display: none; }
 .nav-trigger__chevron { display: inline-block; flex: none; }
+
+/* Official product-page replicas (/features/<product>/) */
+.page-replica .official { background: rgb(252 252 252); color: rgb(17 17 17); overflow-x: clip; }
+.page-replica .official a { transition: none; }
+.page-replica .official a:hover { color: inherit; }
+.page-replica .official img { max-width: none; }
+.page-replica .official [data-replica-hide] { display: none !important; }
+.replica-note { border-top: 1px solid var(--border); background: #fcfcfc; padding: 28px 0 36px; }
+.replica-note__inner { display: grid; gap: 8px; max-width: 880px; font-size: 13px; line-height: 1.65; color: var(--text-secondary); }
+.replica-note__lead { color: var(--text-primary); }
+.replica-note a { text-decoration: underline; }
+.replica-note__caveat { color: var(--text-primary); }
+
+.page-replica .official-app { background: #fff; color: rgb(17 17 17); overflow-x: clip; }
+.page-replica .official-app img { max-width: none; }
+.page-replica .official-app a { transition: none; }
+/* replica targets */
+.page-replica .official a, .page-replica .official-app a { min-height: 24px; }
+.page-replica .official .sr-only, .page-replica .official-app .sr-only { font-family: "Pretendard Variable", Pretendard, sans-serif; }
+/* replica contrast: official light tokens darkened to meet WCAG AA */
+.page-replica .official.light, .page-replica .official .light:not(.dark),
+.page-replica .official-app.light, .page-replica .official-app .light:not(.dark) {
+  --text-secondary: 25 25 25 / .7;
+  --text-tertiary: 25 25 25 / .62;
+  --text-accent-primary: 0 95 204;
+}
+.page-replica :is(.official, .official-app) :is(.text-dt-text-muted, .text-text-disabled) { color: rgb(25 25 25 / .6); }
+.page-replica :is(.official, .official-app) :is(.text-diff-added, .text-text-green) { color: #00804a; }
+.page-replica :is(.official, .official-app) :is(.text-diff-removed, .text-text-red) { color: #c62828; }
+.page-replica :is(.official, .official-app) .text-text-purple { color: #6a3fc0; }
+.page-replica :is(.official, .official-app) .text-text-blue { color: #1d5fd0; }
+.page-replica :is(.official, .official-app) .text-text-orange { color: #a85300; }
+.page-replica .official { --slack-link: #0a6aa6; --slack-code: #b0164a; }
+.page-replica .official .text-white\/45 { color: rgb(255 255 255 / .62); }
+.page-replica .official .text-dt-text-inverse-dim.opacity-80 { opacity: 1; }
+.page-replica .official .text-\[var\(--slack-link\)\] { color: #0a6aa6; }
+.page-replica .official .text-\[var\(--slack-code\)\] { color: #b0164a; }
+.page-replica .official-app :is(.text-red, [class*="text-red-"]) { color: #c62828; }
+.page-replica .official-app [class*="text-orange"] { color: #a85300; }
+.page-replica .official-app [class*="text-green"] { color: #00804a; }
+.page-replica .official [style*="#1971c2"] { color: #14589a !important; }
+.page-replica .official [style*="#d9730d"] { color: #9a4f05 !important; }
+.page-replica :is(.official, .official-app) :is(.text-dt-text-muted, .text-text-disabled) { color: rgb(25 25 25 / .68); }
+.page-replica .official .bg-tint-green.text-text-green { color: #006b3e; }
+.page-replica .official p.tabular-nums.text-text-secondary { color: rgb(255 255 255 / .62); }
+.page-replica .official [class*="triageLine"] { opacity: 1 !important; animation: none !important; }
+.page-replica :is(.official, .official-app) a { min-width: 24px; }
+.page-replica .official .opacity-50:has(> .truncate) { opacity: .82; }
+.page-replica .official-app .prose-main span.font-mono { color: #1f6f94; }
+.page-replica .official [style*="opacity: 0.82"] [style*="#696969"] { color: #4a4a4a !important; }
+/* replica fonts: official Latin stacks get Pretendard for Korean glyphs */
+.page-replica .official, .page-replica .official-app {
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  --font-geist-mono: geistMono, "Pretendard Variable";
+  --font-ibm-plex-mono: geistMono, "Pretendard Variable";
+  --font-sans: "Pretendard Variable", Pretendard, sans-serif;
+}
+.page-replica .official-app .font-sans { font-family: "Pretendard Variable", Pretendard, sans-serif; }
+.page-replica .official .text-dt-text-disabled { color: rgb(25 25 25 / .68); }
+.page-replica .official .g3LArG_className { font-family: slackFont, "slackFont Fallback", "Pretendard Variable", Pretendard, sans-serif; }
+.page-replica .official-app { --font-ui: "Pretendard Variable", Pretendard, sans-serif; }

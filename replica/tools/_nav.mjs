@@ -1,0 +1,10 @@
+import { chromium } from "playwright-core";
+const b = await chromium.connectOverCDP("http://localhost:29229");
+const p = await b.contexts()[0].newPage();
+await p.setViewportSize({ width: 1440, height: 900 });
+await p.goto("https://devin.ai/desktop", { waitUntil: "networkidle" });
+const btn = p.getByRole("button", { name: /Product/i }).first();
+await btn.click(); await p.waitForTimeout(800);
+const links = await p.$$eval("a", (as) => as.filter(a=>a.offsetParent).map((a) => a.innerText.replace(/\s+/g," ").trim().slice(0,60) + " | " + a.href));
+console.log(links.join("\n"));
+await p.close(); process.exit(0);

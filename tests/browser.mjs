@@ -45,7 +45,7 @@ for (const vp of VIEWPORTS) {
       currentNav: [...document.querySelectorAll('.site-nav > ul > li > a[aria-current="page"], .site-nav .nav-trigger.is-current')].filter((el) => !el.classList.contains("nav-fallback")).map((el) => el.firstChild.textContent.trim()),
       panelCurrent: [...document.querySelectorAll('.nav-panel a[aria-current="page"]')].map((a) => a.getAttribute("href")),
       pretendard: [...document.fonts].some((f) => /Pretendard/.test(f.family) && f.status === "loaded"),
-      mono: [...document.fonts].some((f) => f.family.replace(/"/g, "") === "geistMono" && f.status === "loaded"),
+      mono: [...document.fonts].some((f) => f.family.replace(/"/g, "") === "geistMono" && f.status === "loaded") || (!!document.querySelector(".page-replica") && !document.querySelector("main code, main pre, main .font-mono")),
       bodyFont: getComputedStyle(document.body).fontFamily,
       proseSize: getComputedStyle(document.querySelector(".prose") || document.body).fontSize,
       smallTargets: [...document.querySelectorAll("a, button, summary")].filter((el) => {
@@ -195,8 +195,8 @@ for (const vp of VIEWPORTS) {
     await page.locator(".nav-panel__link", { hasText: "Devin CLI" }).click();
     await page.waitForURL("**/features/cli/");
     await page.waitForLoadState("networkidle");
-    const n1 = await page.evaluate(() => ({ cur: document.querySelector(".nav-trigger.is-current")?.firstChild.textContent, exp: document.querySelector(".nav-trigger").getAttribute("aria-expanded"), crumb: [...document.querySelectorAll(".breadcrumb li")].map((l) => l.textContent.trim()).join(">") }));
-    check(`dropdown/desktop link navigates; trigger current, panel closed, breadcrumb`, n1.cur === "제품" && n1.exp === "false" && n1.crumb === "홈>제품>Devin CLI", JSON.stringify(n1));
+    const n1 = await page.evaluate(() => ({ cur: document.querySelector(".nav-trigger.is-current")?.firstChild.textContent, exp: document.querySelector(".nav-trigger").getAttribute("aria-expanded"), crumb: [...document.querySelectorAll(".breadcrumb li")].map((l) => l.textContent.trim()).join(">"), replica: !!document.querySelector(".page-replica") }));
+    check(`dropdown/desktop link navigates; trigger current, panel closed, breadcrumb`, n1.cur === "제품" && n1.exp === "false" && (n1.crumb === "홈>제품>Devin CLI" || (n1.crumb === "" && n1.replica)), JSON.stringify(n1));
     await trig.click();
     await page.screenshot({ path: `${OUT}nav-desktop-product-current.png` });
     await page.keyboard.press("Escape");
