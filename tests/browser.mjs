@@ -170,6 +170,16 @@ for (const vp of VIEWPORTS) {
     check(`nav/desktop 스타트업 프로그램 navigates and is current`, await page.evaluate(() => location.pathname === "/startups/" && document.querySelector('.site-nav a[aria-current="page"]')?.textContent.trim() === "스타트업 프로그램"));
     const ctas = await page.evaluate(() => [...document.querySelectorAll("main a")].filter((a) => /신청/.test(a.textContent)).map((a) => a.href));
     check(`startups/desktop every apply CTA → official Tally form, no embedded form`, ctas.length >= 1 && ctas.every((h) => h === "https://tally.so/r/zxGB7g") && (await page.locator("iframe[src*='tally']").count()) === 0, JSON.stringify(ctas));
+    const vids = await page.evaluate(() => {
+      const tabs = [...document.querySelectorAll("#startups-videos-tab-0, #startups-videos-tab-1, #startups-videos-tab-2")].map((t) => t.getAttribute("aria-selected"));
+      const srcs = [0, 1, 2].map((i) => {
+        const f = document.querySelector(`#startups-videos-panel-${i} iframe`);
+        return [f?.getAttribute("data-src") || "", f?.getAttribute("src") || "", !!document.getElementById(`startups-videos-panel-${i}`)?.hidden];
+      });
+      const logo = getComputedStyle(document.querySelector(".exa-tab-logo") || document.body).webkitMaskImage || getComputedStyle(document.querySelector(".exa-tab-logo") || document.body).maskImage;
+      return { tabs, srcs, logo, extless: [...document.querySelectorAll("[src]")].map((e) => e.getAttribute("src")).filter((s) => s && s.includes("video__")) };
+    });
+    check(`startups/desktop Finch/Exa/Eight Sleep tabs: official Vimeo embeds, only Exa src on load, no extensionless snapshot, Exa logo mask`, vids.tabs.join() === "false,true,false" && vids.srcs[0][0].includes("1210533558") && !vids.srcs[0][1] && vids.srcs[0][2] && vids.srcs[1][0].includes("1199624852") && vids.srcs[1][1].includes("player.vimeo.com") && !vids.srcs[1][2] && vids.srcs[2][0].includes("1210532977") && !vids.srcs[2][1] && vids.srcs[2][2] && vids.extless.length === 0 && /exa-tab\.svg/.test(vids.logo), JSON.stringify(vids));
     await page.goto(base + "/use-cases/", { waitUntil: "load" });
     await page.waitForURL(base + "/", { timeout: 5000 }).catch(() => {});
     check(`redirect/desktop /use-cases/ → /`, await page.evaluate(() => location.pathname === "/"));

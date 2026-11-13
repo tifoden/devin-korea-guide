@@ -656,3 +656,13 @@ html:not(.js) .nav-panel,
   .js .is-open .header-pill { height: 44px; justify-content: center; font-size: 16px; }
   .js .is-open .nav-panel--cta { width: auto; }
 }
+
+/* Startups case-study tabs: official Exa mark, painted with currentColor (blue when selected). */
+.exa-tab-logo {
+  display: block;
+  width: 46.3px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask: url("../official/exa-tab.svg") no-repeat center / contain;
+          mask: url("../official/exa-tab.svg") no-repeat center / contain;
+}

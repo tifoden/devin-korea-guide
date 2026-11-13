@@ -1031,10 +1031,6 @@
   "orig": "https://devin.ai/assets/images/ios/iphone-render.webp",
   "local": "/assets/official/assets__images__ios__iphone-render.webp"
  },
- "https://tally.so/embed/q46p0g?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1&originPage=%2Fmobile": {
-  "orig": "https://tally.so/embed/q46p0g?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1&originPage=%2Fmobile",
-  "local": "/assets/official/embed__q46p0g"
- },
  "https://devin.ai/_next/image?url=%2Fimages%2Fblog%2Fdevin-security-2%2Fcover.png&w=1080&q=75&dpl=dpl_7o47S2uUmmsUr3efdwGzYjdpGWb3": {
   "orig": "https://devin.ai/images/blog/devin-security-2/cover.png",
   "local": "/assets/official/images__blog__devin-security-2__cover.png"
@@ -3986,13 +3982,5 @@
  "https://devin.ai/_next/image?url=%2Fassets%2Fimages%2Fstartups%2Fadriano.jpg&w=128&q=75&dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
   "orig": "https://devin.ai/assets/images/startups/adriano.jpg",
   "local": "/assets/official/assets__images__startups__adriano.jpg"
- },
- "https://tally.so/embed/zxGB7g?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1&originPage=%2Fstartups": {
-  "orig": "https://tally.so/embed/zxGB7g?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1&originPage=%2Fstartups",
-  "local": "/assets/official/embed__zxGB7g"
- },
- "https://player.vimeo.com/video/1199624852?h=f1ddb43fb0&badge=0&autopause=0&autoplay=1&muted=1&texttrack=en&title=0&byline=0&portrait=0": {
-  "orig": "https://player.vimeo.com/video/1199624852?h=f1ddb43fb0&badge=0&autopause=0&autoplay=1&muted=1&texttrack=en&title=0&byline=0&portrait=0",
-  "local": "/assets/official/video__1199624852"
  }
 }

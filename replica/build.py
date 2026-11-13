@@ -13,6 +13,10 @@ ROUTES.update({"": "/", "/fusion": "/models/fusion/"})
 
 def local(u):
     full = urljoin("https://devin.ai/", u)
+    # Keep Vimeo players remote. A snapshotted player HTML has no extension, so
+    # GitHub Pages serves it as application/octet-stream and browsers download it.
+    if "vimeo.com" in full or "tally.so" in full:
+        return full
     return amap.get(full, {}).get("local")
 
 def _lum(r, g, b):
@@ -165,12 +169,24 @@ def review_fix(soup, root):
     for el in root.find_all(style=re.compile("Excalifont")):
         el["style"] = re.sub(r"font-family:[^;]*Excalifont[^;]*", 'font-family: Excalifont, "Pretendard Variable", Pretendard, sans-serif', el["style"])
 
+def in_startups_videos(el):
+    eid = el.get("id") or ""
+    if eid.startswith("startups-videos"):
+        return True
+    if el.find(id=lambda v: v and str(v).startswith("startups-videos")):
+        return True
+    return bool(el.find_parent(id=lambda v: v and str(v).startswith("startups-videos")))
+
 def common_fix(soup, root):
     for b in root.find_all("button"):
+        if in_startups_videos(b):
+            continue
         b.name = "span"
         for a in ("type", "aria-expanded", "aria-controls", "aria-pressed", "aria-label", "aria-haspopup", "disabled", "tabindex", "data-state"):
             if b.get(a) is not None: del b[a]
     for el in root.find_all(attrs={"role": ["tab", "tablist", "tabpanel"]}):
+        if in_startups_videos(el):
+            continue
         del el["role"]
         for a in ("aria-selected", "aria-controls", "aria-labelledby", "tabindex"):
             if el.get(a) is not None: del el[a]
@@ -238,21 +254,54 @@ def security_fix(soup, root):
             d.decompose()
 
 
+STARTUP_VIDEOS = {
+    # Official unlisted embeds from the /startups client bundle (module 475233).
+    0: "https://player.vimeo.com/video/1210533558?h=1dbffaba0f&badge=0&autopause=0&autoplay=1&muted=1&texttrack=en&title=0&byline=0&portrait=0",
+    1: "https://player.vimeo.com/video/1199624852?h=f1ddb43fb0&badge=0&autopause=0&autoplay=1&muted=1&texttrack=en&title=0&byline=0&portrait=0",
+    2: "https://player.vimeo.com/video/1210532977?h=6f607a5d1a&badge=0&autopause=0&autoplay=1&muted=1&texttrack=en&title=0&byline=0&portrait=0",
+}
+
 def startups_fix(soup, root):
     """One destination only: hero CTA and closing CTA go to the official Tally form; the embedded form is not reproduced."""
     TALLY = "https://tally.so/r/zxGB7g"
     hero = root.find("a", href="#apply")
     for a in root.find_all("a", href="#apply"): a["href"] = TALLY
     for f in root.find_all("iframe"):
-        if "tally.so" in (f.get("src") or ""):
+        src = " ".join(filter(None, [f.get("src"), f.get("data-tally-src"), f.get("id")]))
+        if "tally.so" in src or "embed__zxGB7g" in src or f.get("id") == "iFrameResizer0":
             box = f.parent
             box.clear()
             if hero:
                 import copy
                 btn = copy.copy(hero); btn["href"] = TALLY
                 box.append(btn)
-        elif not f.get("src"):
-            f.decompose()
+    # Official page hydrates Finch/Eight Sleep iframe src in JS; snapshot only had the Exa src.
+    for i, src in STARTUP_VIDEOS.items():
+        panel = root.find(id=f"startups-videos-panel-{i}")
+        if not panel:
+            continue
+        iframe = panel.find("iframe")
+        if not iframe:
+            iframe = soup.new_tag("iframe")
+            iframe["class"] = ["absolute", "inset-0", "size-full"]
+            iframe["frameborder"] = "0"
+            iframe["allow"] = "autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            iframe["referrerpolicy"] = "strict-origin-when-cross-origin"
+            panel.append(iframe)
+        iframe["data-src"] = src
+        if i == 1:
+            iframe["src"] = src
+        elif iframe.get("src"):
+            del iframe["src"]
+    # Official Exa tab mark is an inline SVG that can render a missing-glyph box; use the local official asset.
+    tab = root.find(id="startups-videos-tab-1")
+    if tab:
+        svg = tab.find("svg")
+        if svg:
+            logo = soup.new_tag("span")
+            logo["class"] = ["exa-tab-logo"]
+            logo["aria-hidden"] = "true"
+            svg.replace_with(logo)
 
 FIX = {"startups": startups_fix, "desktop": desktop_fix, "mobile": mobile_fix, "review": review_fix, "security": security_fix}
 
