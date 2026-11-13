@@ -127,7 +127,7 @@ for (const vp of VIEWPORTS) {
     const n = await page.evaluate(() => [...document.querySelectorAll("#site-menu a, #site-menu button")].filter((el) => el.getClientRects().length).length);
     for (let i = 0; i < n; i++) await page.keyboard.press("Tab");
     const mc = await page.evaluate(() => ({ pills: [...document.querySelectorAll("#site-menu .header-pill")].filter((e) => e.getClientRects().length).map((e) => e.firstChild.textContent.trim()) }));
-    check(`menu/mobile shows 요금제 + 도입 상담하기`, mc.pills.join() === "요금제,도입 상담하기", JSON.stringify(mc));
+    check(`menu/mobile shows 요금제 + 도입 검토하기`, mc.pills.join() === "요금제,도입 검토하기", JSON.stringify(mc));
     check(`menu/mobile Tab loops back to toggle`, await page.evaluate(() => document.activeElement.classList.contains("menu-toggle")));
     await page.keyboard.press("Escape");
     const closed = await page.evaluate(() => ({ exp: document.querySelector(".menu-toggle").getAttribute("aria-expanded"), focus: document.activeElement.className }));
@@ -141,7 +141,7 @@ for (const vp of VIEWPORTS) {
     await page.screenshot({ path: `${OUT}nav-mobile-product.png` });
     await page.locator("#site-menu .header-cta .nav-trigger").click();
     const mcta = await page.evaluate(() => [...document.querySelectorAll("#cta-menu a")].filter((a) => a.getClientRects().length).map((a) => a.querySelector(".nav-panel__label").textContent.trim()));
-    check(`menu/mobile 도입 상담하기 tap shows both options`, mcta.join() === "한국 앰버서더와 미팅,Devin 데모 받기", JSON.stringify(mcta));
+    check(`menu/mobile 도입 검토하기 tap shows both options`, mcta.join() === "한국 앰버서더와 미팅,Devin 데모 받기", JSON.stringify(mcta));
     await page.locator("#site-menu .header-cta .nav-trigger").click();
     await page.locator("#site-menu .nav-trigger").first().click();
     await page.locator("#site-menu .nav-panel__link", { hasText: "Devin Review" }).click();
@@ -261,11 +261,11 @@ for (const vp of VIEWPORTS) {
     await page.goto(base + "/", { waitUntil: "networkidle" });
     await page.mouse.move(1300, 800);
     const pills = await page.evaluate(() => [...document.querySelectorAll(".header-pill")].map((e) => { const s = getComputedStyle(e); return { t: e.firstChild.textContent.trim(), href: e.getAttribute("href"), h: e.getBoundingClientRect().height, r: s.borderRadius, f: s.fontSize + "/" + s.fontWeight, bg: s.backgroundColor }; }));
-    check(`header/desktop 요금제 (outline → devin.ai/pricing) + 도입 상담하기 (solid black) pills 28px/200px/14px 400`, pills.length === 2 && pills[0].t === "요금제" && pills[0].href === "https://devin.ai/pricing" && pills[1].t === "도입 상담하기" && pills[1].bg === "rgb(0, 0, 0)" && pills.every((p) => p.h === 28 && p.r === "200px" && p.f === "14px/400"), JSON.stringify(pills));
+    check(`header/desktop 요금제 (outline → devin.ai/pricing) + 도입 검토하기 (solid black) pills 28px/200px/14px 400`, pills.length === 2 && pills[0].t === "요금제" && pills[0].href === "https://devin.ai/pricing" && pills[1].t === "도입 검토하기" && pills[1].bg === "rgb(0, 0, 0)" && pills.every((p) => p.h === 28 && p.r === "200px" && p.f === "14px/400"), JSON.stringify(pills));
     const cta = page.locator(".header-cta .nav-trigger");
     await cta.focus(); await page.keyboard.press("Enter");
     const c1 = await page.evaluate(() => ({ exp: document.querySelector(".header-cta .nav-trigger").getAttribute("aria-expanded"), links: [...document.querySelectorAll("#cta-menu a")].map((a) => [a.querySelector(".nav-panel__label").textContent.trim(), a.getAttribute("href"), a.target, a.rel]), focus: document.activeElement.textContent.trim().slice(0, 10), shadow: getComputedStyle(document.getElementById("cta-menu")).boxShadow }));
-    check(`cta/desktop Enter opens 도입 상담하기 menu: ambassador (site config) + demo (_blank noopener), focus first`, c1.exp === "true" && c1.links.length === 2 && c1.links[0][0] === "한국 앰버서더와 미팅" && c1.links[0][1] === "#" && c1.links[1][0] === "Devin 데모 받기" && c1.links[1][1] === "https://devin.ai/demo" && c1.links[1][2] === "_blank" && c1.links[1][3] === "noopener" && c1.focus.startsWith("한국"), JSON.stringify(c1));
+    check(`cta/desktop Enter opens 도입 검토하기 menu: ambassador (site config) + demo (_blank noopener), focus first`, c1.exp === "true" && c1.links.length === 2 && c1.links[0][0] === "한국 앰버서더와 미팅" && c1.links[0][1] === "https://cal.com/jaden-son/1h" && c1.links[0][2] === "_blank" && c1.links[0][3] === "noopener" && c1.links[1][0] === "Devin 데모 받기" && c1.links[1][1] === "https://devin.ai/demo" && c1.links[1][2] === "_blank" && c1.links[1][3] === "noopener" && c1.focus.startsWith("한국"), JSON.stringify(c1));
     await page.keyboard.press("ArrowDown");
     check(`cta/desktop ArrowDown moves to demo link`, await page.evaluate(() => document.activeElement.getAttribute("href") === "https://devin.ai/demo"));
     await page.keyboard.press("Escape");

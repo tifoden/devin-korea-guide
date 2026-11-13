@@ -6,5 +6,5 @@ export default {
   officialDocs: "https://docs.devin.ai",
   pricingUrl: "https://devin.ai/pricing",
   demoUrl: "https://devin.ai/demo",
-  ambassadorMeetingUrl: "#",
+  ambassadorMeetingUrl: "https://cal.com/jaden-son/1h",
 };
