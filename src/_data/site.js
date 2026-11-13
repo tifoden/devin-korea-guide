@@ -1,13 +1,10 @@
 export default {
   title: "Devin 한국어 가이드",
-  shortDescription: "Devin을 한국어로 차근차근 익히는 안내서",
-  description:
-    "Devin 공식 한국 앰버서더가 주도해 만드는 한국어 가이드 초안입니다. 공식 문서로 확인한 사실, 필자 제안, 가상 실습을 구분해 적습니다.",
+  shortDescription: "팀의 자율 소프트웨어 엔지니어 Devin",
+  description: "팀의 자율 소프트웨어 엔지니어 Devin. 클라우드와 내 컴퓨터에서 코드를 작성하고 테스트하며, 머지할 수 있는 PR까지 완성합니다.",
   lang: "ko",
-  status: "초안",
-  maintainer: "Jaden (Devin 공식 한국 앰버서더)",
   officialDocs: "https://docs.devin.ai",
-  officialIndex: "https://docs.devin.ai/llms.txt",
-  disclaimer:
-    "이 사이트는 앰버서더가 주도해 만드는 초안입니다. Cognition이 발행하거나 검수·보증한 문서가 아닙니다.",
+  pricingUrl: "https://devin.ai/pricing",
+  demoUrl: "https://devin.ai/demo",
+  ambassadorMeetingUrl: "#",
 };

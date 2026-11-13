@@ -53,6 +53,5 @@ export default [
     ],
     overview: { label: "모델 개요 전체 보기", url: "/models/" },
   },
-  { label: "활용사례", url: "/use-cases/" },
   { label: "스타트업 프로그램", url: "/startups/" },
 ];

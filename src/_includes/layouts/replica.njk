@@ -6,15 +6,8 @@ extraCss: ["/assets/official/official.css"]
 <div class="{{ replicaClass or 'official light theme-light font-body antialiased' }}" lang="ko">
 {% if replica %}{% replica replica %}{% else %}{{ content | safe }}{% endif %}
 </div>
-<aside class="replica-note" aria-label="출처와 확인일">
-  <div class="page-container replica-note__inner">
-    <p class="replica-note__lead"><span class="badge badge--neutral">{{ site.status }}</span>{% if noteLead %} {{ noteLead | safe }}</p>{% else %} 이 페이지는 공식 제품 페이지 <a href="{{ officialUrl }}">{{ officialUrl | replace("https://", "") }}</a>를 한국어로 옮긴 것입니다. <time datetime="{{ verifiedAt }}">{{ verifiedAt | koDate }}</time> (KST)에 공식 페이지를 열어 확인했습니다. 내용이 다르면 공식 페이지를 따르세요.</p>{% endif %}
-    {%- if caveat %}<p class="replica-note__caveat">{{ caveat | safe }}</p>{% endif %}
-    <p class="replica-note__meta">관리: {{ site.maintainer or "Jaden (Devin 공식 한국 앰버서더)" }}. 앰버서더가 운영하는 가이드로, Cognition이 발행·검토·보증한 페이지가 아닙니다. 화면 속 이미지와 그래픽은 공식 페이지의 공개 자료입니다.</p>
-    {%- if sources %}
-    <p class="replica-note__sources">참고 문서:
-      {%- for s in sources %} <a href="{{ s.url }}">{{ s.title }}</a>{% if not loop.last %} ·{% endif %}{% endfor %}
-    </p>
-    {%- endif %}
-  </div>
-</aside>
+{%- if availability %}
+<section class="product-note" aria-label="이용 조건">
+  <div class="page-container product-note__inner"><p>{{ availability | safe }}</p></div>
+</section>
+{%- endif %}

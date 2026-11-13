@@ -238,8 +238,24 @@ def security_fix(soup, root):
             d.decompose()
 
 
-FIX = {"desktop": desktop_fix, "mobile": mobile_fix, "review": review_fix, "security": security_fix}
+def startups_fix(soup, root):
+    """One destination only: hero CTA and closing CTA go to the official Tally form; the embedded form is not reproduced."""
+    TALLY = "https://tally.so/r/zxGB7g"
+    hero = root.find("a", href="#apply")
+    for a in root.find_all("a", href="#apply"): a["href"] = TALLY
+    for f in root.find_all("iframe"):
+        if "tally.so" in (f.get("src") or ""):
+            box = f.parent
+            box.clear()
+            if hero:
+                import copy
+                btn = copy.copy(hero); btn["href"] = TALLY
+                box.append(btn)
+        elif not f.get("src"):
+            f.decompose()
+
+FIX = {"startups": startups_fix, "desktop": desktop_fix, "mobile": mobile_fix, "review": review_fix, "security": security_fix}
 
 if __name__ == "__main__":
-    for n in sys.argv[1:] or ["cloud", "desktop", "cli", "mobile", "security", "oncall", "review", "home", "fusion"]:
+    for n in sys.argv[1:] or ["cloud", "desktop", "cli", "mobile", "security", "oncall", "review", "home", "fusion", "startups"]:
         build(n, FIX.get(n))

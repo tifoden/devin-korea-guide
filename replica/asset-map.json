@@ -3926,5 +3926,73 @@
  "https://devin.ai/assets/images/fusion/fusion-cli.mp4": {
   "orig": "https://devin.ai/assets/images/fusion/fusion-cli.mp4",
   "local": "/assets/official/assets__images__fusion__fusion-cli.mp4"
+ },
+ "https://devin.ai/_next/image?url=%2Fassets%2Fimages%2Fstartups%2Fadriano.jpg&w=64&q=75&dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/assets/images/startups/adriano.jpg",
+  "local": "/assets/official/assets__images__startups__adriano.jpg"
+ },
+ "https://devin.ai/_next/image?url=%2Fassets%2Fimages%2Fstartups%2Ffaris.jpg&w=64&q=75&dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/assets/images/startups/faris.jpg",
+  "local": "/assets/official/assets__images__startups__faris.jpg"
+ },
+ "https://devin.ai/_next/image?url=%2Fassets%2Fimages%2Fstartups%2Fhari.jpg&w=64&q=75&dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/assets/images/startups/hari.jpg",
+  "local": "/assets/official/assets__images__startups__hari.jpg"
+ },
+ "https://devin.ai/images/customer-logos/cloudflare.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/images/customer-logos/cloudflare.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66",
+  "local": "/assets/official/images__customer-logos__cloudflare.svg"
+ },
+ "https://devin.ai/images/customer-logos/exa.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/images/customer-logos/exa.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66",
+  "local": "/assets/official/images__customer-logos__exa.svg"
+ },
+ "https://devin.ai/images/customer-logos/gamma.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/images/customer-logos/gamma.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66",
+  "local": "/assets/official/images__customer-logos__gamma.svg"
+ },
+ "https://devin.ai/images/customer-logos/mercor.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/images/customer-logos/mercor.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66",
+  "local": "/assets/official/images__customer-logos__mercor.svg"
+ },
+ "https://devin.ai/images/customer-logos/modal.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/images/customer-logos/modal.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66",
+  "local": "/assets/official/images__customer-logos__modal.svg"
+ },
+ "https://devin.ai/images/customer-logos/nvidia.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/images/customer-logos/nvidia.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66",
+  "local": "/assets/official/images__customer-logos__nvidia.svg"
+ },
+ "https://devin.ai/images/customer-logos/profound.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/images/customer-logos/profound.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66",
+  "local": "/assets/official/images__customer-logos__profound.svg"
+ },
+ "https://devin.ai/images/customer-logos/openrouter.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/images/customer-logos/openrouter.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66",
+  "local": "/assets/official/images__customer-logos__openrouter.svg"
+ },
+ "https://devin.ai/images/customer-logos/decagon.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/images/customer-logos/decagon.svg?dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66",
+  "local": "/assets/official/images__customer-logos__decagon.svg"
+ },
+ "https://devin.ai/_next/image?url=%2Fassets%2Fimages%2Fstartups%2Fhari.jpg&w=128&q=75&dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/assets/images/startups/hari.jpg",
+  "local": "/assets/official/assets__images__startups__hari.jpg"
+ },
+ "https://devin.ai/_next/image?url=%2Fassets%2Fimages%2Fstartups%2Ffaris.jpg&w=128&q=75&dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/assets/images/startups/faris.jpg",
+  "local": "/assets/official/assets__images__startups__faris.jpg"
+ },
+ "https://devin.ai/_next/image?url=%2Fassets%2Fimages%2Fstartups%2Fadriano.jpg&w=128&q=75&dpl=dpl_CGQQE7LYPtBRV8fgGDjw8rBV7R66": {
+  "orig": "https://devin.ai/assets/images/startups/adriano.jpg",
+  "local": "/assets/official/assets__images__startups__adriano.jpg"
+ },
+ "https://tally.so/embed/zxGB7g?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1&originPage=%2Fstartups": {
+  "orig": "https://tally.so/embed/zxGB7g?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1&originPage=%2Fstartups",
+  "local": "/assets/official/embed__zxGB7g"
+ },
+ "https://player.vimeo.com/video/1199624852?h=f1ddb43fb0&badge=0&autopause=0&autoplay=1&muted=1&texttrack=en&title=0&byline=0&portrait=0": {
+  "orig": "https://player.vimeo.com/video/1199624852?h=f1ddb43fb0&badge=0&autopause=0&autoplay=1&muted=1&texttrack=en&title=0&byline=0&portrait=0",
+  "local": "/assets/official/video__1199624852"
  }
 }

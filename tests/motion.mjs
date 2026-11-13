@@ -57,8 +57,8 @@ const dims = await page.evaluate(async () => {
 });
 check("cloud stacked-card dim ramps to captured caps", dims.out[0].split(",").every((v) => v === "0.00") && dims.out[3] === dims.caps.split(",").map((v) => (+v).toFixed(2)).join(","), JSON.stringify(dims));
 
-// Dropdown timing is sampled on /use-cases/: the home replica's collage animations drop this VM's software renderer to ~14 fps (devin.ai itself: ~9 fps), which stretches any 0.1s transition.
-await page.goto(`${base}/use-cases/`, { waitUntil: "networkidle" });
+// Dropdown timing is sampled on /models/: the home replica's collage animations drop this VM's software renderer to ~14 fps (devin.ai itself: ~9 fps), which stretches any 0.1s transition.
+await page.goto(`${base}/models/`, { waitUntil: "networkidle" });
 const trig = page.locator(".nav-trigger").first();
 await trig.click();
 const sample = await page.evaluate(() => new Promise((res) => { const p = document.querySelector(".nav-trigger + .nav-panel"); const s = document.querySelector(".nav-scrim"); const seq = []; const t0 = performance.now(); (function f() { seq.push([Math.round(performance.now() - t0), +getComputedStyle(p).opacity, +getComputedStyle(s).opacity]); performance.now() - t0 < 250 ? requestAnimationFrame(f) : res(seq); })(); }));

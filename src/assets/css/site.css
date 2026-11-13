@@ -638,3 +638,21 @@ html:not(.js) .nav-panel,
   .official .tp-pair { grid-template-columns: minmax(0, 1fr); padding: 16px; }
   .official .tp-pair__plus { justify-self: center; }
 }
+
+/* Header actions (t25u): official devin.ai right-side pills — 28px, radius 200px, 14px/400. */
+.wordmark__logo { height: 28px; }
+.site-header__actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.header-pill { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 1px 12px 0; border-radius: 200px; font: 400 14px/19.6px var(--font-body); letter-spacing: normal; white-space: nowrap; text-decoration: none; cursor: pointer; transition: color .15s cubic-bezier(.4,0,.2,1), background-color .15s cubic-bezier(.4,0,.2,1), opacity .15s cubic-bezier(.4,0,.2,1); }
+.header-pill--outline { border: 1px solid var(--border, rgba(0,0,0,.12)); background: transparent; color: var(--black); }
+.header-pill--outline:hover { background: rgba(0,0,0,.06); color: var(--black); }
+.header-pill--solid { border: 0; background: #000; color: #fff; }
+.header-pill--solid:hover, .header-pill--solid[aria-expanded="true"] { background: #000; color: #fff; opacity: .8; }
+.header-pill--solid .nav-trigger__chevron { border-color: currentColor; }
+.header-cta { position: relative; }
+.nav-panel--cta { grid-template-columns: minmax(0, 1fr); width: 300px; }
+@media (min-width: 64rem) { .nav-panel--cta { left: auto; right: 0; } }
+@media (max-width: 63.99rem) {
+  .js .is-open .site-header__actions { flex-direction: column; align-items: stretch; margin: 16px 0 0; gap: 10px; }
+  .js .is-open .header-pill { height: 44px; justify-content: center; font-size: 16px; }
+  .js .is-open .nav-panel--cta { width: auto; }
+}

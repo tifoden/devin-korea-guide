@@ -21,7 +21,6 @@ const PAGES = [
   { name: "models", path: "/models/", nav: "모델" },
   { name: "models-fusion", path: "/models/fusion/", nav: "모델" },
   { name: "models-third-party", path: "/models/third-party/", nav: "모델" },
-  { name: "use-cases", path: "/use-cases/", nav: "활용사례" },
   { name: "startups", path: "/startups/", nav: "스타트업 프로그램" },
 ];
 const VIEWPORTS = [{ name: "desktop", width: 1440, height: 900, dpr: 1 }, { name: "mobile", width: 390, height: 844, dpr: 2 }];
@@ -127,6 +126,8 @@ for (const vp of VIEWPORTS) {
     await page.screenshot({ path: `${OUT}home-mobile-menu.png` });
     const n = await page.evaluate(() => [...document.querySelectorAll("#site-menu a, #site-menu button")].filter((el) => el.getClientRects().length).length);
     for (let i = 0; i < n; i++) await page.keyboard.press("Tab");
+    const mc = await page.evaluate(() => ({ pills: [...document.querySelectorAll("#site-menu .header-pill")].filter((e) => e.getClientRects().length).map((e) => e.firstChild.textContent.trim()) }));
+    check(`menu/mobile shows 요금제 + 도입 상담하기`, mc.pills.join() === "요금제,도입 상담하기", JSON.stringify(mc));
     check(`menu/mobile Tab loops back to toggle`, await page.evaluate(() => document.activeElement.classList.contains("menu-toggle")));
     await page.keyboard.press("Escape");
     const closed = await page.evaluate(() => ({ exp: document.querySelector(".menu-toggle").getAttribute("aria-expanded"), focus: document.activeElement.className }));
@@ -138,6 +139,11 @@ for (const vp of VIEWPORTS) {
     const grp = await page.evaluate(() => ({ exp: document.querySelector(".nav-trigger").getAttribute("aria-expanded"), heads: [...document.querySelectorAll(".nav-panel__heading")].filter((h) => h.getClientRects().length).map((h) => h.textContent), links: [...document.querySelectorAll(".nav-panel__link")].filter((a) => a.getClientRects().length).length, overflow: document.getElementById("site-menu").scrollWidth - document.getElementById("site-menu").clientWidth }));
     check(`menu/mobile tap expands grouped product list`, grp.exp === "true" && grp.heads.join() === "사용 환경,업무 기능" && grp.links === 7 && grp.overflow <= 0, JSON.stringify(grp));
     await page.screenshot({ path: `${OUT}nav-mobile-product.png` });
+    await page.locator("#site-menu .header-cta .nav-trigger").click();
+    const mcta = await page.evaluate(() => [...document.querySelectorAll("#cta-menu a")].filter((a) => a.getClientRects().length).map((a) => a.querySelector(".nav-panel__label").textContent.trim()));
+    check(`menu/mobile 도입 상담하기 tap shows both options`, mcta.join() === "한국 앰버서더와 미팅,Devin 데모 받기", JSON.stringify(mcta));
+    await page.locator("#site-menu .header-cta .nav-trigger").click();
+    await page.locator("#site-menu .nav-trigger").first().click();
     await page.locator("#site-menu .nav-panel__link", { hasText: "Devin Review" }).click();
     await page.waitForURL("**/features/review/");
     await page.waitForLoadState("networkidle");
@@ -158,15 +164,16 @@ for (const vp of VIEWPORTS) {
   } else {
     check(`article/desktop section tabs hidden (sidebar TOC instead)`, !(await page.locator(".subnav").isVisible()));
     await page.goto(base + "/", { waitUntil: "networkidle" });
-    await page.locator(".site-nav a", { hasText: "활용사례" }).click();
-    await page.waitForURL("**/use-cases/");
+    await page.locator(".site-nav a", { hasText: "스타트업 프로그램" }).click();
+    await page.waitForURL("**/startups/");
     await page.waitForLoadState("networkidle");
-    check(`nav/desktop 활용사례 navigates and is current`, await page.evaluate(() => location.pathname === "/use-cases/" && document.querySelector('.site-nav a[aria-current="page"]')?.textContent.trim() === "활용사례"));
-    await page.locator(".toc__list a", { hasText: "대규모 마이그레이션" }).click();
-    await page.waitForTimeout(700);
-    const dr = await page.evaluate(() => { const t = document.getElementById("대규모-마이그레이션").getBoundingClientRect().top; const bar = document.querySelector("[data-header]").getBoundingClientRect().bottom; return { t, bar }; });
-    check(`nav/desktop TOC link lands below header`, dr.t >= dr.bar && dr.t < dr.bar + 60, JSON.stringify(dr));
-    await page.screenshot({ path: `${OUT}use-cases-desktop-toc.png` });
+    check(`nav/desktop 스타트업 프로그램 navigates and is current`, await page.evaluate(() => location.pathname === "/startups/" && document.querySelector('.site-nav a[aria-current="page"]')?.textContent.trim() === "스타트업 프로그램"));
+    const ctas = await page.evaluate(() => [...document.querySelectorAll("main a")].filter((a) => /신청/.test(a.textContent)).map((a) => a.href));
+    check(`startups/desktop every apply CTA → official Tally form, no embedded form`, ctas.length >= 1 && ctas.every((h) => h === "https://tally.so/r/zxGB7g") && (await page.locator("iframe[src*='tally']").count()) === 0, JSON.stringify(ctas));
+    await page.goto(base + "/use-cases/", { waitUntil: "load" });
+    await page.waitForURL(base + "/", { timeout: 5000 }).catch(() => {});
+    check(`redirect/desktop /use-cases/ → /`, await page.evaluate(() => location.pathname === "/"));
+    check(`nav/desktop 활용사례 tab removed`, await page.evaluate(() => ![...document.querySelectorAll(".site-nav a")].some((a) => a.textContent.trim() === "활용사례")));
     // Product dropdown: click, keyboard, Escape, focus return, outside click, Tab out, navigation.
     await page.goto(base + "/", { waitUntil: "networkidle" });
     const trig = page.locator(".nav-trigger").first();
@@ -215,13 +222,13 @@ for (const vp of VIEWPORTS) {
     for (const w of [1024, 1280]) {
       await page.setViewportSize({ width: w, height: 800 });
       await trig.click();
-      const wv = await page.evaluate(() => { const docs = document.querySelector(".site-header__docs").getBoundingClientRect(); const last = [...document.querySelectorAll(".site-nav > ul > li")].pop().getBoundingClientRect(); const p = document.querySelector(".nav-panel").getBoundingClientRect(); return { overlap: last.right > docs.left, panelRight: p.right, vw: innerWidth, overflow: document.documentElement.scrollWidth - innerWidth }; });
+      const wv = await page.evaluate(() => { const docs = document.querySelector(".site-header__actions").getBoundingClientRect(); const last = [...document.querySelectorAll(".site-nav > ul > li")].pop().getBoundingClientRect(); const p = document.querySelector(".nav-panel").getBoundingClientRect(); return { overlap: last.right > docs.left, panelRight: p.right, vw: innerWidth, overflow: document.documentElement.scrollWidth - innerWidth }; });
       check(`dropdown/desktop ${w}px: nav fits, panel in viewport, no overflow`, !wv.overlap && wv.panelRight <= wv.vw && wv.overflow <= 0, JSON.stringify(wv));
       await page.keyboard.press("Escape");
     }
     await page.setViewportSize({ width: 1440, height: 900 });
     // Models dropdown + official nav metrics: identical tab text, no current-page background.
-    await page.goto(base + "/use-cases/", { waitUntil: "networkidle" });
+    await page.goto(base + "/startups/", { waitUntil: "networkidle" });
     const mt = page.locator(".nav-trigger", { hasText: "모델" });
     await mt.focus();
     await page.keyboard.press("Enter");
@@ -232,16 +239,16 @@ for (const vp of VIEWPORTS) {
     check(`models/desktop Escape closes and returns focus`, await page.evaluate(() => document.activeElement.getAttribute("aria-controls") === "models-menu" && document.activeElement.getAttribute("aria-expanded") === "false"));
     await mt.click();
     await page.waitForTimeout(150);
-    check(`models/desktop click opens; only one panel open`, await page.evaluate(() => [...document.querySelectorAll(".nav-trigger")].map((t) => t.getAttribute("aria-expanded")).join() === "false,true"));
+    check(`models/desktop click opens; only one panel open`, await page.evaluate(() => [...document.querySelectorAll(".nav-trigger")].map((t) => t.getAttribute("aria-expanded")).join() === "false,true,false"));
     await page.locator("#models-menu .nav-panel__link", { hasText: "Fusion" }).click();
     await page.waitForURL("**/models/fusion/");
     await page.mouse.move(1200, 700);
     await page.waitForTimeout(400);
-    for (const path of ["/", "/use-cases/", "/models/fusion/", "/models/third-party/", "/features/cli/"]) {
+    for (const path of ["/", "/startups/", "/models/fusion/", "/models/third-party/", "/features/cli/"]) {
       await page.goto(base + path, { waitUntil: "networkidle" });
       await page.mouse.move(1200, 700);
       const nm = await page.evaluate(() => [...document.querySelectorAll(".site-nav > ul > li > .nav-link")].filter((e) => e.getClientRects().length).map((e) => { const s = getComputedStyle(e); return { t: e.firstChild.textContent.trim(), k: [s.fontSize, s.fontWeight, s.letterSpacing, s.lineHeight, e.getBoundingClientRect().height].join("/"), bg: s.backgroundColor, cur: e.matches('[aria-current], .is-current') }; }));
-      check(`navstyle/desktop ${path} tabs = 개요,제품,모델,활용사례,스타트업 프로그램 with identical 14px/400/normal/19.6px/28`, nm.map((n) => n.t).join() === "개요,제품,모델,활용사례,스타트업 프로그램" && nm.every((n) => n.k === "14px/400/normal/19.6px/28"), JSON.stringify(nm));
+      check(`navstyle/desktop ${path} tabs = 개요,제품,모델,스타트업 프로그램 with identical 14px/400/normal/19.6px/28`, nm.map((n) => n.t).join() === "개요,제품,모델,스타트업 프로그램" && nm.every((n) => n.k === "14px/400/normal/19.6px/28"), JSON.stringify(nm));
       check(`navstyle/desktop ${path} current tab has no background`, nm.some((n) => n.cur) && nm.every((n) => n.bg === "rgba(0, 0, 0, 0)"), JSON.stringify(nm.filter((n) => n.cur)));
     }
     await page.goto(base + "/overview/", { waitUntil: "load" });
@@ -251,8 +258,23 @@ for (const vp of VIEWPORTS) {
     await page.goto(base + "/models/third-party/", { waitUntil: "networkidle" });
     const tp = await page.evaluate(() => ({ providers: [...document.querySelectorAll("[data-provider] h2")].map((h) => h.textContent.trim()), families: document.querySelectorAll("[data-family]").length, chips: document.querySelectorAll("[data-family] .tp-chip").length, fusion: !!document.querySelector('.tp-fusion a[href="/models/fusion/"]') }));
     check(`third-party/desktop lists 9 providers, 53 families, Fusion recommended block`, tp.providers.join() === "Cognition,Anthropic,OpenAI,Google,xAI,DeepSeek,Kimi (Moonshot AI),GLM (Z.ai),NVIDIA" && tp.families === 53 && tp.fusion, JSON.stringify(tp));
+    await page.goto(base + "/", { waitUntil: "networkidle" });
+    await page.mouse.move(1300, 800);
+    const pills = await page.evaluate(() => [...document.querySelectorAll(".header-pill")].map((e) => { const s = getComputedStyle(e); return { t: e.firstChild.textContent.trim(), href: e.getAttribute("href"), h: e.getBoundingClientRect().height, r: s.borderRadius, f: s.fontSize + "/" + s.fontWeight, bg: s.backgroundColor }; }));
+    check(`header/desktop 요금제 (outline → devin.ai/pricing) + 도입 상담하기 (solid black) pills 28px/200px/14px 400`, pills.length === 2 && pills[0].t === "요금제" && pills[0].href === "https://devin.ai/pricing" && pills[1].t === "도입 상담하기" && pills[1].bg === "rgb(0, 0, 0)" && pills.every((p) => p.h === 28 && p.r === "200px" && p.f === "14px/400"), JSON.stringify(pills));
+    const cta = page.locator(".header-cta .nav-trigger");
+    await cta.focus(); await page.keyboard.press("Enter");
+    const c1 = await page.evaluate(() => ({ exp: document.querySelector(".header-cta .nav-trigger").getAttribute("aria-expanded"), links: [...document.querySelectorAll("#cta-menu a")].map((a) => [a.querySelector(".nav-panel__label").textContent.trim(), a.getAttribute("href"), a.target, a.rel]), focus: document.activeElement.textContent.trim().slice(0, 10), shadow: getComputedStyle(document.getElementById("cta-menu")).boxShadow }));
+    check(`cta/desktop Enter opens 도입 상담하기 menu: ambassador (site config) + demo (_blank noopener), focus first`, c1.exp === "true" && c1.links.length === 2 && c1.links[0][0] === "한국 앰버서더와 미팅" && c1.links[0][1] === "#" && c1.links[1][0] === "Devin 데모 받기" && c1.links[1][1] === "https://devin.ai/demo" && c1.links[1][2] === "_blank" && c1.links[1][3] === "noopener" && c1.focus.startsWith("한국"), JSON.stringify(c1));
+    await page.keyboard.press("ArrowDown");
+    check(`cta/desktop ArrowDown moves to demo link`, await page.evaluate(() => document.activeElement.getAttribute("href") === "https://devin.ai/demo"));
+    await page.keyboard.press("Escape");
+    check(`cta/desktop Escape closes and returns focus`, await page.evaluate(() => document.activeElement.classList.contains("header-pill") && document.activeElement.getAttribute("aria-expanded") === "false"));
+    await cta.click(); await page.waitForTimeout(200);
+    await page.mouse.click(700, 700);
+    check(`cta/desktop outside click closes`, await page.evaluate(() => document.querySelector(".header-cta .nav-trigger").getAttribute("aria-expanded") === "false"));
     const logo = await page.evaluate(() => { const i = document.querySelector(".wordmark__logo"); const r = i.getBoundingClientRect(); return { h: r.height, alt: i.alt, ok: i.complete && i.naturalWidth > 0 }; });
-    check(`navstyle/desktop logo 20px high with accessible name`, logo.h === 20 && logo.alt === "Devin 한국어 가이드" && logo.ok, JSON.stringify(logo));
+    check(`navstyle/desktop logo 28px high with accessible name`, logo.h === 28 && logo.alt === "Devin 한국어 가이드" && logo.ok, JSON.stringify(logo));
   }
   await context.close();
 }

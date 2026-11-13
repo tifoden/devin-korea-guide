@@ -55,7 +55,18 @@
             {%- endfor %}
           </ul>
         </nav>
-        <a class="btn btn--sm btn--secondary site-header__docs" href="{{ site.officialDocs }}">공식 문서<span class="visually-hidden"> (docs.devin.ai, 영문)</span> <span aria-hidden="true">↗</span></a>
+        <div class="site-header__actions">
+          <a class="header-pill header-pill--outline" href="{{ site.pricingUrl }}">요금제</a>
+          <div class="nav-item header-cta">
+            <button class="header-pill header-pill--solid nav-trigger" type="button" aria-expanded="false" aria-controls="cta-menu">도입 상담하기<span class="nav-trigger__chevron" aria-hidden="true"></span></button>
+            <div class="nav-panel nav-panel--cta" id="cta-menu">
+              <ul>
+                <li><a class="nav-panel__link" href="{{ site.ambassadorMeetingUrl }}"><span class="nav-panel__label">한국 앰버서더와 미팅</span><span class="nav-panel__desc">도입과 활용을 한국어로 상담합니다</span></a></li>
+                <li><a class="nav-panel__link" href="{{ site.demoUrl }}" target="_blank" rel="noopener"><span class="nav-panel__label"><span lang="en">Devin</span> 데모 받기</span><span class="nav-panel__desc">devin.ai에서 데모를 신청합니다 <span aria-hidden="true">↗</span><span class="visually-hidden">(새 창)</span></span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -68,29 +79,38 @@
   <footer class="site-footer">
     <div class="page-container">
       <div class="site-footer__grid">
-        <p class="site-footer__brand"><img class="site-footer__logo" src="/assets/brand/devin-korea-logo.svg" alt="Devin 한국어 가이드" width="773" height="120"></p>
-        <nav class="site-footer__col" aria-labelledby="footer-guide">
-          <h2 id="footer-guide" class="site-footer__heading">가이드</h2>
+        <p class="site-footer__brand"><a href="/"><img class="site-footer__logo" src="/assets/brand/devin-korea-logo.svg" alt="Devin 한국어 가이드" width="773" height="120"></a></p>
+        <nav class="site-footer__col" aria-labelledby="footer-product">
+          <h2 id="footer-product" class="site-footer__heading">제품</h2>
           <ul>
-            <li><a href="/">홈</a></li>
+            <li><a href="/features/cloud/">Devin Cloud</a></li>
+            <li><a href="/features/desktop/">Devin Desktop</a></li>
+            <li><a href="/features/cli/">Devin CLI</a></li>
+            <li><a href="/features/review/">Devin Review</a></li>
+            <li><a href="/features/security/">Devin Security</a></li>
+            <li><a href="/features/oncall/">Devin Oncall</a></li>
+          </ul>
+        </nav>
+        <nav class="site-footer__col" aria-labelledby="footer-models">
+          <h2 id="footer-models" class="site-footer__heading">모델</h2>
+          <ul>
+            <li><a href="/models/fusion/">Fusion</a></li>
+            <li><a href="/models/third-party/">타사 모델</a></li>
+            <li><a href="/models/">모델 개요</a></li>
+          </ul>
+        </nav>
+        <nav class="site-footer__col" aria-labelledby="footer-start">
+          <h2 id="footer-start" class="site-footer__heading">시작하기</h2>
+          <ul>
             {%- for guide in collections.guides %}
             <li><a href="{{ guide.url }}">{{ guide.data.navTitle or guide.data.title }}</a></li>
             {%- endfor %}
+            <li><a href="/startups/">스타트업 프로그램</a></li>
+            <li><a href="{{ site.officialDocs }}">공식 문서 <span aria-hidden="true">↗</span></a></li>
           </ul>
         </nav>
-        <nav class="site-footer__col" aria-labelledby="footer-official">
-          <h2 id="footer-official" class="site-footer__heading">공식 자료 <span class="site-footer__hint">영문</span></h2>
-          <ul>
-            <li><a href="{{ site.officialDocs }}">Devin Docs</a></li>
-            <li><a href="{{ site.officialIndex }}">문서 색인 llms.txt</a></li>
-          </ul>
-        </nav>
-        <div class="site-footer__col">
-          <h2 class="site-footer__heading">이 사이트에 대해</h2>
-          <p class="site-footer__disclaimer">{{ site.maintainer }}이 주도해 만드는 초안입니다. Cognition이 발행하거나 검수·보증한 문서가 아니며, 제품 정보는 공식 문서를 기준으로 합니다.</p>
-        </div>
       </div>
-      <p class="site-footer__legal mono-label">Devin은 Cognition의 제품입니다 · 본문 글꼴 Pretendard(<a href="/assets/fonts/pretendard/LICENSE.txt">OFL</a>) · 고정폭 글꼴 Geist Mono(<a href="/assets/fonts/geist-mono/LICENSE.txt">OFL</a>)</p>
+      <p class="site-footer__legal mono-label">Devin은 Cognition의 제품입니다 · 글꼴 Pretendard(<a href="/assets/fonts/pretendard/LICENSE.txt">OFL</a>) · Geist Mono(<a href="/assets/fonts/geist-mono/LICENSE.txt">OFL</a>)</p>
     </div>
   </footer>
 </body>

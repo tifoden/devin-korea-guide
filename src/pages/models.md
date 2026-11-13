@@ -1,11 +1,10 @@
 ---
 title: Devin의 모델, Fusion, Adaptive 구분하기
 navTitle: 모델
-description: SWE 계열 모델, 두 모델을 짝짓는 Fusion, 모델을 고르는 Adaptive는 서로 다른 개념입니다. 공식 문서로 확인한 이름과 제공 조건만 정리했습니다.
+description: SWE 계열 모델, 두 모델을 짝짓는 Fusion, 모델을 고르는 Adaptive는 서로 다른 개념입니다. 각각의 역할과 제공 조건을 소개합니다.
 permalink: /models/
 series: 모델
 seriesNumber: "개요"
-statusLabel: 초안 · 앰버서더 검토 대기
 verifiedAt: 2026-11-09T22:00:00+09:00
 sources:
   - title: AI Models (Devin Desktop)
@@ -28,16 +27,7 @@ sources:
     url: https://docs.devin.ai/get-started/first-run
 ---
 
-Devin을 쓰다 보면 SWE-2, Fusion, Adaptive, Agent 같은 이름이 한 화면에 함께 나옵니다. 이름은 비슷해 보여도 가리키는 대상이 다릅니다. 이 페이지는 공식 문서에 나온 이름을 기준으로 이 넷을 구분합니다.
-
-<div class="reading-guide" role="note" aria-label="이 페이지를 읽는 법">
-<p class="reading-guide__title">이 페이지를 읽는 법</p>
-<ul>
-<li><strong>표시 없는 본문</strong>은 공식 문서를 요약한 내용입니다.</li>
-<li class="is-tip"><strong>필자 제안</strong>은 공식 문서에 없는 필자의 의견입니다.</li>
-<li>모델 목록, 가격, 프로모션은 자주 바뀝니다. 이 페이지에는 가격표를 옮기지 않았습니다. 실제 값은 Devin Desktop이나 Devin CLI의 모델 선택기와 공식 문서에서 확인하세요.</li>
-</ul>
-</div>
+Devin을 쓰다 보면 SWE-2, Fusion, Adaptive, Agent 같은 이름이 한 화면에 함께 나옵니다. 이름은 비슷해 보여도 가리키는 대상이 다릅니다. 아래에서 넷을 구분해 봅니다.
 
 ## 네 가지 개념
 
@@ -48,13 +38,9 @@ Devin을 쓰다 보면 SWE-2, Fusion, Adaptive, Agent 같은 이름이 한 화�
 | Adaptive | 작업에 맞춰 모델을 고르는 라우팅 방식 | 모델 선택기 |
 | Ask / Agent | 모델이 아니라 세션의 작업 모드 | 새 세션 화면 |
 
-::: src
-[AI Models](https://docs.devin.ai/desktop/models), [Fusion in Devin Desktop](https://docs.devin.ai/desktop/fusion), [Models (Devin CLI)](https://docs.devin.ai/cli/models), [Your First Session](https://docs.devin.ai/get-started/first-run)
-:::
-
 ## Fusion: 두 모델이 함께 일하는 방식
 
-공식 제품 페이지를 한국어로 옮긴 [Fusion 페이지](/models/fusion/)에서 작업 분담과 공개 벤치마크를 그림으로 볼 수 있습니다.
+[Fusion 페이지](/models/fusion/)에서 작업 분담과 공개 벤치마크를 그림으로 볼 수 있습니다.
 
 Fusion을 고르면 모든 세션에서 두 모델이 함께 일합니다.
 
@@ -63,24 +49,16 @@ Fusion을 고르면 모든 세션에서 두 모델이 함께 일합니다.
 
 공식 문서는 대부분의 사용자에게 Fusion을 권하며, 프런티어 모델만 쓸 때보다 비용을 낮추는 것이 목적이라고 설명합니다. Fusion은 하나의 모델이 아니라 여러 lead·sidekick 조합의 계열이고, 사용량은 ACU(Agent Compute Unit)로 계량합니다.
 
-**제공 조건** ([Fusion in Devin Desktop](https://docs.devin.ai/desktop/fusion) 원문: <span lang="en">“Fusion is available on paid plans in Devin CLI 3000.10.20+ and Devin Desktop 3.10.0+. It's not included in free or trial tiers.”</span>)
+**제공 조건**
 
 - 유료 플랜에서 쓸 수 있습니다. 무료·체험 등급에는 포함되지 않습니다.
 - 최소 버전: Devin CLI 3000.10.20 이상, Devin Desktop 3.10.0 이상.
 - 레거시 또는 크레딧 기반 요금제(레거시 크레딧 과금 Enterprise 포함)에서는 쓸 수 없습니다.
 - Desktop에서는 Devin Local 세션의 모델 선택기에서 고릅니다. `/model`, `/fusion` 명령은 CLI 전용입니다.
 
-::: src
-[Fusion in Devin Desktop](https://docs.devin.ai/desktop/fusion), [Fusion in Devin CLI](https://docs.devin.ai/cli/fusion)
-:::
-
 ## Adaptive
 
 CLI 문서는 Adaptive를 모델 설정의 **라우팅(Adaptive routing)** 으로 소개하고, Desktop 문서에도 별도 Adaptive 페이지가 있습니다. Fusion처럼 두 모델을 짝짓는 방식과는 다른 기능입니다. 라우팅 기준의 세부 사항은 공식 Adaptive 문서를 참고하세요.
-
-::: src
-[Models (Devin CLI)](https://docs.devin.ai/cli/models), [Adaptive](https://docs.devin.ai/desktop/adaptive)
-:::
 
 <h2 id="swe">SWE 계열 모델</h2>
 
@@ -97,8 +75,8 @@ CLI 문서는 Adaptive를 모델 설정의 **라우팅(Adaptive routing)** 으�
 
 ### SWE-2 Flash
 
-- 모델 문서 기준 Devin Desktop과 Devin CLI에서 쓸 수 있고, **Devin Cloud에서는 쓸 수 없습니다.**
-- Medium, High, Max 세 변형이 있습니다. 문서 원문: <span lang="en">“SWE-2 Flash Medium is available on the Free plan. SWE-2 Flash High and Max require a paid plan.”</span>
+- Devin Desktop과 Devin CLI에서 쓸 수 있고, **Devin Cloud에서는 쓸 수 없습니다.**
+- Medium, High, Max 세 변형이 있습니다. Free 플랜은 Medium을 고를 수 있고, High와 Max는 유료 플랜이 필요합니다.
 - 파라미터 수, 컨텍스트 길이, 벤치마크 수치는 확인한 공식 자료에 나오지 않아 적지 않았습니다.
 
 ### 이전 세대와 보조 모델
@@ -111,17 +89,6 @@ CLI 문서는 Adaptive를 모델 설정의 **라우팅(Adaptive routing)** 으�
 - **swe-check**: 흔한 코드 문제를 빠르게 훑는 Quick Review를 구동합니다.
 
 CLI에서 `swe` 같은 짧은 이름은 항상 해당 계열의 최신 버전을 가리킵니다.
-
-::: src
-[AI Models](https://docs.devin.ai/desktop/models), [Models (Devin CLI)](https://docs.devin.ai/cli/models), [Introducing SWE-2](https://cognition.com/blog/swe-2), [Introducing SWE-1.5](https://devin.ai/blog/swe-1-5)
-:::
-
-### 확인하지 못한 것
-
-- **“SWE Flash”라는 이름은 공식 문서에서 찾지 못했습니다.** 공식 이름은 **SWE-2 Flash**입니다.
-- SWE-2 Flash의 파라미터 수, 컨텍스트 길이, 그리고 SWE-2의 컨텍스트 길이는 확인한 공식 자료에 나오지 않아 적지 않았습니다.
-- 위 벤치마크와 비용 수치는 Cognition이 발표한 값이며 이 가이드가 직접 측정하지 않았습니다.
-- 확인일 기준 같은 모델 문서 안에 SWE-2 Flash 프로모션 공지가 두 가지(‘2026년 12월 4일까지 무료’와 ‘2026년 11월 18일까지 25% 할인’) 함께 실려 있고, SWE-2 가격 공지도 두 가지가 함께 있습니다. 공지가 서로 엇갈리므로 이 가이드는 어느 쪽도 지금 받을 수 있는 혜택으로 안내하지 않습니다. 실제 가격은 사용 전에 모델 선택기와 공식 문서에서 직접 확인해야 합니다.
 
 ::: tip 모델보다 지시문부터
 공식 CLI 문서도 여러 모델을 직접 써 보라고 권합니다. 다만 결과가 나쁠 때는 모델을 바꾸기 전에 지시문의 범위와 완료 기준을 먼저 점검해 보는 편이 원인을 찾기 쉽습니다.

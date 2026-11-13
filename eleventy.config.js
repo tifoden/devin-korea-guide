@@ -4,8 +4,8 @@ import markdownItAnchor from "markdown-it-anchor";
 import markdownItContainer from "markdown-it-container";
 
 const NOTE_KINDS = {
-  tip: "필자 제안",
-  exercise: "가상 실습",
+  tip: "팁",
+  exercise: "예시",
   caution: "주의",
 };
 
@@ -38,7 +38,7 @@ export default function (eleventyConfig) {
 
   md.use(markdownItContainer, "src", {
     render(tokens, idx) {
-      return tokens[idx].nesting === 1 ? '<div class="src"><span class="src__label">근거</span>' : "</div>\n";
+      return tokens[idx].nesting === 1 ? '<div class="src" hidden>' : "</div>\n";
     },
   });
 
