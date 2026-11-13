@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="en" translate="yes" data-sentry-element="Html" data-sentry-component="MyDocument" data-sentry-source-file="_document.tsx"><head data-sentry-element="Head" data-sentry-source-file="_document.tsx"><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" data-sentry-element="meta" data-sentry-source-file="_head.tsx" data-next-head=""/><title data-next-head="">iOS Waitlist Signup</title><meta content="noindex,nofollow" name="robots" data-next-head=""/><link rel="canonical" href="https://tally.so/r/q46p0g" data-next-head=""/><link rel="shortcut icon" type="image/png" href="https://tally.so/tally-square.png" data-next-head=""/><link rel="alternate icon" type="image/png" href="https://tally.so/favicon.png" data-next-head=""/><link rel="icon" type="image/svg+xml" href="https://tally.so/favicon.svg" data-next-head=""/><link rel="icon" type="image/x-icon" href="https://tally.so/favicon.ico" data-next-head=""/><meta property="og:type" content="website" data-sentry-element="meta" data-sentry-source-file="_head.tsx" data-next-head=""/><meta property="og:site_name" content="Tally Forms" data-sentry-element="meta" data-sentry-source-file="_head.tsx" data-next-head=""/><meta property="og:url" content="https://tally.so/r/q46p0g" data-sentry-element="meta" data-sentry-source-file="_head.tsx" data-next-head=""/><meta name="title" property="og:title" content="iOS Waitlist Signup" data-sentry-element="meta" data-sentry-source-file="_head.tsx" data-next-head=""/><meta name="image" property="og:image" content="https://tally.so/images/og.jpg" data-sentry-element="meta" data-sentry-source-file="_head.tsx" data-next-head=""/><meta name="twitter:card" content="summary_large_image" data-sentry-element="meta" data-sentry-source-file="_head.tsx" data-next-head=""/><meta name="twitter:site" content="@TallyForms" data-sentry-element="meta" data-sentry-source-file="_head.tsx" data-next-head=""/><meta name="twitter:title" content="iOS Waitlist Signup" data-sentry-element="meta" data-sentry-source-file="_head.tsx" data-next-head=""/><meta name="twitter:image" content="https://tally.so/images/og.jpg" data-sentry-element="meta" data-sentry-source-file="_head.tsx" data-next-head=""/><link rel="alternate" type="application/json+oembed" href="https://api.tally.so/oembed?url=https%3A%2F%2Ftally.so%2Fembed%2Fq46p0g%3FalignLeft%3D1%26hideTitle%3D1%26transparentBackground%3D1%26dynamicHeight%3D1%26originPage%3D%252Fmobile&amp;format=json" title="iOS Waitlist Signup" data-next-head=""/><link rel="preload" href="/_next/static/media/e4af272ccee01ff0-s.p.woff2" as="font" type="font/woff2" crossorigin="anonymous" data-next-font="size-adjust"/><link rel="preload" href="/_next/static/css/230f0385371561a3.css" as="style"/><script>if (!("noModule" in document.createElement("script")) || !window.PointerEvent) { window.location.href = "https://tally.so/browser-not-supported.html"; }</script><link rel="stylesheet" href="/_next/static/css/230f0385371561a3.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" noModule="" src="/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/_next/static/chunks/webpack-140d1fb2303700cc.js" defer=""></script><script src="/_next/static/chunks/framework-396f35bf20174c3a.js" defer=""></script><script src="/_next/static/chunks/main-f4ee5045b047e362.js" defer=""></script><script src="/_next/static/chunks/pages/_app-d5225112997ffecd.js" defer=""></script><script src="/_next/static/chunks/98441-34df34e2b5d0fac9.js" defer=""></script><script src="/_next/static/chunks/66170-99bb3111db315c25.js" defer=""></script><script src="/_next/static/chunks/24607-aaa6e4d941576859.js" defer=""></script><script src="/_next/static/chunks/7832-3862aed2eee950c1.js" defer=""></script><script src="/_next/static/chunks/29594-ef4a2337bbd4125e.js" defer=""></script><script src="/_next/static/chunks/36852-a426b89dfa90f9c0.js" defer=""></script><script src="/_next/static/chunks/2027-c2c58f8d81ce257b.js" defer=""></script><script src="/_next/static/chunks/44412-2f2dd3e82ea40aaa.js" defer=""></script><script src="/_next/static/chunks/41716-68a6e86c6f8cd0d7.js" defer=""></script><script src="/_next/static/chunks/2059-56013da15cbb603a.js" defer=""></script><script src="/_next/static/chunks/10287-1be14a32086196cf.js" defer=""></script><script src="/_next/static/chunks/57276-aeda03322c84b632.js" defer=""></script><script src="/_next/static/chunks/9451-11b9057800a22aa0.js" defer=""></script><script src="/_next/static/chunks/53949-827d77756075668b.js" defer=""></script><script src="/_next/static/chunks/65999-4db3441814aee7df.js" defer=""></script><script src="/_next/static/chunks/73080-0da03e884b967d26.js" defer=""></script><script src="/_next/static/chunks/23741-3b73c0138e16aeff.js" defer=""></script><script src="/_next/static/chunks/65801-49f03f43d17e58cf.js" defer=""></script><script src="/_next/static/chunks/pages/embed/%5Bid%5D-41ad67215de3a30b.js" defer=""></script><script src="/_next/static/c-QCqPigVOOB6kCt69KA8/_buildManifest.js" defer=""></script><script src="/_next/static/c-QCqPigVOOB6kCt69KA8/_ssgManifest.js" defer=""></script><style data-styled="" data-styled-version="6.6.0">@keyframes bqrFYP{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}/*!sc*/
+data-styled.g13[id="sc-keyframes-bqrFYP"]{content:"bqrFYP,"}/*!sc*/
+.ylMWx{animation:bqrFYP 1.618s linear infinite;transform-origin:center;transform:translateZ(0);width:1.2em;height:1.2em;font-size:inherit;}/*!sc*/
+data-styled.g14[id="sc-38436b93-0"]{content:"ylMWx,"}/*!sc*/
+.iJuRjD{display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;vertical-align:middle;transition:opacity 100ms ease-in-out,color 100ms ease-in-out;font-weight:600;transform:translateZ(0);}/*!sc*/
+data-styled.g17[id="sc-3a847d-2"]{content:"iJuRjD,"}/*!sc*/
+.gDDqNp{font-style:normal;}/*!sc*/
+.gDDqNp svg{width:1.2em;height:1.2em;}/*!sc*/
+data-styled.g18[id="sc-3a847d-3"]{content:"gDDqNp,"}/*!sc*/
+.cvgzir{position:absolute;right:0;left:0;bottom:0;top:0;gap:0;opacity:0;pointer-events:none;transform:translateZ(0);}/*!sc*/
+data-styled.g19[id="sc-3a847d-4"]{content:"cvgzir,"}/*!sc*/
+.ddDYWi{position:relative;cursor:pointer;transition:background-color 100ms ease-in-out,border-color 100ms ease-in-out,outline 100ms ease-in-out;line-height:1;color:inherit;display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;text-align:center;vertical-align:middle;text-decoration:none;overflow:hidden;transform:translateZ(0);border:0;outline:2px solid transparent;outline-offset:-1px;height:36px;font-size:15px;border-radius:8px;padding:0 0.9em;gap:0.5em;background:#000000;}/*!sc*/
+.ddDYWi:focus,.ddDYWi:focus-visible{outline:4px solid rgba(58, 145, 224, 0.36);}/*!sc*/
+.ddDYWi>.sc-3a847d-3:first-of-type:first-child{margin-left:-0.15em;margin-right:-0.1em;}/*!sc*/
+.ddDYWi>.sc-3a847d-3:last-of-type:not(:first-child){margin-right:-0.15em;margin-left:-0.1em;}/*!sc*/
+.ddDYWi>.sc-3a847d-3:nth-last-child(2):first-child,.ddDYWi>.sc-3a847d-3:nth-child(2):last-child{margin-left:-0.3em;margin-right:-0.3em;}/*!sc*/
+.ddDYWi>.sc-3a847d-2{gap:0.5em;}/*!sc*/
+.ddDYWi .sc-3a847d-2{color:#FFFFFF;}/*!sc*/
+@media (hover:hover){.ddDYWi:hover:not([disabled]){background:#000000BF;}}/*!sc*/
+data-styled.g22[id="sc-3a847d-6"]{content:"ddDYWi,"}/*!sc*/
+.jlIOCF{width:100%;height:36px;padding:0 10px;box-shadow:rgba(0, 0, 0, 0.12) 0px 1px 1px 0px,rgba(61, 59, 53, 0.16) 0px 0px 0px 1px,rgba(61, 59, 53, 0.08) 0px 2px 5px 0px;border:0;border-radius:8px;outline:none;background-color:rgba(255, 255, 255, 0.5);color:#37352F;caret-color:#37352F;}/*!sc*/
+@media (hover:hover){.jlIOCF:not([disabled]):hover{box-shadow:rgba(0, 0, 0, 0.12) 0px 1px 1px 0px,rgba(61, 59, 53, 0.16) 0px 0px 0px 1px,rgba(61, 59, 53, 0.08) 0px 3px 9px 0px,rgba(61, 59, 53, 0.08) 0px 2px 5px 0px;}}/*!sc*/
+.jlIOCF:not([disabled]):focus,.jlIOCF:not([disabled]):focus-within{box-shadow:rgba(58, 145, 224, 0.36) 0px 0px 0px 4px,rgba(61, 59, 53, 0.16) 0px 0px 0px 1px;}/*!sc*/
+.jlIOCF::placeholder{color:#bbbab8;}/*!sc*/
+data-styled.g58[id="sc-7df71daf-0"]{content:"jlIOCF,"}/*!sc*/
+html{line-height:1.15;-webkit-text-size-adjust:100%;}/*!sc*/
+body{margin:0;}/*!sc*/
+main{display:block;}/*!sc*/
+h1{font-size:2em;margin:0.67em 0;}/*!sc*/
+hr{box-sizing:content-box;height:0;overflow:visible;}/*!sc*/
+pre{font-family:monospace,monospace;font-size:1em;}/*!sc*/
+a{background-color:transparent;}/*!sc*/
+abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted;}/*!sc*/
+b,strong{font-weight:bolder;}/*!sc*/
+code,kbd,samp{font-family:monospace,monospace;font-size:1em;}/*!sc*/
+small{font-size:80%;}/*!sc*/
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}/*!sc*/
+sub{bottom:-0.25em;}/*!sc*/
+sup{top:-0.5em;}/*!sc*/
+img{border-style:none;}/*!sc*/
+button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0;}/*!sc*/
+button,input{overflow:visible;}/*!sc*/
+button,select{text-transform:none;}/*!sc*/
+button,[type='button'],[type='reset'],[type='submit']{-webkit-appearance:button;}/*!sc*/
+button{border-style:none;padding:0;}/*!sc*/
+fieldset{padding:0.35em 0.75em 0.625em;}/*!sc*/
+legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal;}/*!sc*/
+progress{vertical-align:baseline;}/*!sc*/
+textarea{overflow:auto;}/*!sc*/
+[type='checkbox'],[type='radio']{box-sizing:border-box;padding:0;}/*!sc*/
+[type='number']::-webkit-inner-spin-button,[type='number']::-webkit-outer-spin-button{height:auto;}/*!sc*/
+[type='search']{-webkit-appearance:textfield;outline-offset:-2px;}/*!sc*/
+[type='search']::-webkit-search-decoration{-webkit-appearance:none;}/*!sc*/
+::-webkit-file-upload-button{-webkit-appearance:button;font:inherit;}/*!sc*/
+details{display:block;}/*!sc*/
+summary{display:list-item;}/*!sc*/
+template{display:none;}/*!sc*/
+[hidden]{display:none;}/*!sc*/
+html{box-sizing:border-box;text-rendering:optimizelegibility;text-size-adjust:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;--tally-builder-font:'Inter','Inter Fallback';--tally-builder-text:#37352F;color:#37352F;font-size:16px;}/*!sc*/
+body{--font-family:'Inter','Inter Fallback';font-family:var(--font-family),sans-serif;font-size:16px;}/*!sc*/
+*,*:before,*:after{box-sizing:inherit;padding:0;margin:0;}/*!sc*/
+[role='button'],input[type='submit'],input[type='reset'],input[type='button'],button{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;-webkit-appearance:none;appearance:none;}/*!sc*/
+html,body,[id='__next']{height:100%;width:100%;}/*!sc*/
+[id='__next']{height:auto;min-height:100%;}/*!sc*/
+input,select,textarea{-webkit-appearance:none;}/*!sc*/
+.selecto-selection{border:0!important;background:#0070D750!important;}/*!sc*/
+data-styled.g219[id="sc-global-ftCYLP"]{content:"sc-global-ftCYLP1,"}/*!sc*/
+.ftVdjp{position:absolute;top:6px;right:-8px;bottom:auto;left:auto;z-index:1;display:flex;justify-content:center;align-items:center;width:16px;height:16px;min-width:16px;min-height:16px;border-radius:50%;background-color:#eaeae9;color:#37352F;font-size:14px;font-weight:900;text-align:center;cursor:pointer;}/*!sc*/
+.ftVdjp >span{position:relative;top:2px;}/*!sc*/
+.ftVdjp.hidden{visibility:hidden;}/*!sc*/
+data-styled.g263[id="sc-e3e82704-0"]{content:"ftVdjp,"}/*!sc*/
+.lieedq{width:100%;max-width:700px;margin:0 auto;}/*!sc*/
+@media (max-width:758px){.lieedq{max-width:500px;max-width:min(700px,calc(100vw - 2 * 25px));}}/*!sc*/
+data-styled.g268[id="sc-d6793100-2"]{content:"lieedq,"}/*!sc*/
+.bqWSqo{position:relative;display:inline-block;max-width:320px;width:100%;}/*!sc*/
+.bqWSqo .content-editable-block,.bqWSqo input:placeholder-shown{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}/*!sc*/
+@media (max-width: 758px){.bqWSqo{min-width:100%;}}/*!sc*/
+data-styled.g269[id="sc-d6793100-3"]{content:"bqWSqo,"}/*!sc*/
+.jPyOoh{font-size:2.5rem;font-weight:800;line-height:1.2;padding-bottom:2.5rem;margin:0;}/*!sc*/
+@media (max-width:758px){.jPyOoh{padding-bottom:2rem;font-size:2rem;}}/*!sc*/
+data-styled.g278[id="sc-83488966-0"]{content:"jPyOoh,"}/*!sc*/
+.fYeuip{position:relative;margin-bottom:10px;}/*!sc*/
+data-styled.g286[id="sc-a5c04a2b-0"]{content:"fYeuip,"}/*!sc*/
+.iWlGoD{position:relative;display:inline-flex;padding-top:1.25rem;padding-bottom:0.625rem;}/*!sc*/
+.iWlGoD.required-indicator-position-fallback .tally-required-indicator{position:relative;left:auto;right:auto;margin-left:5px;}/*!sc*/
+.iWlGoD.required-indicator-position-fallback h3{padding-right:0px;}/*!sc*/
+data-styled.g308[id="sc-c6d5bdd9-1"]{content:"iWlGoD,"}/*!sc*/
+.gRZicM{margin:0;font-size:1.25rem;font-weight:600;line-height:1.25;padding-right:5px;}/*!sc*/
+.gRZicM:empty{padding-right:0px;}/*!sc*/
+@media (max-width:758px){.gRZicM{font-size:1.125rem;}}/*!sc*/
+data-styled.g309[id="sc-c6d5bdd9-2"]{content:"gRZicM,"}/*!sc*/
+.bEzuKY a:not(.unstyled){color:#0070D7;cursor:pointer;border-bottom:1px solid #0070D7;text-decoration:none;font-weight:500;}/*!sc*/
+@media (hover: hover){.bEzuKY a:not(.unstyled):hover{color:#005bae;border-bottom:1px solid #005bae;}}/*!sc*/
+.bEzuKY span.mention:empty{border-bottom:2px solid #898884;}/*!sc*/
+.bEzuKY span.mention:empty::before{content:'                    ';}/*!sc*/
+data-styled.g323[id="sc-23bff209-0"]{content:"bEzuKY,"}/*!sc*/
+.BilEU{padding:1px 0;white-space:pre-wrap;word-break:break-word;display:none;}/*!sc*/
+.BilEU:empty{padding:0;}/*!sc*/
+.bZRLpR{padding:1px 0;white-space:pre-wrap;word-break:break-word;}/*!sc*/
+.bZRLpR:empty{padding:0;}/*!sc*/
+data-styled.g329[id="sc-23bff209-6"]{content:"BilEU,bZRLpR,"}/*!sc*/
+.gvUdIe{display:flex;justify-content:space-between;margin:10px 0;}/*!sc*/
+.gvUdIe button:nth-child(2),.gvUdIe .tally-powered{margin-left:10px;}/*!sc*/
+.gvUdIe >div{display:flex;min-width:0;}/*!sc*/
+data-styled.g342[id="sc-80f0a8bb-2"]{content:"gvUdIe,"}/*!sc*/
+.edUeYd{flex:1;display:flex;flex-direction:column;margin-top:150px;margin-bottom:50px;width:100%;max-width:100%!important;padding:8px;margin-bottom:0;margin-top:0;}/*!sc*/
+.edUeYd progress{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;}/*!sc*/
+.edUeYd .sc-80f0a8bb-1 button{background:none!important;padding:0;}/*!sc*/
+@media (hover:hover){.edUeYd .sc-80f0a8bb-1 button:hover{background:none!important;}}/*!sc*/
+.edUeYd .tally-context-menu{font-family:var(--font-family),sans-serif;}/*!sc*/
+.edUeYd.tally-ranking-option-dragging .tally-ranking-option-dropzone{display:block;}/*!sc*/
+data-styled.g343[id="sc-80f0a8bb-3"]{content:"edUeYd,"}/*!sc*/
+.eBtEVi{display:flex;background:#ffffff;direction:ltr;overflow-x:hidden;background:transparent;overflow:hidden;}/*!sc*/
+data-styled.g437[id="sc-5227d566-0"]{content:"eBtEVi,"}/*!sc*/
+.dVWnui{display:flex;flex-direction:column;width:100%;height:auto;min-height:100vh;min-height:100dvh;height:auto;min-height:auto;}/*!sc*/
+data-styled.g438[id="sc-5227d566-1"]{content:"dVWnui,"}/*!sc*/
+html,body,[id='__next']{height:auto!important;width:100%!important;}/*!sc*/
+html.tally-page-transition,body.tally-page-transition,[id='__next'].tally-page-transition{overflow:hidden;}/*!sc*/
+html.tally-page-transition .tally-block,body.tally-page-transition .tally-block,[id='__next'].tally-page-transition .tally-block{opacity:0;}/*!sc*/
+[id='__next']{height:auto!important;min-height:auto!important;}/*!sc*/
+data-styled.g447[id="sc-global-eTJorw"]{content:"sc-global-eTJorw1,"}/*!sc*/
+</style><style id="tally-custom-css">/* Devin Mobile waitlist (tally.so/r/q46p0g): match the /ios Figma hero form. */
+@font-face {
+  font-family: "NB International Pro";
+  src: url("https://devin.ai/assets/fonts/NBInternationalPro-Regular.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --dt-text: rgb(25, 25, 25);
+  --dt-text-secondary: rgba(25, 25, 25, 0.56);
+  --dt-tint-soft: rgba(0, 0, 0, 0.06);
+  --dt-primary: rgb(49, 124, 255);
+  --dt-button: rgb(0, 0, 0);
+  --dt-font: "NB International Pro", system-ui, sans-serif;
+  --tally-builder-font: var(--dt-font);
+  --tally-builder-text: var(--dt-text);
+}
+
+html,
+body,
+.tally-app {
+  background: transparent !important;
+}
+
+.tally-page,
+.tally-page * {
+  font-family: var(--dt-font) !important;
+}
+
+.tally-page {
+  color: var(--dt-text) !important;
+}
+
+/* Email field + button on one row (Figma: 293px pill + 12px gap + button) */
+.tally-page form > div:has(> .tally-submit-button) {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+}
+
+.tally-page form > div:has(> .tally-submit-button) > * {
+  flex: 1 1 100% !important;
+  margin: 0 !important;
+}
+
+.tally-page form > div:has(> .tally-submit-button) > .tally-block-input-email,
+.tally-page form > div:has(> .tally-submit-button) > .tally-block-input-text {
+  flex: 0 1 293px !important;
+  min-width: 0 !important;
+}
+
+.tally-page form > div:has(> .tally-submit-button) > .tally-submit-button {
+  flex: 0 0 auto !important;
+}
+
+/* Figma has no visible label; placeholder carries it */
+.tally-block-title,
+.tally-block-form-title,
+.tally-required-indicator {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+}
+
+/* Pill input */
+.tally-page input {
+  height: 42px !important;
+  min-height: 42px !important;
+  width: 100% !important;
+  padding: 0 20px !important;
+  border: 0 !important;
+  border-radius: 9999px !important;
+  background-color: var(--dt-tint-soft) !important;
+  box-shadow: none !important;
+  color: var(--dt-text) !important;
+  font-size: 16px !important;
+  line-height: 1.4 !important;
+}
+
+.tally-page input::placeholder {
+  color: var(--dt-text-secondary) !important;
+}
+
+.tally-page input:focus,
+.tally-page input:focus-visible {
+  outline: 2px solid var(--dt-primary) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
+}
+
+.tally-page svg {
+  color: var(--dt-text-secondary) !important;
+}
+
+/* Error text under the field */
+.tally-validation-error,
+.tally-validation-error * {
+  font-size: 14px !important;
+}
+
+/* "Get started" pill button */
+.tally-submit-button,
+.tally-submit-button > div {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.tally-submit-button button {
+  width: auto !important;
+  min-width: 123px !important;
+  height: 42px !important;
+  padding: 0 24px !important;
+  justify-content: center !important;
+  border: 0 !important;
+  border-radius: 9999px !important;
+  background-color: var(--dt-button) !important;
+  box-shadow: none !important;
+  color: rgb(255, 255, 255) !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+}
+
+.tally-submit-button button * {
+  color: rgb(255, 255, 255) !important;
+  font-weight: 400 !important;
+}
+
+.tally-submit-button button:hover {
+  opacity: 0.8 !important;
+}
+
+.tally-submit-button button svg {
+  display: none !important;
+}
+
+/* Thank-you screen */
+.tally-page h1,
+.tally-page h2,
+.tally-page h3,
+.tally-page p {
+  color: var(--dt-text) !important;
+  font-weight: 400 !important;
+}
+
+@media (max-width: 480px) {
+  .tally-page form > div:has(> .tally-submit-button) > * {
+    flex: 1 1 100% !important;
+  }
+
+  .tally-submit-button button {
+    width: 100% !important;
+  }
+}
+</style></head><body data-iframe-size="true"><div id="__next"><div class="sc-5227d566-0 eBtEVi tally-app" data-sentry-element="Container" data-sentry-source-file="index.tsx"><main data-sentry-element="Content" data-sentry-source-file="index.tsx" class="sc-5227d566-1 dVWnui"><span role="status" aria-live="polite" aria-atomic="true" data-sentry-element="VisuallyHidden" data-sentry-source-file="index.tsx" style="position:absolute;border:0;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;word-wrap:normal"></span><section class="sc-d6793100-2 sc-80f0a8bb-3 lieedq edUeYd tally-page tally-page-1" data-sentry-element="Content" data-sentry-source-file="index.tsx"><form><progress max="1" value="1" aria-label="Form progress" aria-valuetext="Page 1 of 1">Page 1 of 1</progress><div data-sentry-element="Container" data-sentry-component="FormBlocks" data-sentry-source-file="index.tsx" class="sc-23bff209-0 bEzuKY"><div class="sc-23bff209-6 BilEU tally-block tally-block-form-title tally-block-2443e01b-10d1-4125-8f29-a68b7e519da5" data-block-type="FORM_TITLE" data-block-id="2443e01b-10d1-4125-8f29-a68b7e519da5" data-sentry-element="BlockContainer" data-sentry-component="renderBlock" data-sentry-source-file="index.tsx"><h1 data-sentry-element="Container" data-sentry-component="FormTitleBlock" data-sentry-source-file="index.tsx" class="sc-83488966-0 jPyOoh">iOS Waitlist Signup</h1></div><div class="sc-23bff209-6 bZRLpR tally-block tally-block-title tally-block-d023e138-87b3-4ff3-bac1-d343fb9af732" data-block-type="TITLE" data-block-id="d023e138-87b3-4ff3-bac1-d343fb9af732" data-sentry-element="BlockContainer" data-sentry-component="renderBlock" data-sentry-source-file="index.tsx"><div data-sentry-element="Container" data-sentry-component="TitleBlock" data-sentry-source-file="index.tsx" class="sc-c6d5bdd9-0"><div class="sc-c6d5bdd9-1 iWlGoD title-content" data-sentry-element="ContentWrapper" data-sentry-source-file="index.tsx"><h3 data-sentry-element="Content" data-sentry-source-file="index.tsx" class="sc-c6d5bdd9-2 gRZicM"></h3><div aria-hidden="true" class="sc-e3e82704-0 ftVdjp tally-required-indicator hidden" data-sentry-element="Container" data-sentry-component="RequiredIndicator" data-sentry-source-file="index.tsx"><span>*</span></div></div></div></div><div class="sc-23bff209-6 bZRLpR tally-block tally-block-input-email tally-block-46a83654-8775-4097-a7f8-f3a917b60fee" data-block-type="INPUT_EMAIL" data-block-id="46a83654-8775-4097-a7f8-f3a917b60fee" data-sentry-element="BlockContainer" data-sentry-component="renderBlock" data-sentry-source-file="index.tsx"><div data-sentry-element="Container" data-sentry-component="InputEmailBlock" data-sentry-source-file="index.tsx" class="sc-a5c04a2b-0 fYeuip"><div data-sentry-element="Content" data-sentry-source-file="index.tsx" class="sc-d6793100-3 sc-a5c04a2b-1 bqWSqo"><input id="8bd70775-2839-43e9-bf81-d49cb20b1a0b" type="email" placeholder="Your Devin account email" required="" autoComplete="email" aria-label="Untitled email field" aria-required="true" aria-invalid="false" mode="respond" data-sentry-element="Input" data-sentry-source-file="index.tsx" class="sc-7df71daf-0 jlIOCF" value=""/></div></div></div></div><div class="sc-80f0a8bb-2 gvUdIe tally-submit-button"><div><button type="submit" tabindex="0" class="sc-3a847d-6 ddDYWi"><span class="sc-3a847d-2 iJuRjD">Submit</span><i aria-hidden="true" class="sc-3a847d-2 sc-3a847d-3 iJuRjD gDDqNp"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></i><span aria-hidden="true" class="sc-3a847d-2 sc-3a847d-4 iJuRjD cvgzir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader sc-38436b93-0 ylMWx activity-indicator" aria-hidden="true" data-sentry-element="Loader" data-sentry-component="ActivityIndicator" data-sentry-source-file="index.tsx"><path d="M12 2v4"></path><path d="m16.2 7.8 2.9-2.9"></path><path d="M18 12h4"></path><path d="m16.2 16.2 2.9 2.9"></path><path d="M12 18v4"></path><path d="m4.9 19.1 2.9-2.9"></path><path d="M2 12h4"></path><path d="m4.9 4.9 2.9 2.9"></path></svg></span></button></div></div></form></section></main></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"translations":{"label.page":"Page","label.required":"Required","label.next":"Next","label.submit":"Submit","label.your-email":"Your email","label.cardholder-name":"Name on card","label.loading":"Loading...","label.pay":"Pay","label.uploading":"Uploading...","label.back":"Back","label.signature":"Signature","label.hour":"Hour","label.minutes":"Minutes","label.date":"Date","label.time":"Time","label.clear":"Clear","label.country":"Country","label.delete":"Delete","label.image":"Image","label.audio":"Audio","label.video":"Video","label.application":"Application","label.text":"Text","label.all-text-files":"All text files","label.all-application-files":"All application files","label.password":"Password","label.continue":"Continue","label.find-option":"Find an option","label.verify":"Verify","label.verification-code":"Verification code","label.other":"Other","label.view-raw":"View raw","error.title":"Oops, something is off!","error.description":"Take a moment and try again. If the error persist, please contact us.","error.button":"Refresh the page","error.404.title":"Oops, page was not found!","error.404.description":"This page doesn't exist. If you think there is something off, please contact us.","error.404.button":"Go back home","form.error.REQUIRED":"Please enter a value","form.error.PAYMENT_REQUIRED":"Complete the payment before you can proceed","form.error.SHOULD_BE_VALID_VALUE":"Please enter a valid value","form.error.SHOULD_BE_VALID_FORMAT":"Please enter a valid value","form.error.SHOULD_BE_EMAIL":"Please enter a valid email","form.error.SHOULD_BE_PHONE_NUMBER":"Please enter a valid phone number","form.error.SHOULD_BE_URL":"Please enter a valid link","form.error.SHOULD_BE_DOMAIN_HOST":"Please enter a valid domain host e.g., example.com, survey.example.com","form.error.SHOULD_BE_MIN_CHARS":"Please enter at least {{constraint}} characters","form.error.SHOULD_BE_MAX_CHARS":"Please enter {{constraint}} characters or less","form.error.SHOULD_BE_MIN_NUMBER":"Please enter {{constraint}} or more","form.error.SHOULD_BE_MAX_NUMBER":"Please enter {{constraint}} or less","form.error.SHOULD_BE_BETWEEN_NUMBERS":"Please enter a number between {{constraint.0}} and {{constraint.1}}","form.error.SHOULD_BE_BEFORE_DATE":"Please enter a date before {{constraint}}","form.error.SHOULD_BE_AFTER_DATE":"Please enter a date after {{constraint}}","form.error.SHOULD_BE_BETWEEN_DATES":"Please enter a date between {{constraint.0}} and {{constraint.1}}","form.error.SHOULD_BE_ONE_OF_SPECIFIC_DATES":"Date should be one of the specified dates","form.error.SHOULD_BE_ENABLED_DATE":"This date is not allowed","form.error.SHOULD_HAVE_MIN_ARRAY_LENGTH":"Minimum {{constraint}} required","form.error.SHOULD_HAVE_MAX_ARRAY_LENGTH":"Maximum {{constraint}} required","form.error.SHOULD_SOLVE_CAPTCHA":"Complete the Captcha before you can proceed","form.error.OPTION_REQUIRED":"Please select an option","form.error.VALUE_REQUIRED":"Please select a value","form.error.SIGNATURE_REQUIRED":"Please sign","form.error.FILE_REQUIRED":"Please upload a file","form.error.RANKING_REQUIRED":"Please rank all options","form.error.PAYMENT_MINIMUM_AMOUNT":"Payments below {{prefix}}{{amount}}{{suffix}} cannot be processed","form.error.SHOULD_FINISH_UPLOAD":"Please wait for all files to upload","form.error.MATRIX_REQUIRED":"Please select an option from each row","form.error.EMAIL_VERIFICATION_REQUIRED":"Please verify the email address","error.GENERAL":"Something went wrong, please try again.","error.NETWORK_ERROR":"Uh oh, we couldn't reach the server. Please try again.","title.form":"Form - Tally","description.respond":"Made with Tally, the simplest way to create forms.","form-builder.file-upload.title":"Click to choose a file or drag here","form-builder.file-upload.description":"Size limit: {{size}} {{unit}}","form-builder.file-upload.add-multiple":"Upload another file","form-builder.file-upload.file-too-large-error":"The selected file exceeds the {{size}} {{unit}} file limit.","form-builder.file-upload.KB":"KB","form-builder.file-upload.MB":"MB","form-builder.file-upload.GB":"GB","form-builder.file-upload.accepted-file-types":"Accepts {{types}} files","stripe.connect-paid.title":"Payment received","form-builder.wallet-connect.email-option":"Email option","form-builder.wallet-connect.social-option":"Social options","form-builder.wallet-connect.caip-format":"CAIP-2 address format","form-builder.embed-error":"Failed to embed link","form-respond.wallet-connect.connect":"Connect Wallet","form-respond.wallet-connect.disconnect":"Disconnect Wallet","form-respond.wallet-connect.error.REQUIRED":"Please connect your wallet to continue","form-respond.language-picker.close":"Close","form-respond.language-picker.label":"Language","form-respond.unlock-form.title":"Authentication required","form-respond.unlock-form.description":"This page is protected.","form-respond.unlock-form.wrong-password":"The provided password was not accepted.","form-respond.verify-email.verification-code-sent":"A verification code has been sent to your inbox.","form-respond.verify-email.no-code-received_one":"Didn't receive a code? Resend in 1 second.","form-respond.verify-email.no-code-received_other":"Didn't receive a code? Resend in {{count}} seconds.","form-respond.verify-email.no-code-received_zero":"Didn't receive a code? \u003c0\u003eResend\u003c/0\u003e.","form-respond.verify-email.error.REQUEST_CODE_ERROR":"Could not request a verification code. Please try again later.","form-respond.verify-email.error.INVALID_CODE":"The code you entered is incorrect. Please try again.","form-respond.verify-email.error.VALIDATE_CODE_ERROR":"Could not validate the code. Please try again later.","form-respond.thank-you-page.title":"Thanks for completing this form!","form-respond.thank-you-page.description":"Made with Tally, the simplest way to create forms for free.","form-respond.thank-you-page.create-button":"Create your own form","form-respond.submit-errors-announcement_other":"{{count}} questions need your attention.","form-respond.submit-errors-announcement_one":"1 question needs your attention.","form-respond.submit-success-announcement":"Form submitted","form-respond.powered-by-tally":"Powered by Tally","form-respond.made-with-tally":"Made with Tally","form-respond.made-with":"Made with","form-respond.progress":"Page {{page}} of {{pages}}","form-respond.progress-bar":"Form progress","form-respond.rating":"{{value}} stars","form-respond.ranking.option-rank":"{{text}}, rank {{rank}} of {{total}}","form-respond.ranking.reorder-instructions":"Use the up and down arrow keys to change the rank.","form-respond.ranking.order-announce":"Ranking order: {{order}}","form-respond.closed.title":"This form is now closed","form-respond.closed.description":"The form can't receive new submissions at this moment.","form-respond.not-submitted-data-warning":"Are you sure you want to leave this page?","form-respond.multi-select.empty-results":"No results","form-respond.pay-disclaimer":"Your credit card will be charged when you click the “{{buttonText}}” button.\u003cbr/\u003eThe payment is powered by Stripe.","form-respond.other-option-input":"Type your answer","form-respond.unique-submission-conflict.title":"Form submission not accepted","form-respond.unique-submission-conflict.description":"It looks like you have already filled out this form. To prevent duplicate entries, only one submission per respondent is permitted.","email.unsubscribe.title":"Successfully unsubscribed, you can now close this window","email.input-verify.subject":"Verify your email address","email.input-verify.preheader":"Enter this 6-digit code in your browser","email.input-verify.title":"Your verification code","email.input-verify.text.0":"To verify that this email address belongs to you, please use this code:","email.input-verify.text.1":"This code will expire one hour after this email was sent. If you did not make this request, you can ignore this email.","json.countries":"{\"AD\":\"Andorra\",\"AE\":\"United Arab Emirates\",\"AF\":\"Afghanistan\",\"AG\":\"Antigua and Barbuda\",\"AI\":\"Anguilla\",\"AL\":\"Albania\",\"AM\":\"Armenia\",\"AO\":\"Angola\",\"AQ\":\"Antarctica\",\"AR\":\"Argentina\",\"AS\":\"American Samoa\",\"AT\":\"Austria\",\"AU\":\"Australia\",\"AW\":\"Aruba\",\"AX\":\"Åland Islands\",\"AZ\":\"Azerbaijan\",\"BA\":\"Bosnia and Herzegovina\",\"BB\":\"Barbados\",\"BD\":\"Bangladesh\",\"BE\":\"Belgium\",\"BF\":\"Burkina Faso\",\"BG\":\"Bulgaria\",\"BH\":\"Bahrain\",\"BI\":\"Burundi\",\"BJ\":\"Benin\",\"BL\":\"Saint Barthélemy\",\"BM\":\"Bermuda\",\"BN\":\"Brunei Darussalam\",\"BO\":\"Bolivia (Plurinational State of)\",\"BQ\":\"Bonaire, Sint Eustatius and Saba\",\"BR\":\"Brazil\",\"BS\":\"Bahamas\",\"BT\":\"Bhutan\",\"BV\":\"Bouvet Island\",\"BW\":\"Botswana\",\"BY\":\"Belarus\",\"BZ\":\"Belize\",\"CA\":\"Canada\",\"CC\":\"Cocos (Keeling) Islands\",\"CD\":\"Congo (Democratic Republic of the)\",\"CF\":\"Central African Republic\",\"CG\":\"Congo\",\"CH\":\"Switzerland\",\"CI\":\"Côte d'Ivoire\",\"CK\":\"Cook Islands\",\"CL\":\"Chile\",\"CM\":\"Cameroon\",\"CN\":\"China\",\"CO\":\"Colombia\",\"CR\":\"Costa Rica\",\"CU\":\"Cuba\",\"CV\":\"Cabo Verde\",\"CW\":\"Curaçao\",\"CX\":\"Christmas Island\",\"CY\":\"Cyprus\",\"CZ\":\"Czechia\",\"DE\":\"Germany\",\"DJ\":\"Djibouti\",\"DK\":\"Denmark\",\"DM\":\"Dominica\",\"DO\":\"Dominican Republic\",\"DZ\":\"Algeria\",\"EC\":\"Ecuador\",\"EE\":\"Estonia\",\"EG\":\"Egypt\",\"EH\":\"Western Sahara\",\"ER\":\"Eritrea\",\"ES\":\"Spain\",\"ET\":\"Ethiopia\",\"FI\":\"Finland\",\"FJ\":\"Fiji\",\"FK\":\"Falkland Islands (Malvinas)\",\"FM\":\"Micronesia (Federated States of)\",\"FO\":\"Faroe Islands\",\"FR\":\"France\",\"GA\":\"Gabon\",\"GB\":\"United Kingdom of Great Britain and Northern Ireland\",\"GD\":\"Grenada\",\"GE\":\"Georgia\",\"GF\":\"French Guiana\",\"GG\":\"Guernsey\",\"GH\":\"Ghana\",\"GI\":\"Gibraltar\",\"GL\":\"Greenland\",\"GM\":\"Gambia\",\"GN\":\"Guinea\",\"GP\":\"Guadeloupe\",\"GQ\":\"Equatorial Guinea\",\"GR\":\"Greece\",\"GS\":\"South Georgia and the South Sandwich Islands\",\"GT\":\"Guatemala\",\"GU\":\"Guam\",\"GW\":\"Guinea-Bissau\",\"GY\":\"Guyana\",\"HK\":\"Hong Kong\",\"HM\":\"Heard Island and McDonald Islands\",\"HN\":\"Honduras\",\"HR\":\"Croatia\",\"HT\":\"Haiti\",\"HU\":\"Hungary\",\"ID\":\"Indonesia\",\"IE\":\"Ireland\",\"IL\":\"Israel\",\"IM\":\"Isle of Man\",\"IN\":\"India\",\"IO\":\"British Indian Ocean Territory\",\"IQ\":\"Iraq\",\"IR\":\"Iran (Islamic Republic of)\",\"IS\":\"Iceland\",\"IT\":\"Italy\",\"JE\":\"Jersey\",\"JM\":\"Jamaica\",\"JO\":\"Jordan\",\"JP\":\"Japan\",\"KE\":\"Kenya\",\"KG\":\"Kyrgyzstan\",\"KH\":\"Cambodia\",\"KI\":\"Kiribati\",\"KM\":\"Comoros\",\"KN\":\"Saint Kitts and Nevis\",\"KP\":\"Korea (Democratic People's Republic of)\",\"KR\":\"Korea (Republic of)\",\"KW\":\"Kuwait\",\"KY\":\"Cayman Islands\",\"KZ\":\"Kazakhstan\",\"LA\":\"Lao People's Democratic Republic\",\"LB\":\"Lebanon\",\"LC\":\"Saint Lucia\",\"LI\":\"Liechtenstein\",\"LK\":\"Sri Lanka\",\"LR\":\"Liberia\",\"LS\":\"Lesotho\",\"LT\":\"Lithuania\",\"LU\":\"Luxembourg\",\"LV\":\"Latvia\",\"LY\":\"Libya\",\"MA\":\"Morocco\",\"MC\":\"Monaco\",\"MD\":\"Moldova (Republic of)\",\"ME\":\"Montenegro\",\"MF\":\"Saint Martin (French part)\",\"MG\":\"Madagascar\",\"MH\":\"Marshall Islands\",\"MK\":\"North Macedonia\",\"ML\":\"Mali\",\"MM\":\"Myanmar\",\"MN\":\"Mongolia\",\"MO\":\"Macao\",\"MP\":\"Northern Mariana Islands\",\"MQ\":\"Martinique\",\"MR\":\"Mauritania\",\"MS\":\"Montserrat\",\"MT\":\"Malta\",\"MU\":\"Mauritius\",\"MV\":\"Maldives\",\"MW\":\"Malawi\",\"MX\":\"Mexico\",\"MY\":\"Malaysia\",\"MZ\":\"Mozambique\",\"NA\":\"Namibia\",\"NC\":\"New Caledonia\",\"NE\":\"Niger\",\"NF\":\"Norfolk Island\",\"NG\":\"Nigeria\",\"NI\":\"Nicaragua\",\"NL\":\"Netherlands\",\"NO\":\"Norway\",\"NP\":\"Nepal\",\"NR\":\"Nauru\",\"NU\":\"Niue\",\"NZ\":\"New Zealand\",\"OM\":\"Oman\",\"PA\":\"Panama\",\"PE\":\"Peru\",\"PF\":\"French Polynesia\",\"PG\":\"Papua New Guinea\",\"PH\":\"Philippines\",\"PK\":\"Pakistan\",\"PL\":\"Poland\",\"PM\":\"Saint Pierre and Miquelon\",\"PN\":\"Pitcairn\",\"PR\":\"Puerto Rico\",\"PS\":\"Palestine, State of\",\"PT\":\"Portugal\",\"PW\":\"Palau\",\"PY\":\"Paraguay\",\"QA\":\"Qatar\",\"RE\":\"Réunion\",\"RO\":\"Romania\",\"RS\":\"Serbia\",\"RU\":\"Russian Federation\",\"RW\":\"Rwanda\",\"SA\":\"Saudi Arabia\",\"SB\":\"Solomon Islands\",\"SC\":\"Seychelles\",\"SD\":\"Sudan\",\"SE\":\"Sweden\",\"SG\":\"Singapore\",\"SH\":\"Saint Helena, Ascension and Tristan da Cunha\",\"SI\":\"Slovenia\",\"SJ\":\"Svalbard and Jan Mayen\",\"SK\":\"Slovakia\",\"SL\":\"Sierra Leone\",\"SM\":\"San Marino\",\"SN\":\"Senegal\",\"SO\":\"Somalia\",\"SR\":\"Suriname\",\"SS\":\"South Sudan\",\"ST\":\"Sao Tome and Principe\",\"SV\":\"El Salvador\",\"SX\":\"Sint Maarten (Dutch part)\",\"SY\":\"Syrian Arab Republic\",\"SZ\":\"Eswatini\",\"TC\":\"Turks and Caicos Islands\",\"TD\":\"Chad\",\"TF\":\"French Southern Territories\",\"TG\":\"Togo\",\"TH\":\"Thailand\",\"TJ\":\"Tajikistan\",\"TK\":\"Tokelau\",\"TL\":\"Timor-Leste\",\"TM\":\"Turkmenistan\",\"TN\":\"Tunisia\",\"TO\":\"Tonga\",\"TR\":\"Turkey\",\"TT\":\"Trinidad and Tobago\",\"TV\":\"Tuvalu\",\"TW\":\"Taiwan, Republic of China\",\"TZ\":\"Tanzania, United Republic of\",\"UA\":\"Ukraine\",\"UG\":\"Uganda\",\"UM\":\"United States Minor Outlying Islands\",\"US\":\"United States of America\",\"UY\":\"Uruguay\",\"UZ\":\"Uzbekistan\",\"VA\":\"Holy See\",\"VC\":\"Saint Vincent and the Grenadines\",\"VE\":\"Venezuela (Bolivarian Republic of)\",\"VG\":\"Virgin Islands (British)\",\"VI\":\"Virgin Islands (U.S.)\",\"VN\":\"Viet Nam\",\"VU\":\"Vanuatu\",\"WF\":\"Wallis and Futuna\",\"WS\":\"Samoa\",\"XK\":\"Kosovo\",\"YE\":\"Yemen\",\"YT\":\"Mayotte\",\"ZA\":\"South Africa\",\"ZM\":\"Zambia\",\"ZW\":\"Zimbabwe\"}","json.date-locale":"{\"code\":\"en-US\",\"format\":\"MMM d, y\",\"months\":[\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\"],\"monthsShort\":[\"Jan\",\"Feb\",\"Mar\",\"Apr\",\"May\",\"Jun\",\"Jul\",\"Aug\",\"Sep\",\"Oct\",\"Nov\",\"Dec\"],\"weekdays\":[\"Sunday\",\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\",\"Saturday\"],\"weekdaysShort\":[\"Su\",\"Mo\",\"Tu\",\"We\",\"Th\",\"Fr\",\"Sa\"]}"},"country":"US","isRespondPage":true,"formId":"q46p0g","workspaceId":"3XMD0z","name":"iOS Waitlist Signup","blocks":[{"type":"FORM_TITLE","groupType":"TEXT","payload":{"safeHTMLSchema":[["iOS Waitlist Signup"]],"title":"iOS Waitlist Signup"},"uuid":"2443e01b-10d1-4125-8f29-a68b7e519da5","groupUuid":"2922ea9a-dc4a-4987-b006-e85fbe9379db"},{"type":"TITLE","groupType":"QUESTION","payload":{"safeHTMLSchema":[]},"uuid":"d023e138-87b3-4ff3-bac1-d343fb9af732","groupUuid":"abff5836-a6ad-404f-a1cb-36fdc78e22ad"},{"type":"INPUT_EMAIL","groupType":"INPUT_EMAIL","payload":{"isRequired":true,"placeholder":"Your Devin account email"},"uuid":"46a83654-8775-4097-a7f8-f3a917b60fee","groupUuid":"8bd70775-2839-43e9-bf81-d49cb20b1a0b"}],"isClosed":false,"isPreview":false,"settings":{"language":"en","translationsEnabled":false,"isClosed":false,"closeMessageTitle":null,"closeMessageDescription":null,"closeTimezone":null,"closeDate":null,"closeTime":null,"submissionsLimit":null,"redirectOnCompletion":null,"hasProgressBar":false,"hasPartialSubmissions":false,"pageAutoJump":false,"saveForLater":true,"styles":{"theme":"CUSTOM","color":{"background":"#ffffff","text":"#37352F","accent":"#0070D7","buttonBackground":"#000000","buttonText":"#FFFFFF"},"css":"/* Devin Mobile waitlist (tally.so/r/q46p0g): match the /ios Figma hero form. */\n@font-face {\n  font-family: \"NB International Pro\";\n  src: url(\"https://devin.ai/assets/fonts/NBInternationalPro-Regular.woff2\") format(\"woff2\");\n  font-weight: 400 500;\n  font-style: normal;\n  font-display: swap;\n}\n\n:root {\n  --dt-text: rgb(25, 25, 25);\n  --dt-text-secondary: rgba(25, 25, 25, 0.56);\n  --dt-tint-soft: rgba(0, 0, 0, 0.06);\n  --dt-primary: rgb(49, 124, 255);\n  --dt-button: rgb(0, 0, 0);\n  --dt-font: \"NB International Pro\", system-ui, sans-serif;\n  --tally-builder-font: var(--dt-font);\n  --tally-builder-text: var(--dt-text);\n}\n\nhtml,\nbody,\n.tally-app {\n  background: transparent !important;\n}\n\n.tally-page,\n.tally-page * {\n  font-family: var(--dt-font) !important;\n}\n\n.tally-page {\n  color: var(--dt-text) !important;\n}\n\n/* Email field + button on one row (Figma: 293px pill + 12px gap + button) */\n.tally-page form \u003e div:has(\u003e .tally-submit-button) {\n  display: flex !important;\n  flex-wrap: wrap !important;\n  align-items: flex-start !important;\n  gap: 12px !important;\n}\n\n.tally-page form \u003e div:has(\u003e .tally-submit-button) \u003e * {\n  flex: 1 1 100% !important;\n  margin: 0 !important;\n}\n\n.tally-page form \u003e div:has(\u003e .tally-submit-button) \u003e .tally-block-input-email,\n.tally-page form \u003e div:has(\u003e .tally-submit-button) \u003e .tally-block-input-text {\n  flex: 0 1 293px !important;\n  min-width: 0 !important;\n}\n\n.tally-page form \u003e div:has(\u003e .tally-submit-button) \u003e .tally-submit-button {\n  flex: 0 0 auto !important;\n}\n\n/* Figma has no visible label; placeholder carries it */\n.tally-block-title,\n.tally-block-form-title,\n.tally-required-indicator {\n  position: absolute !important;\n  width: 1px !important;\n  height: 1px !important;\n  overflow: hidden !important;\n  clip: rect(0 0 0 0) !important;\n  white-space: nowrap !important;\n}\n\n/* Pill input */\n.tally-page input {\n  height: 42px !important;\n  min-height: 42px !important;\n  width: 100% !important;\n  padding: 0 20px !important;\n  border: 0 !important;\n  border-radius: 9999px !important;\n  background-color: var(--dt-tint-soft) !important;\n  box-shadow: none !important;\n  color: var(--dt-text) !important;\n  font-size: 16px !important;\n  line-height: 1.4 !important;\n}\n\n.tally-page input::placeholder {\n  color: var(--dt-text-secondary) !important;\n}\n\n.tally-page input:focus,\n.tally-page input:focus-visible {\n  outline: 2px solid var(--dt-primary) !important;\n  outline-offset: 2px !important;\n  box-shadow: none !important;\n}\n\n.tally-page svg {\n  color: var(--dt-text-secondary) !important;\n}\n\n/* Error text under the field */\n.tally-validation-error,\n.tally-validation-error * {\n  font-size: 14px !important;\n}\n\n/* \"Get started\" pill button */\n.tally-submit-button,\n.tally-submit-button \u003e div {\n  margin: 0 !important;\n  padding: 0 !important;\n}\n\n.tally-submit-button button {\n  width: auto !important;\n  min-width: 123px !important;\n  height: 42px !important;\n  padding: 0 24px !important;\n  justify-content: center !important;\n  border: 0 !important;\n  border-radius: 9999px !important;\n  background-color: var(--dt-button) !important;\n  box-shadow: none !important;\n  color: rgb(255, 255, 255) !important;\n  font-size: 16px !important;\n  font-weight: 400 !important;\n}\n\n.tally-submit-button button * {\n  color: rgb(255, 255, 255) !important;\n  font-weight: 400 !important;\n}\n\n.tally-submit-button button:hover {\n  opacity: 0.8 !important;\n}\n\n.tally-submit-button button svg {\n  display: none !important;\n}\n\n/* Thank-you screen */\n.tally-page h1,\n.tally-page h2,\n.tally-page h3,\n.tally-page p {\n  color: var(--dt-text) !important;\n  font-weight: 400 !important;\n}\n\n@media (max-width: 480px) {\n  .tally-page form \u003e div:has(\u003e .tally-submit-button) \u003e * {\n    flex: 1 1 100% !important;\n  }\n\n  .tally-submit-button button {\n    width: 100% !important;\n  }\n}\n"},"metaSiteName":null,"metaSiteFaviconUrl":null,"metaTitle":null,"metaDescription":null,"metaImageUrl":null,"isPasswordProtected":false},"metaData":{"customized":false,"isCustomDomain":false,"url":"https://tally.so/r/q46p0g","siteName":"Tally Forms","title":"iOS Waitlist Signup","description":null,"allowIndexing":false,"codeInjection":"","oembedUrl":"https://tally.so/embed/q46p0g?alignLeft=1\u0026hideTitle=1\u0026transparentBackground=1\u0026dynamicHeight=1\u0026originPage=%2Fmobile"},"integrations":[],"styles":{"removeBranding":true,"alignLeft":true,"transparentBackground":true,"hideTitle":true,"dynamicHeight":true,"showBrandingRef":null},"subscriptionPlan":"PRO","formTranslations":null,"language":"en","hasLanguageQuery":false,"theme":{"is":"CUSTOM","color":{"white":"#FFFFFF","black":"#000000","gray":{"50":"#FEFEFE","100":"#F5F5F5","200":"#EAEAEA","300":"#DFDFDE","400":"#898884","500":"#777672","600":"#5F5E5A","700":"#45433E","800":"#37352F","900":"#272622","950":"#1A1917"},"green":{"50":"#E9FAEB","100":"#D2F4D6","200":"#90E499","300":"#58D766","400":"#20C933","500":"#1AA82B","600":"#189726","700":"#148120","800":"#10651A","900":"#0C4A14","950":"#08320E"},"blue":{"50":"#E3EFFF","100":"#C6DCFF","200":"#A4C8FF","300":"#7EB2FF","400":"#559BFA","500":"#2D85EC","600":"#0070D7","700":"#005BB5","800":"#004794","900":"#003573","950":"#002252"},"purple":{"50":"#F3EDFF","100":"#E5D9FF","200":"#C5A3FF","300":"#A57DFF","400":"#7957FF","500":"#711DFF","600":"#6835BF","700":"#523189","800":"#462380","900":"#351A66","950":"#29144D"},"magenta":{"50":"#FEE8FC","100":"#FCBFF6","200":"#FC8EF2","300":"#F85FEA","400":"#F81CE5","500":"#D915C4","600":"#BA15AC","700":"#8F117F","800":"#7C0E73","900":"#5B0A56","950":"#3D043A"},"red":{"50":"#FFECEC","100":"#F0CCCF","200":"#FFA2A2","300":"#FF7373","400":"#FF4444","500":"#E03B3B","600":"#BF3333","700":"#B20110","800":"#802222","900":"#611A1A","950":"#441212"},"orange":{"50":"#FFF1E6","100":"#FFE0CC","200":"#FFB880","300":"#FF9960","400":"#FF7100","500":"#E66500","600":"#BF5500","700":"#994400","800":"#803900","900":"#5F2A00","950":"#3F1C00"},"yellow":{"50":"#FFFCED","100":"#FFF7D1","200":"#FFF0A4","300":"#FFE873","400":"#FFE148","500":"#FFD12E","600":"#F0B826","700":"#D09E1E","800":"#B28618","900":"#8C6512","950":"#6B4C0D"},"charts":{"blue":"#0070D7","blueLight":"#C6DCFF","green":"#148120","amber":"#F7A501","magenta":"#D915C4","purple":"#CD9CF2","pink":"#F86DA9","neutral":"#EAEAEA","positive":"#148120","negative":"#E8594A","rating":["#7A3D0B","#A85A10","#D4780A","#F7A501","#FFCC33"]},"main":"#F81CE5","darkPurple":"#33125C","text":"#37352F","grayBackground":"#F1F1F1","lightGrayBackground":"#F5F5F5","error":"#B20110","danger":"#ed561b","warning":"#fbbc04","success":"#20c933","purpleDark2":"#462380","purpleDark1":"#6835bf","purpleNeutral":"#8b46ff","purpleRGB":"139, 70, 255","purpleLight1":"#c5a3ff","purpleLight2":"#f3edff","darkerGray":"#444444","darkGray":"#777777","grayNeutral":"#888888","lightGray":"#BBBBBB","lighterGray":"#DFDFDF","redDark2":"#802222","redDark1":"#bf3333","redNeutral":"#FF4444","redRGB":"255, 68, 68","redLight1":"#ffa2a2","redLight2":"#ffecec","orangeDark2":"#803900","orangeDark1":"#bf5500","orangeNeutral":"#FF7100","orangeRGB":"255, 113, 0","orangeLight1":"#ffb880","orangeLight2":"#fff1e6","yellowDark2":"#807124","yellowDark1":"#bfa936","yellowNeutral":"#ffe148","yellowRGB":"255, 225, 72","yellowLight1":"#fff0a4","yellowLight2":"#fffced","greenDark2":"#10651a","greenDark1":"#189726","greenNeutral":"#20c933","greenRGB":"32, 201, 51","greenLight1":"#90e499","greenLight2":"#e9faeb","blueDark2":"#003d80","blueDark1":"#005cbf","blueNeutral":"#007aff","blueRGB":"0, 122, 255","blueLight1":"#80bdff","blueLight2":"#e6f2ff","pinkDark2":"#7c0e73","pinkDark1":"#ba15ac","pinkNeutral":"#F81CE5","pinkRGB":"248, 28, 229","pinkLight1":"#fc8ef2","pinkLight2":"#fee8fc","background":"#ffffff","accent":"#0070D7","button":{"bg":"#000000","fg":"#FFFFFF","hover":{"bg":"#37352F"},"accent":{"fg":"#FFFFFF","bg":"#0070D7","hover":{"bg":"#005BB5"}}},"badge":{"accent":{"fg":"#0070D7","bg":"rgba(58, 145, 224, 0.36)"}},"boxShadow":"rgba(61, 59, 53, 0.16)","boxShadowHalf":"rgba(61, 59, 53, 0.08)","textGrayscale1":"#45433e","textGrayscale2":"#605e5a","textGrayscale3":"#777672","textGrayscale4":"#898884","textGrayscale5":"#dfdfde","textGrayscale6":"#eaeae9","textGrayscale7":"#f5f5f5","border":{"light":"rgba(55, 53, 47, 0.09)"},"actionBackgroundHover":"rgba(55, 53, 47, 0.09)","inputPlaceholder":"#bbbab8","inputBackground":"rgba(255, 255, 255, 0.5)","inputBackgroundSolid":"#ffffff","menuInputBackgroundSolid":"#ffffff","inputBoxShadow":"rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(61, 59, 53, 0.16) 0px 0px 0px 1px, rgba(61, 59, 53, 0.08) 0px 2px 5px 0px","inputBoxShadowHover":"rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(61, 59, 53, 0.16) 0px 0px 0px 1px, rgba(61, 59, 53, 0.08) 0px 3px 9px 0px, rgba(61, 59, 53, 0.08) 0px 2px 5px 0px","inputBoxShadowFocus":"rgba(58, 145, 224, 0.36) 0px 0px 0px 4px, rgba(61, 59, 53, 0.16) 0px 0px 0px 1px","inputBoxShadowActive":"#0070D7 0px 0px 0px 2px, rgba(61, 59, 53, 0.16) 0px 0px 0px 1px","inputBoxShadowActiveFocus":"rgba(58, 145, 224, 0.36) 0px 0px 0px 4px, #0070D7 0px 0px 0px 2px","accentFocus":"rgba(58, 145, 224, 0.36)","accentHover":"#005bae","menuBackground":"rgba(255, 255, 255, 0.5)","menuBoxShadow":"rgba(0, 0, 0, 0.09) 0px 3px 12px","menuOverlay":"rgba(15, 15, 15, 0.6)","isBackgroundDark":false,"dynamicColorsWithoutFormStyles":{}},"font":{"provider":"Google","family":"var(--font-family)","weight":{"regular":"400","medium":"500","semiBold":"600","bold":"700","extraBold":"800","black":"900"}},"spacing":{"xs":"5px","sm":"10px","md":"20px","lg":"40px","xl":"50px","xxl":"100px","xxxl":"150px","xxxxl":"200px","x":"2px","x2":"4px","x3":"6px","x4":"8px","x5":"10px","x6":"12px","x7":"14px","x8":"16px","x12":"24px","x16":"32px","x20":"40px","x24":"48px","x32":"64px","x64":"128px","x72":"144px","x96":"192px","x128":"256px"},"breakpoint":{"xs":"320px","sm":"576px","md":"758px","lg":"992px","xl":"1200px","xxl":"1440px","xxxl":"1800px","xxxxl":"2400px"},"direction":"ltr","zIndex":{"overlay":100000003,"bottomSheet":2147483647},"radius":{"xs":3,"sm":5,"md":7,"lg":8,"xl":10,"xxl":12},"form":{"baseFontSize":16,"inputHeight":36,"inputHorizontalPadding":10,"inputMarginBottom":10,"inputBorderRadius":8,"inputBorderWidth":1}}},"__N_SSP":true},"page":"/embed/[id]","query":{"alignLeft":"1","hideTitle":"1","transparentBackground":"1","dynamicHeight":"1","originPage":"/mobile","id":"q46p0g"},"buildId":"c-QCqPigVOOB6kCt69KA8","isFallback":false,"isExperimentalCompile":false,"gssp":true,"appGip":true,"scriptLoader":[]}</script></body></html>

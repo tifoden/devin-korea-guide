@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Devin으로 첫 작업 시작하기 — Devin 한국어 가이드</title>
+  <meta name="description" content="저장소 연결부터 첫 지시문, 결과 검토까지. 처음 Devin 세션을 열기 전에 알아 두면 좋은 순서를 공식 문서를 바탕으로 정리했습니다.">
+  <meta name="color-scheme" content="light">
+  <link rel="stylesheet" href="/devin-korea-guide/assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
+  <link rel="stylesheet" href="/devin-korea-guide/assets/css/site.css">
+  <script>document.documentElement.classList.add("js")</script>
+  <script src="/devin-korea-guide/assets/js/nav.js" defer=""></script>
+  <script src="/devin-korea-guide/assets/js/motion.js" defer=""></script>
+</head>
+<body class="page-article">
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header" data-header="">
+    <div class="page-container site-header__inner">
+      <a class="wordmark" href="/devin-korea-guide/">
+        <img class="wordmark__logo" src="/devin-korea-guide/assets/brand/devin-korea-logo.svg" alt="Devin 한국어 가이드" width="773" height="120">
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+        <span class="menu-toggle__bars" aria-hidden="true"></span><span class="visually-hidden">메뉴</span>
+      </button>
+      <div class="site-menu" id="site-menu">
+        <nav class="site-nav" aria-label="주 메뉴">
+          <ul>
+          <li><a class="nav-link" href="/devin-korea-guide/">개요</a></li>
+          <li class="nav-item">
+            <a class="nav-link nav-fallback" href="/devin-korea-guide/features/">제품</a>
+            <button class="nav-link nav-trigger" type="button" aria-expanded="false" aria-controls="product-menu">제품<span class="nav-trigger__chevron" aria-hidden="true"></span></button>
+            <div class="nav-panel" id="product-menu">
+              <div class="nav-panel__group">
+                <p class="nav-panel__heading" id="product-menu-g1">사용 환경</p>
+                <ul aria-labelledby="product-menu-g1">
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/cloud/"><span class="nav-panel__label" lang="en">Devin Cloud</span><span class="nav-panel__desc">클라우드 VM에서 작업을 끝내고 PR로</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/desktop/"><span class="nav-panel__label" lang="en">Devin Desktop</span><span class="nav-panel__desc">로컬·클라우드 에이전트를 한 화면에서</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/cli/"><span class="nav-panel__label" lang="en">Devin CLI</span><span class="nav-panel__desc">터미널 에이전트와 클라우드 넘기기</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/mobile/"><span class="nav-panel__label" lang="en">Mobile</span> <span class="badge badge--neutral">출시 전</span><span class="nav-panel__desc">대기자 명단 단계</span></a></li>
+                </ul>
+              </div>
+              <div class="nav-panel__group">
+                <p class="nav-panel__heading" id="product-menu-g2">업무 기능</p>
+                <ul aria-labelledby="product-menu-g2">
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/review/"><span class="nav-panel__label" lang="en">Devin Review</span><span class="nav-panel__desc">PR 변경 설명과 버그 표시</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/security/"><span class="nav-panel__label" lang="en">Devin Security</span><span class="nav-panel__desc">취약점 스캔과 수정 PR</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/oncall/"><span class="nav-panel__label" lang="en">Devin Oncall</span><span class="nav-panel__desc">알림·인시던트 1차 조사</span></a></li>
+                </ul>
+              </div>
+              <a class="nav-panel__overview" href="/devin-korea-guide/features/">제품·기능 전체 보기 <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-fallback" href="/devin-korea-guide/models/">모델</a>
+            <button class="nav-link nav-trigger" type="button" aria-expanded="false" aria-controls="models-menu">모델<span class="nav-trigger__chevron" aria-hidden="true"></span></button>
+            <div class="nav-panel" id="models-menu">
+              <div class="nav-panel__group">
+                <p class="nav-panel__heading" id="models-menu-g1">모델 선택</p>
+                <ul aria-labelledby="models-menu-g1">
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/models/fusion/"><span class="nav-panel__label" lang="en">Fusion</span><span class="nav-panel__desc">lead와 sidekick 두 모델을 짝짓는 방식</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/models/third-party/"><span class="nav-panel__label">타사 모델</span><span class="nav-panel__desc">OpenAI, Anthropic, Google, SpaceXSI 및 오픈소스 최신 모델에 액세스</span></a></li>
+                </ul>
+              </div>
+              <div class="nav-panel__group">
+                <p class="nav-panel__heading" id="models-menu-g2">SWE 계열</p>
+                <ul aria-labelledby="models-menu-g2">
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/models/#swe-2"><span class="nav-panel__label" lang="en">SWE-2</span><span class="nav-panel__desc">Cognition의 최신 소프트웨어 엔지니어링 모델</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/models/#swe-2-flash"><span class="nav-panel__label" lang="en">SWE-2 Flash</span><span class="nav-panel__desc">Desktop·CLI 전용 경량 변형</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/models/#이전-세대와-보조-모델"><span class="nav-panel__label" lang="en">SWE-1.7 · 보조 모델</span><span class="nav-panel__desc">이전 세대와 swe-grep · swe-check</span></a></li>
+                </ul>
+              </div>
+              <a class="nav-panel__overview" href="/devin-korea-guide/models/">모델 개요 전체 보기 <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li><a class="nav-link" href="/devin-korea-guide/use-cases/">활용사례</a></li>
+          <li><a class="nav-link" href="/devin-korea-guide/startups/">스타트업 프로그램</a></li>
+          </ul>
+        </nav>
+        <a class="btn btn--sm btn--secondary site-header__docs" href="https://docs.devin.ai">공식 문서<span class="visually-hidden"> (docs.devin.ai, 영문)</span> <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </header>
+  <div class="nav-scrim" aria-hidden="true"></div>
+
+  <main id="main" tabindex="-1">
+    <article class="article" aria-labelledby="article-title">
+  <header class="article__header">
+    <div class="page-container">
+      <nav class="breadcrumb" aria-label="현재 위치">
+        <ol>
+          <li><a href="/devin-korea-guide/">홈</a></li>
+          <li><span aria-current="page">입문 01</span></li>
+        </ol>
+      </nav>
+      <h1 id="article-title" class="t-h2 article__title">Devin으로 첫 작업 시작하기</h1>
+      <p class="article__lead">저장소 연결부터 첫 지시문, 결과 검토까지. 처음 Devin 세션을 열기 전에 알아 두면 좋은 순서를 공식 문서를 바탕으로 정리했습니다.</p>
+      <dl class="meta-list meta-list--row">
+        <div><dt>공식 문서 확인</dt><dd><time datetime="Sat Nov 07 2026 23:13:00 GMT+0900 (Korean Standard Time)">2026년 11월 7일</time> (KST)</dd></div>
+        <div><dt>읽는 시간</dt><dd>약 10분</dd></div>
+        <div><dt>상태</dt><dd>초안 · 앰버서더 검토 대기</dd></div>
+      </dl>
+    </div>
+  </header>
+  <nav class="subnav" aria-label="이 글의 섹션 바로가기">
+    <div class="page-container">
+      <ol class="subnav__list">
+        <li><a class="subnav__link" href="#시작하기-전에-준비할-것"><span class="subnav__num" aria-hidden="true">01</span>시작하기 전에 준비할 것</a></li>
+        <li><a class="subnav__link" href="#첫-작업-고르기"><span class="subnav__num" aria-hidden="true">02</span>첫 작업 고르기</a></li>
+        <li><a class="subnav__link" href="#ask로-계획하고-agent로-실행하기"><span class="subnav__num" aria-hidden="true">03</span>Ask로 계획하고 Agent로 실행하기</a></li>
+        <li><a class="subnav__link" href="#에이전트-고르기"><span class="subnav__num" aria-hidden="true">04</span>에이전트 고르기</a></li>
+        <li><a class="subnav__link" href="#지시문-쓰기"><span class="subnav__num" aria-hidden="true">05</span>지시문 쓰기</a></li>
+        <li><a class="subnav__link" href="#가상-실습-작은-버그-하나-맡기기"><span class="subnav__num" aria-hidden="true">06</span>가상 실습: 작은 버그 하나 맡기기</a></li>
+        <li><a class="subnav__link" href="#세션이-진행되는-동안"><span class="subnav__num" aria-hidden="true">07</span>세션이 진행되는 동안</a></li>
+        <li><a class="subnav__link" href="#끝난-뒤-검토와-회고"><span class="subnav__num" aria-hidden="true">08</span>끝난 뒤: 검토와 회고</a></li>
+        <li><a class="subnav__link" href="#알아-둘-한계"><span class="subnav__num" aria-hidden="true">09</span>알아 둘 한계</a></li>
+        <li><a class="subnav__link" href="#sources">출처</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <div class="band">
+    <div class="page-container">
+      <div class="frame article__layout">
+        <nav class="toc" aria-labelledby="toc-title">
+          <details class="toc__details" open="">
+            <summary id="toc-title" class="mono-label toc__title">이 글의 차례</summary>
+            <ol class="toc__list">
+              <li><a href="#시작하기-전에-준비할-것">시작하기 전에 준비할 것</a></li>
+              <li><a href="#첫-작업-고르기">첫 작업 고르기</a></li>
+              <li><a href="#ask로-계획하고-agent로-실행하기">Ask로 계획하고 Agent로 실행하기</a></li>
+              <li><a href="#에이전트-고르기">에이전트 고르기</a></li>
+              <li><a href="#지시문-쓰기">지시문 쓰기</a></li>
+              <li><a href="#가상-실습-작은-버그-하나-맡기기">가상 실습: 작은 버그 하나 맡기기</a></li>
+              <li><a href="#세션이-진행되는-동안">세션이 진행되는 동안</a></li>
+              <li><a href="#끝난-뒤-검토와-회고">끝난 뒤: 검토와 회고</a></li>
+              <li><a href="#알아-둘-한계">알아 둘 한계</a></li>
+              <li><a href="#sources">출처와 확인일</a></li>
+            </ol>
+          </details>
+        </nav>
+
+        <div class="prose">
+          <p>Devin은 코드를 작성하고, 실행하고, 테스트하는 자율형 AI 소프트웨어 엔지니어입니다. 공식 문서는 Devin에게 맡길 일을 고를 때 쓸 만한 기준 하나를 제시합니다. <strong>직접 하면 세 시간 안에 끝낼 수 있는 일이라면 Devin도 대부분 해낼 수 있다</strong>는 것입니다.</p>
+<p>이 글은 그 기준에 맞는 첫 작업을 고르고, 지시문을 쓰고, 결과를 검토하기까지의 흐름을 따라갑니다. 웹 앱(app.devin.ai)에서 세션을 여는 경우를 기준으로 설명합니다.</p>
+<div class="reading-guide" role="note" aria-label="이 글을 읽는 법">
+<p class="reading-guide__title">이 글을 읽는 법</p>
+<ul>
+<li><strong>표시 없는 본문</strong>은 공식 문서를 요약하거나 옮긴 내용입니다. 단락 아래 ‘근거’에 해당 문서를 링크했습니다.</li>
+<li class="is-tip"><strong>필자 제안</strong>은 공식 문서에 없는 필자의 의견입니다.</li>
+<li class="is-exercise"><strong>가상 실습</strong>은 설명을 위해 지어낸 예제로, 실제 저장소나 사례가 아닙니다.</li>
+</ul>
+</div>
+<h2 id="시작하기-전에-준비할-것">시작하기 전에 준비할 것</h2>
+<p>공식 문서는 첫 세션을 열기 전에 저장소를 <strong>인덱싱</strong>하고 <strong>환경을 설정</strong>해 두라고 안내합니다. 그보다 먼저 Devin이 저장소에 접근할 수 있어야 합니다.</p>
+<ol>
+<li><strong>Git 연결.</strong> Settings &gt; Connections에서 GitHub, GitLab, Bitbucket, Azure DevOps 가운데 하나를 연결하고, Devin이 접근할 저장소를 고릅니다. 엔터프라이즈 조직이라면 관리자가 Settings &gt; Repositories에서 조직마다 저장소 접근을 따로 허용해야 합니다.</li>
+<li><strong>환경 설정.</strong> Devin은 저장소가 클론되고 도구와 의존성이 설치된 리눅스 가상 머신에서 일합니다. 이 상태를 <strong>스냅샷</strong>으로 만들어 두면 모든 세션이 같은 상태에서 출발합니다. 공식 문서는 환경 설정을 Devin의 성과를 끌어올리는 데 가장 효과가 큰 일로 꼽습니다. 가장 간단한 방법은 세션에서 <code>Set up your environment for this repo.</code>라고 요청한 뒤, Devin이 제안하는 설정 카드를 검토하고 승인하는 것입니다.</li>
+<li><strong>인덱싱.</strong> 환경에 추가한 저장소는 자동으로 인덱싱됩니다. 인덱싱은 Ask Devin과 DeepWiki 같은 코드 검색·이해 기능에 쓰이며, 환경 설정과는 별개의 과정입니다.</li>
+</ol>
+<p>API 키 같은 민감한 값은 설정 편집기의 Secrets 탭에 암호화된 Secret으로 저장하고 <code>$VARIABLE_NAME</code> 형식으로 참조합니다. Devin은 저장소를 보고 필요한 도구와 의존성을 추론할 수 있지만, 자격 증명은 스스로 알아낼 수 없습니다.</p>
+<div class="src"><span class="src__label">근거</span><p><a href="https://docs.devin.ai/get-started/first-run">Your First Session</a>, <a href="https://docs.devin.ai/onboard-devin/environment">Devin environment setup</a>, <a href="https://docs.devin.ai/onboard-devin/index-repo">Index a Repository</a>, <a href="https://docs.devin.ai/integrations/gh">Devin GitHub integration</a></p>
+</div>
+<aside class="note note--tip" aria-label="필자 제안"><p class="note__label">필자 제안</p><span class="note__title">비밀값은 대화창에 붙여 넣지 않기</span>
+<p>지시문은 세션 기록에 남습니다. 키나 비밀번호는 대화에 직접 적지 말고 Secrets로 등록한 다음 이름으로만 언급하는 습관을 들이면 안전합니다.</p>
+</aside>
+<h2 id="첫-작업-고르기">첫 작업 고르기</h2>
+<p>공식 문서는 작업이 Devin에게 맞는지 판단할 때 세 가지를 물어보라고 합니다.</p>
+<ul>
+<li><strong>성공 기준을 분명히 말할 수 있는가?</strong> 테스트, CI, 린트처럼 결과를 확인할 수단이 있는 작업일수록 성과가 좋습니다.</li>
+<li><strong>맥락이 충분한가?</strong> 참고할 파일, 기존 패턴, 문서, 예시를 함께 줄수록 좋습니다.</li>
+<li><strong>나누면 나아지는가?</strong> 큰 작업은 서로 이어지는 작은 세션 여러 개로 나눕니다.</li>
+</ul>
+<p>시작과 끝이 분명하고 완료 조건이 명시된 작업, 예를 들어 ‘기존 패턴과 같게 맞추고 테스트를 통과시키는’ 일이 좋은 작업입니다.</p>
+<div class="src"><span class="src__label">근거</span><p><a href="https://docs.devin.ai/essential-guidelines/when-to-use-devin">When to Use Devin</a>, <a href="https://docs.devin.ai/get-started/devin-intro">Introducing Devin</a></p>
+</div>
+<aside class="note note--tip" aria-label="필자 제안"><p class="note__label">필자 제안</p><span class="note__title">첫 작업은 답을 이미 아는 일로</span>
+<p>결과를 평가하려면 무엇이 정답인지 알아야 합니다. 첫 세션에는 직접 해결해 본 적 있는 작은 일을 맡겨 보세요. 테스트가 이미 있는 함수의 버그 수정이나 빠진 단위 테스트 추가 같은 일이면 Devin의 결과를 자신의 기준과 나란히 놓고 비교하기 쉽습니다.</p>
+</aside>
+<h2 id="ask로-계획하고-agent로-실행하기">Ask로 계획하고 Agent로 실행하기</h2>
+<p>세션을 시작하면 <strong>Ask</strong>와 <strong>Agent</strong> 두 모드를 고를 수 있습니다.</p>
+<ul>
+<li><strong>Ask</strong>는 코드를 바꾸지 않고 질문하고 계획을 세우는 가벼운 모드입니다. 코드가 어떻게 동작하는지 묻거나, 구현 전에 작업 범위를 정할 때 씁니다.</li>
+<li><strong>Agent</strong>는 코드를 작성하고 명령을 실행하고 웹을 탐색하며, 풀 리퀘스트를 만들기까지 작업을 끝까지 수행하는 자율 모드입니다.</li>
+</ul>
+<p>공식 문서는 계획이 완전히 정해지지 않았다면 Ask로 시작하라고 권합니다. Ask 대화에서 <strong>Construct a Devin Prompt</strong>로 범위가 정리된 지시문을 만들고, <strong>Send to Devin</strong>을 눌러 Agent 모드로 넘기는 흐름입니다. Agent 세션을 열 때는 작업할 저장소를 선택합니다. 그래야 Devin이 올바른 브랜치에서 출발하고, 올바른 저장소에 풀 리퀘스트를 만듭니다.</p>
+<div class="src"><span class="src__label">근거</span><p><a href="https://docs.devin.ai/get-started/first-run">Your First Session</a></p>
+</div>
+<h2 id="에이전트-고르기">에이전트 고르기</h2>
+<p>메시지 입력창의 에이전트 선택기로 세션을 실행할 에이전트를 정합니다. 공식 문서의 설명을 옮기면 다음과 같습니다.</p>
+<div class="table-wrap" role="region" tabindex="0" aria-label="표 (가로 스크롤 가능)"><table>
+<thead>
+<tr>
+<th>에이전트</th>
+<th>이럴 때</th>
+<th>비용에 관한 문서 설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lite</td>
+<td>범위가 분명한 단순한 작업</td>
+<td>가장 낮음</td>
+</tr>
+<tr>
+<td>Normal</td>
+<td>기본값. 일상적인 작업</td>
+<td>비용과 성능의 균형</td>
+</tr>
+<tr>
+<td>Ultra</td>
+<td>가장 어려운 작업</td>
+<td>성능이 가장 높고 비용도 훨씬 큼</td>
+</tr>
+<tr>
+<td>Fusion</td>
+<td>프런티어 모델 수준의 결과가 필요할 때</td>
+<td>프런티어 모델과 비용 효율적인 모델을 짝지어 비용을 낮춤</td>
+</tr>
+<tr>
+<td>SWE-2</td>
+<td>Cognition이 직접 만든 소프트웨어 엔지니어링 모델. 추론 강도를 Medium, High, Max 중에서 고름</td>
+<td>연구 프리뷰. 비용 언급 없음</td>
+</tr>
+</tbody>
+</table>
+</div><p>관리자가 쓸 수 있는 에이전트를 정하기 때문에 모든 선택지가 보이지 않을 수도 있습니다. 에이전트는 세션 도중에도 바꿀 수 있으며, 다음 메시지부터 적용됩니다. 무엇을 골라야 할지 모르겠다면 기본 에이전트로 충분하다고 문서는 안내합니다.</p>
+<div class="src"><span class="src__label">근거</span><p><a href="https://docs.devin.ai/get-started/first-run">Your First Session — Choosing an agent</a></p>
+</div>
+<h2 id="지시문-쓰기">지시문 쓰기</h2>
+<p>공식 문서가 가장 강조하는 원칙은 <strong>가능한 한 구체적으로</strong> 쓰라는 것입니다. 동료에게 일을 맡길 때 사양을 건네듯 Devin에게도 같은 수준의 설명을 주라는 뜻입니다. 잘 쓴 지시문에는 대체로 네 가지가 들어 있습니다.</p>
+<ol>
+<li>어느 저장소에서 무엇을 위해 하는 일인지, <strong>맥락</strong></li>
+<li>작업을 논리적인 단위로 나눈 <strong>단계별 지시</strong></li>
+<li>무엇을 하면 끝난 것인지, <strong>명확한 성공 기준</strong></li>
+<li>따라야 할 <strong>기존 코드와 패턴</strong></li>
+</ol>
+<p>문서에 실린 예시를 우리말로 옮기면 차이가 분명합니다. 아래는 결과가 나쁘기 쉬운 지시문입니다. 어떤 통계를 넣을지, 데이터를 어디서 가져올지, 어떤 기존 패턴을 따를지가 모두 빠져 있습니다.</p>
+<pre tabindex="0"><code class="language-text">사용자 통계 엔드포인트를 추가해 줘.
+</code></pre>
+<p>같은 일을 이렇게 맡기면 경로와 응답 형식, 데이터 출처, 참고할 코드, 테스트 요구 사항이 모두 드러납니다.</p>
+<pre tabindex="0"><code class="language-text">/users/stats 엔드포인트를 새로 만들어 사용자 수와 평균 가입 기간을 담은 JSON을 반환하게 해 줘.
+기존 PostgreSQL의 users 테이블을 사용해.
+응답 구조는 statsController.js에 있는 /orders/stats 엔드포인트를 참고해.
+새 엔드포인트가 StatsController.test.js 스위트로 검증되게 해 줘.
+</code></pre>
+<p>입력창에서 <code>@</code>를 입력하면 저장소(@Repos), 파일(@Files), 스킬(@Skills), 비밀값(@Secrets), 이전 세션(@Sessions) 등을 지정할 수 있습니다. 무엇을 가리키는지 분명해져 지시문의 모호함이 줄어듭니다.</p>
+<div class="src"><span class="src__label">근거</span><p><a href="https://docs.devin.ai/essential-guidelines/instructing-devin-effectively">Instructing Devin Effectively</a>, <a href="https://docs.devin.ai/essential-guidelines/good-vs-bad-instructions">Good vs. Bad Instructions</a>, <a href="https://docs.devin.ai/get-started/first-run">Your First Session — Using @ Mentions</a></p>
+</div>
+<aside class="note note--tip" aria-label="필자 제안"><p class="note__label">필자 제안</p><span class="note__title">코드 속 이름은 번역하지 않기</span>
+<p>파일명, 함수명, 명령어, 오류 메시지는 코드에 적힌 그대로 옮기는 편이 좋습니다. 우리말로 풀어 쓰면 사람에게는 읽기 편해도, 저장소에서 그 이름을 찾아야 하는 쪽에서는 단서가 사라집니다.</p>
+</aside>
+<h2 id="가상-실습-작은-버그-하나-맡기기">가상 실습: 작은 버그 하나 맡기기</h2>
+<aside class="note note--exercise" aria-label="가상 실습"><p class="note__label">가상 실습</p><span class="note__title">저장소, 파일, 버그 모두 설명을 위해 지어낸 것입니다</span>
+<p>가상의 사내 도구 저장소 <code>example/order-admin</code>에서 주문 목록 화면의 주문 일시가 한국 시간이 아닌 UTC로 보인다고 가정합니다. 이 버그를 Devin에게 맡기는 지시문은 이렇게 쓸 수 있습니다.</p>
+<pre tabindex="0"><code class="language-text">example/order-admin 저장소에서 주문 목록의 주문 일시가 UTC로 표시되는 문제를 고쳐 줘.
+
+- 날짜 표시는 src/utils/formatDate.ts의 formatKST()를 그대로 써. 새 날짜 라이브러리는 추가하지 마.
+- 고칠 곳은 src/pages/orders/OrderTable.tsx 한 곳이야.
+- 완료 조건:
+  1. npm test -- OrderTable 이 통과할 것
+  2. 2026-01-01T15:00:00Z 주문이 &quot;2026. 1. 2. 00:00&quot;으로 보이는지 확인하는 테스트를 추가할 것
+  3. 브라우저에서 /orders 화면을 열고 스크린샷으로 결과를 보여 줄 것
+- 작업을 시작하기 전에 계획을 짧게 먼저 알려 줘.
+</code></pre>
+<p>이 지시문을 앞에서 본 원칙에 비춰 보면 다음과 같습니다.</p>
+<ul>
+<li><strong>맥락:</strong> 저장소와 고칠 파일을 짚었습니다.</li>
+<li><strong>판단을 대신 내림:</strong> 쓸 함수를 정하고 새 라이브러리는 막았습니다. 공식 문서도 중요한 결정은 사람이 내려 주라고 권합니다.</li>
+<li><strong>성공 기준:</strong> 통과할 테스트, 새로 추가할 테스트, 화면 확인 방법을 적었습니다.</li>
+<li><strong>스스로 검증:</strong> Devin은 셸, IDE, 브라우저를 갖춘 환경에서 일하므로 앱을 띄워 직접 확인하게 할 수 있습니다.</li>
+</ul>
+</aside>
+<h2 id="세션이-진행되는-동안">세션이 진행되는 동안</h2>
+<p>Devin의 작업 공간에는 Shell, IDE, Browser가 있습니다. 실행되는 명령과 로그를 지켜볼 수 있고, 필요하면 IDE에서 직접 코드를 고치거나 명령을 실행해 작업을 넘겨받을 수도 있습니다.</p>
+<p>사용량은 Devin이 실제로 한 일에 따라 쌓입니다. 계획, 맥락 수집, 작업 실행, 브라우저 동작, 코드 실행 같은 행동의 수와 복잡도, 그리고 가상 머신 시간이 포함됩니다. 엔터프라이즈 고객은 ACU(Agent Compute Unit)를, 셀프서브 고객은 요금제에 포함된 양을 먼저 쓰고 그다음 선불 온디맨드 크레딧을 씁니다.</p>
+<ul>
+<li>사용자의 답을 기다리거나, 테스트 실행을 기다리거나, 저장소를 설정·클론하는 동안에는 가상 머신 유지에 드는 소량을 빼고 사용량이 거의 늘지 않습니다.</li>
+<li>세션은 기본적으로 5분 동안 아무 활동이 없으면 잠듭니다. 잠든 동안에는 사용량이 늘지 않고, 메시지를 보내면 다시 깨어납니다.</li>
+<li>공식 문서가 권하는 사용량 관리법은 범위가 분명한 작업을 맡기고, 지시문과 세션을 짧게 유지하는 것입니다.</li>
+</ul>
+<div class="src"><span class="src__label">근거</span><p><a href="https://docs.devin.ai/get-started/devin-intro">Introducing Devin — The Devin Interface</a>, <a href="https://docs.devin.ai/admin/billing/usage">Usage</a></p>
+</div>
+<aside class="note note--tip" aria-label="필자 제안"><p class="note__label">필자 제안</p><span class="note__title">방향이 어긋나면 일찍 말하기</span>
+<p>Devin이 처음에 공유한 계획이 의도와 다르면 그 자리에서 바로잡는 편이 낫습니다. 다 만든 뒤에 되돌리는 것보다 대화 몇 줄로 방향을 고치는 쪽이 시간도 사용량도 덜 듭니다.</p>
+</aside>
+<h2 id="끝난-뒤-검토와-회고">끝난 뒤: 검토와 회고</h2>
+<p>작업이 끝나면 결과를 검토할 차례입니다. 공식 문서는 CI 상태와 Devin이 사람에게 넘긴 판단 사항을 확인하고, 풀 리퀘스트를 병합할지 사람이 결정하라고 안내합니다. Devin Review를 켜 두면 사람이 보기 전에 버그를 먼저 잡아낼 수 있습니다.</p>
+<p>회고에는 <strong>Session Insights</strong>가 유용합니다. 세션 화면에서 <strong>Generate Analysis</strong>를 누르면 진행 과정의 타임라인, 다음에 반영할 피드백, 비슷한 작업에 다시 쓸 수 있도록 다듬은 지시문을 받을 수 있습니다. 세션 중에 바로잡은 내용은 Memory 기능으로 저장되어 다음 세션에 반영되고, 반복되는 절차는 스킬로 만들어 두면 매번 같은 설명을 되풀이하지 않아도 됩니다.</p>
+<div class="src"><span class="src__label">근거</span><p><a href="https://docs.devin.ai/essential-guidelines/when-to-use-devin">When to Use Devin — Post-Task Review</a>, <a href="https://docs.devin.ai/get-started/first-run">Your First Session — After Your Session</a></p>
+</div>
+<aside class="note note--tip" aria-label="필자 제안"><p class="note__label">필자 제안</p><span class="note__title">동료의 풀 리퀘스트처럼 읽기</span>
+<p>Devin이 만든 풀 리퀘스트도 팀원의 것과 같은 기준으로 리뷰하세요. 테스트가 통과했다는 사실만으로 변경 범위나 설계가 적절한지까지 보장되지는 않습니다.</p>
+</aside>
+<h2 id="알아-둘-한계">알아 둘 한계</h2>
+<p>공식 문서가 스스로 밝힌 주의점도 함께 기억해 두면 좋습니다.</p>
+<ul>
+<li>Devin이 문서에 적힌 대로 정확히 동작하지 않거나, 문서가 최신 상태가 아닐 수 있다고 공식 문서에 명시되어 있습니다.</li>
+<li>대부분의 작업을 처리할 수 있지만 극도로 어려운 작업은 예외로 둡니다. 세 시간을 넘길 만한 일은 작은 세션으로 나누라고 권합니다.</li>
+<li>시각적인 작업에서는 디자인 명세나 Figma 파일을 받아 구현할 수는 있지만, 미적 판단을 스스로 만들어 내지는 않는다고 설명합니다. ‘더 보기 좋게’ 같은 지시 대신 구체적인 명세를 주어야 합니다.</li>
+<li>세션 사용량 한도에 자주 걸린다면 작업이 너무 복잡하다는 신호일 수 있고, 개발 환경 때문에 막힌다면 환경 설정을 다시 살펴보라고 안내합니다.</li>
+</ul>
+<div class="src"><span class="src__label">근거</span><p><a href="https://docs.devin.ai/get-started/devin-intro">Introducing Devin</a>, <a href="https://docs.devin.ai/essential-guidelines/instructing-devin-effectively">Instructing Devin Effectively</a>, <a href="https://docs.devin.ai/essential-guidelines/when-to-use-devin">When to Use Devin</a></p>
+</div>
+
+
+          <section class="sources" aria-labelledby="sources">
+            <h2 id="sources">출처와 확인일</h2>
+            <p>아래 공식 문서를 <time datetime="Sat Nov 07 2026 23:13:00 GMT+0900 (Korean Standard Time)">2026년 11월 7일</time> (KST)에 직접 열어 확인했습니다. 문서는 바뀔 수 있으니, 내용이 다르면 공식 문서를 따르세요.</p>
+            <ol class="sources__list">
+              <li>
+                <a href="https://docs.devin.ai/get-started/devin-intro" lang="en">Introducing Devin</a>
+                <span class="sources__url">docs.devin.ai/get-started/devin-intro</span>
+              </li>
+              <li>
+                <a href="https://docs.devin.ai/get-started/first-run" lang="en">Your First Session</a>
+                <span class="sources__url">docs.devin.ai/get-started/first-run</span>
+              </li>
+              <li>
+                <a href="https://docs.devin.ai/essential-guidelines/when-to-use-devin" lang="en">When to Use Devin</a>
+                <span class="sources__url">docs.devin.ai/essential-guidelines/when-to-use-devin</span>
+              </li>
+              <li>
+                <a href="https://docs.devin.ai/essential-guidelines/instructing-devin-effectively" lang="en">Instructing Devin Effectively</a>
+                <span class="sources__url">docs.devin.ai/essential-guidelines/instructing-devin-effectively</span>
+              </li>
+              <li>
+                <a href="https://docs.devin.ai/essential-guidelines/good-vs-bad-instructions" lang="en">Good vs. Bad Instructions</a>
+                <span class="sources__url">docs.devin.ai/essential-guidelines/good-vs-bad-instructions</span>
+              </li>
+              <li>
+                <a href="https://docs.devin.ai/onboard-devin/environment" lang="en">Devin environment setup</a>
+                <span class="sources__url">docs.devin.ai/onboard-devin/environment</span>
+              </li>
+              <li>
+                <a href="https://docs.devin.ai/onboard-devin/index-repo" lang="en">Index a Repository</a>
+                <span class="sources__url">docs.devin.ai/onboard-devin/index-repo</span>
+              </li>
+              <li>
+                <a href="https://docs.devin.ai/integrations/gh" lang="en">Devin GitHub integration</a>
+                <span class="sources__url">docs.devin.ai/integrations/gh</span>
+              </li>
+              <li>
+                <a href="https://docs.devin.ai/admin/billing/usage" lang="en">Usage</a>
+                <span class="sources__url">docs.devin.ai/admin/billing/usage</span>
+              </li>
+            </ol>
+          </section>
+
+          <p class="article__back"><a class="btn btn--secondary" href="/devin-korea-guide/"><span aria-hidden="true">←</span> 홈으로</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="page-container">
+      <div class="site-footer__grid">
+        <p class="site-footer__brand"><img class="site-footer__logo" src="/devin-korea-guide/assets/brand/devin-korea-logo.svg" alt="Devin 한국어 가이드" width="773" height="120"></p>
+        <nav class="site-footer__col" aria-labelledby="footer-guide">
+          <h2 id="footer-guide" class="site-footer__heading">가이드</h2>
+          <ul>
+            <li><a href="/devin-korea-guide/">홈</a></li>
+            <li><a href="/devin-korea-guide/guides/first-task/">첫 작업 시작하기</a></li>
+          </ul>
+        </nav>
+        <nav class="site-footer__col" aria-labelledby="footer-official">
+          <h2 id="footer-official" class="site-footer__heading">공식 자료 <span class="site-footer__hint">영문</span></h2>
+          <ul>
+            <li><a href="https://docs.devin.ai">Devin Docs</a></li>
+            <li><a href="https://docs.devin.ai/llms.txt">문서 색인 llms.txt</a></li>
+          </ul>
+        </nav>
+        <div class="site-footer__col">
+          <h2 class="site-footer__heading">이 사이트에 대해</h2>
+          <p class="site-footer__disclaimer">Jaden (Devin 공식 한국 앰버서더)이 주도해 만드는 초안입니다. Cognition이 발행하거나 검수·보증한 문서가 아니며, 제품 정보는 공식 문서를 기준으로 합니다.</p>
+        </div>
+      </div>
+      <p class="site-footer__legal mono-label">Devin은 Cognition의 제품입니다 · 본문 글꼴 Pretendard(<a href="/devin-korea-guide/assets/fonts/pretendard/LICENSE.txt">OFL</a>) · 고정폭 글꼴 Geist Mono(<a href="/devin-korea-guide/assets/fonts/geist-mono/LICENSE.txt">OFL</a>)</p>
+    </div>
+  </footer>
+</body>
+</html>

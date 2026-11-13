@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Devin의 모델, Fusion, Adaptive 구분하기 — Devin 한국어 가이드</title>
+  <meta name="description" content="SWE 계열 모델, 두 모델을 짝짓는 Fusion, 모델을 고르는 Adaptive는 서로 다른 개념입니다. 공식 문서로 확인한 이름과 제공 조건만 정리했습니다.">
+  <meta name="color-scheme" content="light">
+  <link rel="stylesheet" href="/devin-korea-guide/assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
+  <link rel="stylesheet" href="/devin-korea-guide/assets/css/site.css">
+  <script>document.documentElement.classList.add("js")</script>
+  <script src="/devin-korea-guide/assets/js/nav.js" defer=""></script>
+  <script src="/devin-korea-guide/assets/js/motion.js" defer=""></script>
+</head>
+<body class="page-article">
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header" data-header="">
+    <div class="page-container site-header__inner">
+      <a class="wordmark" href="/devin-korea-guide/">
+        <img class="wordmark__logo" src="/devin-korea-guide/assets/brand/devin-korea-logo.svg" alt="Devin 한국어 가이드" width="773" height="120">
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+        <span class="menu-toggle__bars" aria-hidden="true"></span><span class="visually-hidden">메뉴</span>
+      </button>
+      <div class="site-menu" id="site-menu">
+        <nav class="site-nav" aria-label="주 메뉴">
+          <ul>
+          <li><a class="nav-link" href="/devin-korea-guide/">개요</a></li>
+          <li class="nav-item">
+            <a class="nav-link nav-fallback" href="/devin-korea-guide/features/">제품</a>
+            <button class="nav-link nav-trigger" type="button" aria-expanded="false" aria-controls="product-menu">제품<span class="nav-trigger__chevron" aria-hidden="true"></span></button>
+            <div class="nav-panel" id="product-menu">
+              <div class="nav-panel__group">
+                <p class="nav-panel__heading" id="product-menu-g1">사용 환경</p>
+                <ul aria-labelledby="product-menu-g1">
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/cloud/"><span class="nav-panel__label" lang="en">Devin Cloud</span><span class="nav-panel__desc">클라우드 VM에서 작업을 끝내고 PR로</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/desktop/"><span class="nav-panel__label" lang="en">Devin Desktop</span><span class="nav-panel__desc">로컬·클라우드 에이전트를 한 화면에서</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/cli/"><span class="nav-panel__label" lang="en">Devin CLI</span><span class="nav-panel__desc">터미널 에이전트와 클라우드 넘기기</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/mobile/"><span class="nav-panel__label" lang="en">Mobile</span> <span class="badge badge--neutral">출시 전</span><span class="nav-panel__desc">대기자 명단 단계</span></a></li>
+                </ul>
+              </div>
+              <div class="nav-panel__group">
+                <p class="nav-panel__heading" id="product-menu-g2">업무 기능</p>
+                <ul aria-labelledby="product-menu-g2">
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/review/"><span class="nav-panel__label" lang="en">Devin Review</span><span class="nav-panel__desc">PR 변경 설명과 버그 표시</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/security/"><span class="nav-panel__label" lang="en">Devin Security</span><span class="nav-panel__desc">취약점 스캔과 수정 PR</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/features/oncall/"><span class="nav-panel__label" lang="en">Devin Oncall</span><span class="nav-panel__desc">알림·인시던트 1차 조사</span></a></li>
+                </ul>
+              </div>
+              <a class="nav-panel__overview" href="/devin-korea-guide/features/">제품·기능 전체 보기 <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-fallback" href="/devin-korea-guide/models/" aria-current="page">모델</a>
+            <button class="nav-link nav-trigger is-current" data-current="" type="button" aria-expanded="false" aria-controls="models-menu">모델<span class="visually-hidden"> (현재 섹션)</span><span class="nav-trigger__chevron" aria-hidden="true"></span></button>
+            <div class="nav-panel" id="models-menu">
+              <div class="nav-panel__group">
+                <p class="nav-panel__heading" id="models-menu-g1">모델 선택</p>
+                <ul aria-labelledby="models-menu-g1">
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/models/fusion/"><span class="nav-panel__label" lang="en">Fusion</span><span class="nav-panel__desc">lead와 sidekick 두 모델을 짝짓는 방식</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/models/third-party/"><span class="nav-panel__label">타사 모델</span><span class="nav-panel__desc">OpenAI, Anthropic, Google, SpaceXSI 및 오픈소스 최신 모델에 액세스</span></a></li>
+                </ul>
+              </div>
+              <div class="nav-panel__group">
+                <p class="nav-panel__heading" id="models-menu-g2">SWE 계열</p>
+                <ul aria-labelledby="models-menu-g2">
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/models/#swe-2"><span class="nav-panel__label" lang="en">SWE-2</span><span class="nav-panel__desc">Cognition의 최신 소프트웨어 엔지니어링 모델</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/models/#swe-2-flash"><span class="nav-panel__label" lang="en">SWE-2 Flash</span><span class="nav-panel__desc">Desktop·CLI 전용 경량 변형</span></a></li>
+                  <li><a class="nav-panel__link" href="/devin-korea-guide/models/#이전-세대와-보조-모델"><span class="nav-panel__label" lang="en">SWE-1.7 · 보조 모델</span><span class="nav-panel__desc">이전 세대와 swe-grep · swe-check</span></a></li>
+                </ul>
+              </div>
+              <a class="nav-panel__overview" href="/devin-korea-guide/models/" aria-current="page">모델 개요 전체 보기 <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li><a class="nav-link" href="/devin-korea-guide/use-cases/">활용사례</a></li>
+          <li><a class="nav-link" href="/devin-korea-guide/startups/">스타트업 프로그램</a></li>
+          </ul>
+        </nav>
+        <a class="btn btn--sm btn--secondary site-header__docs" href="https://docs.devin.ai">공식 문서<span class="visually-hidden"> (docs.devin.ai, 영문)</span> <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </header>
+  <div class="nav-scrim" aria-hidden="true"></div>
+
+  <main id="main" tabindex="-1">
+    <article class="article" aria-labelledby="article-title">
+  <header class="article__header">
+    <div class="page-container">
+      <nav class="breadcrumb" aria-label="현재 위치">
+        <ol>
+          <li><a href="/devin-korea-guide/">홈</a></li>
+          <li><span aria-current="page">모델 개요</span></li>
+        </ol>
+      </nav>
+      <h1 id="article-title" class="t-h2 article__title">Devin의 모델, Fusion, Adaptive 구분하기</h1>
+      <p class="article__lead">SWE 계열 모델, 두 모델을 짝짓는 Fusion, 모델을 고르는 Adaptive는 서로 다른 개념입니다. 공식 문서로 확인한 이름과 제공 조건만 정리했습니다.</p>
+      <dl class="meta-list meta-list--row">
+        <div><dt>공식 문서 확인</dt><dd><time datetime="Mon Nov 09 2026 22:00:00 GMT+0900 (Korean Standard Time)">2026년 11월 9일</time> (KST)</dd></div>
+        <div><dt>읽는 시간</dt><dd>약 7분</dd></div>
+        <div><dt>상태</dt><dd>초안 · 앰버서더 검토 대기</dd></div>
+      </dl>
+    </div>
+  </header>
+  <nav class="subnav" aria-label="이 글의 섹션 바로가기">
+    <div class="page-container">
+      <ol class="subnav__list">
+        <li><a class="subnav__link" href="#네-가지-개념"><span class="subnav__num" aria-hidden="true">01</span>네 가지 개념</a></li>
+        <li><a class="subnav__link" href="#fusion-두-모델이-함께-일하는-방식"><span class="subnav__num" aria-hidden="true">02</span>Fusion: 두 모델이 함께 일하는 방식</a></li>
+        <li><a class="subnav__link" href="#adaptive"><span class="subnav__num" aria-hidden="true">03</span>Adaptive</a></li>
+        <li><a class="subnav__link" href="#swe"><span class="subnav__num" aria-hidden="true">04</span>SWE 계열 모델</a></li>
+        <li><a class="subnav__link" href="#sources">출처</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <div class="band">
+    <div class="page-container">
+      <div class="frame article__layout">
+        <nav class="toc" aria-labelledby="toc-title">
+          <details class="toc__details" open="">
+            <summary id="toc-title" class="mono-label toc__title">이 글의 차례</summary>
+            <ol class="toc__list">
+              <li><a href="#네-가지-개념">네 가지 개념</a></li>
+              <li><a href="#fusion-두-모델이-함께-일하는-방식">Fusion: 두 모델이 함께 일하는 방식</a></li>
+              <li><a href="#adaptive">Adaptive</a></li>
+              <li><a href="#swe">SWE 계열 모델</a></li>
+              <li><a href="#sources">출처와 확인일</a></li>
+            </ol>
+          </details>
+        </nav>
+
+        <div class="prose">
+          <p>Devin을 쓰다 보면 SWE-2, Fusion, Adaptive, Agent 같은 이름이 한 화면에 함께 나옵니다. 이름은 비슷해 보여도 가리키는 대상이 다릅니다. 이 페이지는 공식 문서에 나온 이름을 기준으로 이 넷을 구분합니다.</p>
+<div class="reading-guide" role="note" aria-label="이 페이지를 읽는 법">
+<p class="reading-guide__title">이 페이지를 읽는 법</p>
+<ul>
+<li><strong>표시 없는 본문</strong>은 공식 문서를 요약한 내용입니다.</li>
+<li class="is-tip"><strong>필자 제안</strong>은 공식 문서에 없는 필자의 의견입니다.</li>
+<li>모델 목록, 가격, 프로모션은 자주 바뀝니다. 이 페이지에는 가격표를 옮기지 않았습니다. 실제 값은 Devin Desktop이나 Devin CLI의 모델 선택기와 공식 문서에서 확인하세요.</li>
+</ul>
+</div>
+<h2 id="네-가지-개념">네 가지 개념</h2>
+<div class="table-wrap" role="region" tabindex="0" aria-label="표 (가로 스크롤 가능)"><table>
+<thead>
+<tr>
+<th>이름</th>
+<th>무엇인가</th>
+<th>고르는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SWE 계열 (SWE-2 등)</td>
+<td>Cognition이 만든 모델 계열</td>
+<td>모델 선택기</td>
+</tr>
+<tr>
+<td>Fusion</td>
+<td>단일 모델이 아니라 lead 모델과 sidekick 모델을 짝지은 페어 계열</td>
+<td>모델 선택기</td>
+</tr>
+<tr>
+<td>Adaptive</td>
+<td>작업에 맞춰 모델을 고르는 라우팅 방식</td>
+<td>모델 선택기</td>
+</tr>
+<tr>
+<td>Ask / Agent</td>
+<td>모델이 아니라 세션의 작업 모드</td>
+<td>새 세션 화면</td>
+</tr>
+</tbody>
+</table>
+</div><div class="src"><span class="src__label">근거</span><p><a href="https://docs.devin.ai/desktop/models">AI Models</a>, <a href="https://docs.devin.ai/desktop/fusion">Fusion in Devin Desktop</a>, <a href="https://docs.devin.ai/cli/models">Models (Devin CLI)</a>, <a href="https://docs.devin.ai/get-started/first-run">Your First Session</a></p>
+</div>
+<h2 id="fusion-두-모델이-함께-일하는-방식">Fusion: 두 모델이 함께 일하는 방식</h2>
+<p>공식 제품 페이지를 한국어로 옮긴 <a href="/devin-korea-guide/models/fusion/">Fusion 페이지</a>에서 작업 분담과 공개 벤치마크를 그림으로 볼 수 있습니다.</p>
+<p>Fusion을 고르면 모든 세션에서 두 모델이 함께 일합니다.</p>
+<ul>
+<li><strong>Lead</strong>: 프런티어 모델입니다. 계획, 설계 결정, 조사, 정확성이 중요한 작업을 맡고 결과를 검토합니다.</li>
+<li><strong>Sidekick</strong>: 더 작고 효율적인 모델입니다. lead의 계획에 따라 코드를 쓰고, 빌드와 테스트를 돌리고, 변경을 검증합니다.</li>
+</ul>
+<p>공식 문서는 대부분의 사용자에게 Fusion을 권하며, 프런티어 모델만 쓸 때보다 비용을 낮추는 것이 목적이라고 설명합니다. Fusion은 하나의 모델이 아니라 여러 lead·sidekick 조합의 계열이고, 사용량은 ACU(Agent Compute Unit)로 계량합니다.</p>
+<p><strong>제공 조건</strong> (<a href="https://docs.devin.ai/desktop/fusion">Fusion in Devin Desktop</a> 원문: <span lang="en">“Fusion is available on paid plans in Devin CLI 3000.10.20+ and Devin Desktop 3.10.0+. It's not included in free or trial tiers.”</span>)</p>
+<ul>
+<li>유료 플랜에서 쓸 수 있습니다. 무료·체험 등급에는 포함되지 않습니다.</li>
+<li>최소 버전: Devin CLI 3000.10.20 이상, Devin Desktop 3.10.0 이상.</li>
+<li>레거시 또는 크레딧 기반 요금제(레거시 크레딧 과금 Enterprise 포함)에서는 쓸 수 없습니다.</li>
+<li>Desktop에서는 Devin Local 세션의 모델 선택기에서 고릅니다. <code>/model</code>, <code>/fusion</code> 명령은 CLI 전용입니다.</li>
+</ul>
+<div class="src"><span class="src__label">근거</span><p><a href="https://docs.devin.ai/desktop/fusion">Fusion in Devin Desktop</a>, <a href="https://docs.devin.ai/cli/fusion">Fusion in Devin CLI</a></p>
+</div>
+<h2 id="adaptive">Adaptive</h2>
+<p>CLI 문서는 Adaptive를 모델 설정의 <strong>라우팅(Adaptive routing)</strong> 으로 소개하고, Desktop 문서에도 별도 Adaptive 페이지가 있습니다. Fusion처럼 두 모델을 짝짓는 방식과는 다른 기능입니다. 라우팅 기준의 세부 사항은 공식 Adaptive 문서를 참고하세요.</p>
+<div class="src"><span class="src__label">근거</span><p><a href="https://docs.devin.ai/cli/models">Models (Devin CLI)</a>, <a href="https://docs.devin.ai/desktop/adaptive">Adaptive</a></p>
+</div>
+<h2 id="swe">SWE 계열 모델</h2>
+<p><a href="https://docs.devin.ai/desktop/models">AI Models</a> 문서는 SWE 계열을 “소프트웨어 엔지니어링 작업에 맞춰 만든 Cognition 자체 프런티어 모델”로 소개합니다. SWE-2와 SWE-2 Flash는 각각 Medium, High, Max 세 가지 추론 강도(reasoning effort)로 제공됩니다. 공식 홈페이지 내비게이션의 SWE 항목은 별도 제품 페이지가 아니라 Cognition 블로그의 <a href="https://cognition.com/blog/swe-2">Introducing SWE-2</a> 글로 연결됩니다.</p>
+<h3 id="swe-2">SWE-2</h3>
+<ul>
+<li><strong>위상</strong>: 모델 문서는 “Cognition's software engineering model”로, 출시 글은 “지금까지 가장 앞선 코딩 모델”로 소개합니다(2026.09.10 발표).</li>
+<li><strong>기반 모델</strong>: 출시 글에 따르면 2.8T 파라미터 모델 Kimi K3에서 사후 학습했고, SWE-1.7의 학습 인프라와 방법을 이어받아 강화 학습(RL)을 수조 파라미터 규모로 처음 키웠습니다. 모든 추론 강도를 한 번의 RL 실행에서 함께 학습하는 알고리즘이 핵심 변화라고 설명합니다.</li>
+<li><strong>공개된 벤치마크</strong>(Cognition 발표 수치): FrontierCode 1.1 Main 50.0%, DeepSWE 1.1 73.0%, Terminal-Bench 2.1 92.8%, Terminal-Bench 4.0 27.3%. 같은 표에서 SWE-1.7은 각각 42.0%, 37.7%, 81.5%, 7.6%입니다.</li>
+<li><strong>효율</strong>: FrontierCode 1.1 Main에서 SWE-2 medium은 SWE-1.7보다 점수가 높으면서 턴 수는 58%, 평균 비용은 81% 적었다고 합니다. 실행당 평균 단계는 SWE-1.7 127, SWE-2 medium 53, high 80, max 98이며, 첫 실제 수정까지의 단계 중앙값은 18(SWE-1.7은 48)입니다.</li>
+<li><strong>추론 강도별 차이</strong>: 출시 글은 medium이 단순·중간 난도 작업에 빠르고 비용 효율적이며, high와 max는 계획과 탐색, 검증을 더 많이 해 복잡한 작업에 유리하다고 설명합니다.</li>
+<li><strong>제공 범위</strong>: 출시 글 기준 Devin Desktop과 CLI에서 바로 쓸 수 있고, Devin Web과 Fusion에도 순차 적용 중이라고 밝혔습니다. 공식 <a href="/devin-korea-guide/models/fusion/">Fusion</a> 페이지의 예시에서는 SWE-2가 sidekick 역할을 맡습니다.</li>
+</ul>
+<h3 id="swe-2-flash">SWE-2 Flash</h3>
+<ul>
+<li>모델 문서 기준 Devin Desktop과 Devin CLI에서 쓸 수 있고, <strong>Devin Cloud에서는 쓸 수 없습니다.</strong></li>
+<li>Medium, High, Max 세 변형이 있습니다. 문서 원문: <span lang="en">“SWE-2 Flash Medium is available on the Free plan. SWE-2 Flash High and Max require a paid plan.”</span></li>
+<li>파라미터 수, 컨텍스트 길이, 벤치마크 수치는 확인한 공식 자료에 나오지 않아 적지 않았습니다.</li>
+</ul>
+<h3 id="이전-세대와-보조-모델">이전 세대와 보조 모델</h3>
+<ul>
+<li><strong>SWE-1.7</strong>: 모델 문서가 “이전 플래그십 소프트웨어 엔지니어링 모델”이라고 부르는 직전 세대입니다.</li>
+<li><strong>SWE-1.6</strong>: 소프트웨어 엔지니어링 에이전트용 이전 세대 모델입니다. CLI 설정 예시에는 <code>swe-1-6-fast</code>라는 모델 ID로 나옵니다.</li>
+<li><strong>SWE-1.5</strong>: 공식 블로그가 소개한 빠른 에이전트 모델입니다. 블로그는 수천억 개 파라미터 규모이며 주요 모델보다 최대 13배 빠르다고 밝혔고, 발표 당시 Windsurf(현재 Devin Desktop)용으로 최적화되었다고 설명했습니다.</li>
+<li><strong>SWE-1-mini</strong>: Desktop의 Tab(자동 완성 제안)을 구동하며 실시간 지연 시간에 맞춰 최적화되었습니다.</li>
+<li><strong>swe-grep</strong>: 컨텍스트 검색과 Fast Context를 구동합니다.</li>
+<li><strong>swe-check</strong>: 흔한 코드 문제를 빠르게 훑는 Quick Review를 구동합니다.</li>
+</ul>
+<p>CLI에서 <code>swe</code> 같은 짧은 이름은 항상 해당 계열의 최신 버전을 가리킵니다.</p>
+<div class="src"><span class="src__label">근거</span><p><a href="https://docs.devin.ai/desktop/models">AI Models</a>, <a href="https://docs.devin.ai/cli/models">Models (Devin CLI)</a>, <a href="https://cognition.com/blog/swe-2">Introducing SWE-2</a>, <a href="https://devin.ai/blog/swe-1-5">Introducing SWE-1.5</a></p>
+</div>
+<h3 id="확인하지-못한-것">확인하지 못한 것</h3>
+<ul>
+<li><strong>“SWE Flash”라는 이름은 공식 문서에서 찾지 못했습니다.</strong> 공식 이름은 <strong>SWE-2 Flash</strong>입니다.</li>
+<li>SWE-2 Flash의 파라미터 수, 컨텍스트 길이, 그리고 SWE-2의 컨텍스트 길이는 확인한 공식 자료에 나오지 않아 적지 않았습니다.</li>
+<li>위 벤치마크와 비용 수치는 Cognition이 발표한 값이며 이 가이드가 직접 측정하지 않았습니다.</li>
+<li>확인일 기준 같은 모델 문서 안에 SWE-2 Flash 프로모션 공지가 두 가지(‘2026년 12월 4일까지 무료’와 ‘2026년 11월 18일까지 25% 할인’) 함께 실려 있고, SWE-2 가격 공지도 두 가지가 함께 있습니다. 공지가 서로 엇갈리므로 이 가이드는 어느 쪽도 지금 받을 수 있는 혜택으로 안내하지 않습니다. 실제 가격은 사용 전에 모델 선택기와 공식 문서에서 직접 확인해야 합니다.</li>
+</ul>
+<aside class="note note--tip" aria-label="필자 제안"><p class="note__label">필자 제안</p><span class="note__title">모델보다 지시문부터</span>
+<p>공식 CLI 문서도 여러 모델을 직접 써 보라고 권합니다. 다만 결과가 나쁠 때는 모델을 바꾸기 전에 지시문의 범위와 완료 기준을 먼저 점검해 보는 편이 원인을 찾기 쉽습니다.</p>
+</aside>
+
+
+          <section class="sources" aria-labelledby="sources">
+            <h2 id="sources">출처와 확인일</h2>
+            <p>아래 공식 문서를 <time datetime="Mon Nov 09 2026 22:00:00 GMT+0900 (Korean Standard Time)">2026년 11월 9일</time> (KST)에 직접 열어 확인했습니다. 문서는 바뀔 수 있으니, 내용이 다르면 공식 문서를 따르세요.</p>
+            <ol class="sources__list">
+              <li>
+                <a href="https://docs.devin.ai/desktop/models" lang="en">AI Models (Devin Desktop)</a>
+                <span class="sources__url">docs.devin.ai/desktop/models</span>
+              </li>
+              <li>
+                <a href="https://docs.devin.ai/desktop/fusion" lang="en">Fusion in Devin Desktop</a>
+                <span class="sources__url">docs.devin.ai/desktop/fusion</span>
+              </li>
+              <li>
+                <a href="https://docs.devin.ai/cli/models" lang="en">Models (Devin CLI)</a>
+                <span class="sources__url">docs.devin.ai/cli/models</span>
+              </li>
+              <li>
+                <a href="https://docs.devin.ai/cli/fusion" lang="en">Fusion in Devin CLI</a>
+                <span class="sources__url">docs.devin.ai/cli/fusion</span>
+              </li>
+              <li>
+                <a href="https://docs.devin.ai/desktop/adaptive" lang="en">Adaptive (Devin Desktop)</a>
+                <span class="sources__url">docs.devin.ai/desktop/adaptive</span>
+              </li>
+              <li>
+                <a href="https://cognition.com/blog/swe-2" lang="en">Introducing SWE-2</a>
+                <span class="sources__url">cognition.com/blog/swe-2</span>
+              </li>
+              <li>
+                <a href="https://devin.ai/fusion" lang="en">Devin Fusion (product page)</a>
+                <span class="sources__url">devin.ai/fusion</span>
+              </li>
+              <li>
+                <a href="https://devin.ai/blog/swe-1-5" lang="en">Introducing SWE-1.5</a>
+                <span class="sources__url">devin.ai/blog/swe-1-5</span>
+              </li>
+              <li>
+                <a href="https://docs.devin.ai/get-started/first-run" lang="en">Your First Session</a>
+                <span class="sources__url">docs.devin.ai/get-started/first-run</span>
+              </li>
+            </ol>
+          </section>
+
+          <p class="article__back"><a class="btn btn--secondary" href="/devin-korea-guide/"><span aria-hidden="true">←</span> 홈으로</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="page-container">
+      <div class="site-footer__grid">
+        <p class="site-footer__brand"><img class="site-footer__logo" src="/devin-korea-guide/assets/brand/devin-korea-logo.svg" alt="Devin 한국어 가이드" width="773" height="120"></p>
+        <nav class="site-footer__col" aria-labelledby="footer-guide">
+          <h2 id="footer-guide" class="site-footer__heading">가이드</h2>
+          <ul>
+            <li><a href="/devin-korea-guide/">홈</a></li>
+            <li><a href="/devin-korea-guide/guides/first-task/">첫 작업 시작하기</a></li>
+          </ul>
+        </nav>
+        <nav class="site-footer__col" aria-labelledby="footer-official">
+          <h2 id="footer-official" class="site-footer__heading">공식 자료 <span class="site-footer__hint">영문</span></h2>
+          <ul>
+            <li><a href="https://docs.devin.ai">Devin Docs</a></li>
+            <li><a href="https://docs.devin.ai/llms.txt">문서 색인 llms.txt</a></li>
+          </ul>
+        </nav>
+        <div class="site-footer__col">
+          <h2 class="site-footer__heading">이 사이트에 대해</h2>
+          <p class="site-footer__disclaimer">Jaden (Devin 공식 한국 앰버서더)이 주도해 만드는 초안입니다. Cognition이 발행하거나 검수·보증한 문서가 아니며, 제품 정보는 공식 문서를 기준으로 합니다.</p>
+        </div>
+      </div>
+      <p class="site-footer__legal mono-label">Devin은 Cognition의 제품입니다 · 본문 글꼴 Pretendard(<a href="/devin-korea-guide/assets/fonts/pretendard/LICENSE.txt">OFL</a>) · 고정폭 글꼴 Geist Mono(<a href="/devin-korea-guide/assets/fonts/geist-mono/LICENSE.txt">OFL</a>)</p>
+    </div>
+  </footer>
+</body>
+</html>
