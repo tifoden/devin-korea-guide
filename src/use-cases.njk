@@ -9,9 +9,9 @@ eleventyExcludeFromCollections: true
 <meta charset="utf-8">
 <title>개요로 이동 — Devin 한국어 가이드</title>
 <meta name="robots" content="noindex">
-<link rel="canonical" href="/">
-<meta http-equiv="refresh" content="0; url=/">
-<script>location.replace("/" + location.hash);</script>
+<link rel="canonical" href="{{ '/' | url }}">
+<meta http-equiv="refresh" content="0; url={{ '/' | url }}">
+<script>location.replace("{{ '/' | url }}" + location.hash);</script>
 </head>
-<body><p><a href="/">개요(홈)로 이동</a></p></body>
+<body><p><a href="{{ '/' | url }}">개요(홈)로 이동</a></p></body>
 </html>

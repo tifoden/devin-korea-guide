@@ -1,7 +1,18 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { join, extname } from "node:path";
 import markdownIt from "markdown-it";
 import markdownItAnchor from "markdown-it-anchor";
 import markdownItContainer from "markdown-it-container";
+import { HtmlBasePlugin } from "@11ty/eleventy";
+
+function normalizePathPrefix() {
+  const raw = process.env.PATH_PREFIX;
+  if (raw == null || raw === "" || raw === "/") return "/";
+  const trimmed = raw.startsWith("/") ? raw : `/${raw}`;
+  return trimmed.endsWith("/") ? trimmed : `${trimmed}/`;
+}
+
+const pathPrefix = normalizePathPrefix();
 
 const NOTE_KINDS = {
   tip: "팁",
@@ -18,6 +29,7 @@ function slugify(text) {
 }
 
 export default function (eleventyConfig) {
+  eleventyConfig.addPlugin(HtmlBasePlugin);
   eleventyConfig.addShortcode("replica", (name) => readFileSync(`src/_includes/replica/${name}.html`, "utf8"));
   eleventyConfig.ignores.add("src/_includes/replica/**");
   const md = markdownIt({ html: true, linkify: false, typographer: false })
@@ -83,7 +95,30 @@ export default function (eleventyConfig) {
     return Math.max(1, Math.round(chars / 500));
   });
 
+  eleventyConfig.on("eleventy.after", ({ dir }) => {
+    if (pathPrefix === "/") return;
+    const prefix = pathPrefix.replace(/\/$/, "");
+    const rewrite = (text) =>
+      text.replace(/url\((['"]?)(\/(?!\/)[^'")]+)\1\)/g, (m, q, url) => {
+        if (url === prefix || url.startsWith(prefix + "/")) return m;
+        return `url(${q}${prefix}${url}${q})`;
+      });
+    const walk = (d) => {
+      for (const name of readdirSync(d)) {
+        const p = join(d, name);
+        if (statSync(p).isDirectory()) walk(p);
+        else if (extname(p) === ".css") {
+          const cur = readFileSync(p, "utf8");
+          const next = rewrite(cur);
+          if (next !== cur) writeFileSync(p, next);
+        }
+      }
+    };
+    walk(dir.output);
+  });
+
   return {
+    pathPrefix,
     dir: { input: "src", includes: "_includes", data: "_data", output: "_site" },
     markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk",

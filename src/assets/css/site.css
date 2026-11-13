@@ -5,7 +5,7 @@
  */
 
 /* ---------- Fonts ---------- */
-@font-face { font-family: geistMono; src: url(/assets/fonts/geist-mono/GeistMono-Variable.woff2) format("woff2"); font-display: swap; font-weight: 100 900; font-style: normal; unicode-range: U+0021-10FFFF; } /* adapted: space falls through to Pretendard so Korean words in mono labels keep normal spacing */
+@font-face { font-family: geistMono; src: url("../fonts/geist-mono/GeistMono-Variable.woff2") format("woff2"); font-display: swap; font-weight: 100 900; font-style: normal; unicode-range: U+0021-10FFFF; } /* adapted: space falls through to Pretendard so Korean words in mono labels keep normal spacing */
 
 :root {
   /* type families — adapted: Pretendard for all text (owner decision); Geist Mono kept for code/labels (observed) */
@@ -219,7 +219,7 @@ main:focus { outline: none; }
 .hero__notice { max-width: 300px; }
 .hero__visual {
   margin-top: 48px;
-  background: #c9ccd0 url(/assets/img/devin-bg-1.jpg) center / cover no-repeat;
+  background: #c9ccd0 url("../img/devin-bg-1.jpg") center / cover no-repeat;
   padding: 32px 0 0 20px;
   overflow: hidden;
 }
