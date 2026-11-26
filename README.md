@@ -2,7 +2,7 @@
 
 [Devin](https://devin.ai/) 한국어 사이트입니다.
 
-사이트: **https://tifoden.github.io/devin-korea-guide/**
+사이트: **https://devinkorea.com/**
 
 ## 로컬에서 보기
 
@@ -13,7 +13,7 @@ npm ci
 npm run dev
 ```
 
-GitHub Pages와 같은 하위 경로(`/devin-korea-guide/`)로 빌드하려면:
+기본 빌드는 루트 경로(커스텀 도메인 devinkorea.com)용입니다. 하위 경로(`/devin-korea-guide/`)로 빌드하려면:
 
 ```bash
 PATH_PREFIX=/devin-korea-guide/ npm run build

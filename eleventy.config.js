@@ -67,6 +67,7 @@ export default function (eleventyConfig) {
   eleventyConfig.setLibrary("md", md);
 
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+  eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
   eleventyConfig.addPassthroughCopy({
     "node_modules/pretendard/dist/web/variable/woff2-dynamic-subset": "assets/fonts/pretendard/woff2-dynamic-subset",
     "node_modules/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css": "assets/fonts/pretendard/pretendardvariable-dynamic-subset.css",
