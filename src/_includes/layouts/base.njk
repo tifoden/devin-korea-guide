@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if title and page.url != "/" %}{{ title }} — {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ description or site.description }}">
-  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
   <meta name="color-scheme" content="light">
   <link rel="stylesheet" href="/assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
   <link rel="stylesheet" href="/assets/css/site.css">
